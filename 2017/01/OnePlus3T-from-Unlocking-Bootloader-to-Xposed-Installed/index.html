@@ -1,0 +1,975 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="OnePlus,Android,BootLoader,Xposed,TWRP Recovery,OpenGApps," />
+
+
+
+
+
+  <link rel="alternate" href="/blog/atom.xml" title="oing9179 的记事本儿" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preface原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+
+解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OnePlus 3T 从解锁 BootLoader 到 Xposed">
+<meta property="og:url" content="https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/index.html">
+<meta property="og:site_name" content="oing9179 的记事本儿">
+<meta property="og:description" content="Preface原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+
+解">
+<meta property="og:updated_time" content="2017-02-02T09:55:05.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OnePlus 3T 从解锁 BootLoader 到 Xposed">
+<meta name="twitter:description" content="Preface原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+
+解">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/"/>
+
+
+
+
+
+  <title> OnePlus 3T 从解锁 BootLoader 到 Xposed | oing9179 的记事本儿 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-91332739-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">oing9179 的记事本儿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">This is subtitle.</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://oing9179.github.io/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="oing9179">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="oing9179 的记事本儿">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="oing9179 的记事本儿" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                OnePlus 3T 从解锁 BootLoader 到 Xposed
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-04T19:53:00+08:00">
+                04 January 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Tech-Life/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech & Life</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：</p>
+<ul>
+<li>解锁 BootLoader</li>
+<li>安装 TWRP(Team Win Recovery Project) Recovery</li>
+<li>卡刷 phh’s Superuser</li>
+<li>卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶)</li>
+<li>卡刷 Xposed</li>
+</ul>
+<a id="more"></a>
+<p><strong>注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。</strong><br><strong>免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。</strong></p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>先不要急着开机，做好准备工作再说。</p>
+<ol>
+<li>下载并安装好 Android SDK，在 Android SDK Manager 内安装 <code>platform-tools</code>(platform-tools 里面提供了后续步骤所需的 <code>fastboot</code> 命令行工具)，可选安装 <code>tools</code>(里面的 <code>adb</code> 用来安装 apk / 与手机传送文件)。</li>
+<li>TWRP Recovery<br><a href="https://dl.twrp.me/oneplus3t/" target="_blank" rel="external">https://dl.twrp.me/oneplus3t/</a><br><a href="https://dl.twrp.me/oneplus3t/twrp-3.0.3-0-oneplus3t.img" target="_blank" rel="external">Direct link <code>twrp-3.0.3-0-oneplus3t.img</code></a></li>
+<li>root 卡刷包 / root 权限管理软件<ul>
+<li>phh’s Superuser<br>开源，刷这个包时候会修改手机内的 <code>boot.img</code>，<strong>目前不兼容 Lucky Patcher 之类的东西</strong>。<br><a href="https://superuser.phh.me/superuser.zip" target="_blank" rel="external">下载 卡刷包</a><br><a href="https://play.google.com/store/apps/details?id=me.phh.superuser" target="_blank" rel="external">下载 Superuser 管理软件</a></li>
+<li>Chainfire’s SuperSU<br>闭源，目前最傻瓜化的 Superuser 解决方案。</li>
+</ul>
+</li>
+<li><p>OpenGApps 卡刷包<br>打开 <a href="http://opengapps.org/" target="_blank" rel="external">OpenGApps.org</a>，按照下面的参数进行选择后再下载：</p>
+<p> | 参数     | 值    |<br> |:———|:——|<br> | Platform | ARM64 |<br> | Android  | 6.0   |<br> | Variant  | micro |</p>
+<p> <code>micro</code> 将包含以下App：</p>
+<ul>
+<li>Google Calendar (将替换掉原厂ROM自带的程序)</li>
+<li>Google Now Launcher</li>
+<li>Google Package Installer</li>
+<li>Google Play services (OnePlus 3T 的 HydrogenOS 自带 Play Services，也会被替换掉)</li>
+<li>Google Search</li>
+<li>Google Text-to-Speech</li>
+<li>Gmail</li>
+<li>Hotword</li>
+</ul>
+</li>
+<li><p>为 Xposed 的安装准备如下文件：</p>
+<ul>
+<li><a href="http://dl-xda.xposed.info/framework/sdk23/arm64/" target="_blank" rel="external">Xposed installer 卡刷包</a></li>
+<li><a href="http://dl-xda.xposed.info/framework/uninstaller/" target="_blank" rel="external">Xposed uninstaller 卡刷包</a><br><strong>注：下载最新的 带有 <code>arm64</code> 字样的zip文件。</strong></li>
+<li><a href="https://forum.xda-developers.com/showthread.php?t=3034811" target="_blank" rel="external">[OFFICIAL] Xposed for Lollipop/Marshmallow on XDA-Developers</a><br><strong>注：在帖子中找到 <code>XposedInstaller_3.1.1.apk</code> 并下载。</strong></li>
+</ul>
+</li>
+<li><p><a href="https://play.google.com/store/apps/details?id=cn.wq.myandroidtools" target="_blank" rel="external">My Android Tools</a><br>因为 HydrogenOS 不允许禁用 手动安装/部分系统自带 的App，所以需要借助它来完成。<strong>注：该App需要root权限</strong>。</p>
+</li>
+</ol>
+<h2 id="开机"><a href="#开机" class="headerlink" title="开机"></a>开机</h2><p>开机后会要求用户进行一些设定，能跳过的就跳过，包括 连接WiFi、指纹解锁。然后禁用手机内置的百度输入法，按照如下步骤操作：</p>
+<ol>
+<li>打开 <code>Settings -&gt; Language &amp; input</code></li>
+<li>点击 <code>Current Keyboard</code> 后选择 <code>English (US) Android Keyboard (AOSP)</code></li>
+<li>在 <code>Input Method</code> 里找到 <code>百度输入法</code> 然后点击它，将会弹出百度输入法的预设定界面</li>
+<li>触摸 <code>Home</code> 键，这会使百度输入法会在通知栏发出一个通知</li>
+<li>展开通知栏，长按百度输入法的通知，然后点击右侧的 <code>i</code> 图标，这将打开对百度输入法的通知进行设定的界面</li>
+<li>点击百度输入法图标右侧的 <code>i</code> 图标，这会打开百度输入法的 <code>App info</code> 界面</li>
+<li>点击 <code>Disable</code> 即可</li>
+</ol>
+<h2 id="解锁-BootLoader"><a href="#解锁-BootLoader" class="headerlink" title="解锁 BootLoader"></a>解锁 BootLoader</h2><p><strong><span style="color:red;">警告：</span>解锁BootLoader将会清除手机上的所有用户数据！</strong></p>
+<ol>
+<li>打开 <code>Settings -&gt; About phone</code>，滚动到最下面 找到 <code>Build number</code></li>
+<li>多次点击 <code>Build number</code> 直至出现 Toast 内容为 <code>No need, you are already a developer.</code> 后停止点击。</li>
+<li>回到 <code>Settings</code>，滚动到最下面，点击 <code>Developer options</code></li>
+<li>找到 <code>OEM Unlocking</code> 后点击它，然后会提示用户是否要这么做，确认即可</li>
+<li>手机关机，然后 同时按住 <code>VolumeUp + Power</code> 键，这将会进入 <code>fastboot</code> 模式，然后松开 <code>VolumeUp</code> 和 <code>Power</code> 键</li>
+<li>使用 OnePlus 3T 自带的数据线连接将手机和电脑连接上</li>
+<li><p>进入目录 <code>Android SDK 文件夹/platform-tools/</code>，找到 <code>fastboot</code> 文件(Windows 则为 <code>fastboot.exe</code>)，执行如下命令，这将会解锁手机并<strong>清除手机上的所有用户数据</strong>：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fastboot oem unlock</div></pre></td></tr></table></figure>
+<p> 然后在手机上按照手机上的提示进行解锁。</p>
+</li>
+</ol>
+<p>至此手机已经解锁完毕，手机将会重启至 Android 系统。</p>
+<h2 id="安装-TWRP-phh’s-Superuser-Google-全家桶-OpenGApps"><a href="#安装-TWRP-phh’s-Superuser-Google-全家桶-OpenGApps" class="headerlink" title="安装 TWRP / phh’s Superuser / Google 全家桶(OpenGApps)"></a>安装 TWRP / phh’s Superuser / Google 全家桶(OpenGApps)</h2><h3 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h3><p>将下面列表里的卡刷包传送至手机，既可以以MTP的形式传输到手机，也可以用 <code>adb</code> 命令行工具来传输。<br>首先，与读者进行文件名的协商，协商好的文件名将在后续步骤中被使用。如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">东西</th>
+<th style="text-align:left">卡刷包文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">TWRP Recovery (这个不需要传到手机里)</td>
+<td style="text-align:left">twrp.img</td>
+</tr>
+<tr>
+<td style="text-align:left">phh’s Superuser</td>
+<td style="text-align:left">superuser.zip</td>
+</tr>
+<tr>
+<td style="text-align:left">Open GApps</td>
+<td style="text-align:left">opengapps.zip</td>
+</tr>
+</tbody>
+</table>
+<h3 id="安装-TWRP"><a href="#安装-TWRP" class="headerlink" title="安装 TWRP"></a>安装 TWRP</h3><ol>
+<li><p>将前面准备的 <code>twrp.img</code> 文件放到和 <code>fastboot</code> 同级目录下，然后执行下面的命令将 <code>twrp.img</code> 刷入手机 并 引导手机启动至 TWRP Recovery(Linux 需要root权限来执行)：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fastboot flash recovery twrp.img</div><div class="line">fastboot boot twrp.img</div></pre></td></tr></table></figure>
+</li>
+<li><p>待 TWRP 启动后，会询问 <code>Keep System Read only?</code>，直接滑动下面的 <code>Swipe to Allow Modifications</code> 即可。<br><strong>注：xda论坛上的教程贴里提到了 ‘Allow Modifications 将会触发 <a href="https://source.android.com/security/verifiedboot/" target="_blank" rel="external">dm-verity</a>，会导致手机无法启动到Android系统’。我右滑 <code>Swipe to Allow Modifications</code> 后直接重启手机到Android系统，并没有出现上述问题。</strong></p>
+</li>
+</ol>
+<h3 id="卡刷-phh’s-Superuser-Google-全家桶-OpenGApps"><a href="#卡刷-phh’s-Superuser-Google-全家桶-OpenGApps" class="headerlink" title="卡刷 phh’s Superuser / Google 全家桶(OpenGApps)"></a>卡刷 phh’s Superuser / Google 全家桶(OpenGApps)</h3><ol>
+<li>现在看到的界面应该是 TWRP 的主界面</li>
+<li>点击 <code>Install</code> ，在文件列表寻找前面准备工作里传输到手机里的 <code>superuser.zip</code>，并点击 <code>superuser.zip</code></li>
+<li>现在 TWRP 会询问用户是否刷入这个zip包，先不急</li>
+<li>点击 <code>Add more Zips</code>，然后找到并点击前面准备工作里传输到手机里的 <code>opengapps.zip</code></li>
+<li>向右滑动 <code>Swipe to confirm Flash</code>，这将会把 <code>superuser.zip</code> 和 <code>opengapps.zip</code> 刷入手机</li>
+<li>操作完成后 点击屏幕上的 <code>Home</code> 键回到主界面</li>
+<li>点击 <code>Wipe</code>，然后点击 <code>Advanced Wipe</code></li>
+<li>只勾选 <code>Dalvik / ART Cache</code> 和 <code>Cache</code></li>
+<li>向右滑动 <code>Swipe to Wipe</code>，这将清空 ART Cache 和 Cache，确保 Google 全家桶能正常工作<br><strong>下面的操作将 “禁用” SetupWizard.apk，以免重启后出现不显示桌面的问题。</strong></li>
+<li>操作完成后 点击屏幕上的 <code>Home</code> 键回到主界面</li>
+<li>点击 <code>Mount</code>，勾选 <code>System</code>，然后点击屏幕上的 <code>Home</code> 回到主界面</li>
+<li>依次点击 <code>Advanced -&gt; File Manager</code>，然后定位到 <code>/system/priv-app/SetupWizard/</code></li>
+<li>点击列表里的 <code>SetupWizard.apk</code>，然后点击 <code>Rename File</code>，设定新的文件名为 <code>SetupWizard.apk.bak</code>，点击屏幕键盘上的对号按钮，向右滑动 <code>Swipe to Confirm</code>，至此 文件名修改完成。</li>
+<li>上面的操作完成后，点击屏幕上的 <code>Home</code> 键回到主界面</li>
+<li>依次点击 <code>Reboot -&gt; System</code>，稍后 手机将重启并进入Android系统</li>
+</ol>
+<h3 id="安装-phh’s-Superuser-管理软件"><a href="#安装-phh’s-Superuser-管理软件" class="headerlink" title="安装 phh’s Superuser 管理软件"></a>安装 phh’s Superuser 管理软件</h3><p>把 phh’s Superuser 管理软件的apk传输到手机，然后使用系统自带的文件管理器安装即可。<br>如果提示无法安装 需要启用 <code>Unknown sources</code>，请到 <code>Settings -&gt; Security &amp; fingerprint</code>，点击 <code>Unknown sources</code>，然后按照提示操作即可。</p>
+<h3 id="配置-Google-全家桶-OpenGApps"><a href="#配置-Google-全家桶-OpenGApps" class="headerlink" title="配置 Google 全家桶(OpenGApps)"></a>配置 Google 全家桶(OpenGApps)</h3><p>由于系统自带的 Google Play Services 默认情况下是禁用状态，需要使用 <code>My Android Tools</code> 来启用它。</p>
+<ol>
+<li>将 <code>My Android Tools</code> 的 apk 传输到手机里，并使用自带的文件管理找到并安装它。</li>
+<li>打开 My Android Tools，点击 <code>Apps</code>（如果没有，则从屏幕左边向右滑即可），选择 <code>Disabled</code> 选项卡</li>
+<li>点击 <code>Google Play services</code>，在弹出的窗口中点击 <code>Enable</code>，这时会弹出root权限申请界面，点击 <code>Allow</code> 即可。</li>
+<li>向上面第3步那样，对其余的以 <code>Google</code> 字样开头的列表项执行相同的操作</li>
+<li>回到桌面，启动 <code>Play Store</code>，然后按照提示登录自己的Google帐号</li>
+</ol>
+<h2 id="安装-Xposed"><a href="#安装-Xposed" class="headerlink" title="安装 Xposed"></a>安装 Xposed</h2><p>本段内容将会用到 xposed 的一些文件，现与读者为文件名做如下约定：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">原文件名</th>
+<th style="text-align:left">本段落中使用的文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">xposed-v<code>&lt;数字&gt;</code>-sdk23-arm64.zip</td>
+<td style="text-align:left">xposed-install.zip</td>
+</tr>
+<tr>
+<td style="text-align:left">xposed-uninstaller-<code>&lt;数字&gt;</code>-arm64.zip</td>
+<td style="text-align:left">xposed-uninstall.zip</td>
+</tr>
+<tr>
+<td style="text-align:left">XposedInstaller_<code>&lt;版本号&gt;</code>.apk</td>
+<td style="text-align:left">xposed.apk</td>
+</tr>
+</tbody>
+</table>
+<p>请读者确保下载的文件均为最新版，下载到的文件与上面的原文件名里的 <code>这种字体</code><strong>之外部分的文件名</strong> 相同即可。</p>
+<ol>
+<li>将 <code>xposed.apk</code> 传输到手机里并安装它，不需要启动它</li>
+<li>将 <code>xposed-install.zip</code> 和 <code>xposed-uninstall.zip</code> 传输到手机备用。</li>
+<li>按住 <code>VolumeUp + Power</code> 键重启手机到 fastboot 模式</li>
+<li>像之前 <em>卡刷 phh’s Superuser / Google 全家桶(OpenGApps)</em> 一样，把 <code>xposed-install.zip</code> 刷入手机</li>
+<li>重启手机到Android系统</li>
+<li>打开App <code>Xposed Installer</code>，不出问题的话，界面上应该显示 <code>Xposed Framework version xx is active.</code></li>
+</ol>
+<p><strong>若没能进入到Android系统，或者说 Android启动动画一直循环，请进入 Recovery 并刷入 <code>xposed-uninstall.zip</code> 来卸载 xposed。</strong></p>
+<p><span id="disable_dm-verity"></span></p>
+<h2 id="禁用-dm-verity"><a href="#禁用-dm-verity" class="headerlink" title="禁用 dm-verity"></a>禁用 dm-verity</h2><p>有以下两种情况需要禁用 dm-verity：</p>
+<ol>
+<li>修改系统分区的文件并重启后 卡在1+图标的界面，手机也不发热，有可能就是触发了 <a href="https://source.android.com/security/verifiedboot/" target="_blank" rel="external">dm-verity</a>。</li>
+<li>Root Explorer 无法修改 <code>/system</code> 分区的文件。</li>
+</ol>
+<p>解决方法也很简单：到 <a href="https://build.nethunter.com/android-tools/no-verity-opt-encrypt/" target="_blank" rel="external">no-verity-opt-encrypt</a> 下载最新版的zip包，然后重启手机到 recovery，然后把这个包刷进去，然后重启手机即可。</p>
+<h2 id="修改系统DPI值"><a href="#修改系统DPI值" class="headerlink" title="修改系统DPI值"></a>修改系统DPI值</h2><p>修改DPI值目的是为了不改变屏幕大小的情况下，在屏幕内放下更多的内容。也就意味着：屏幕上显示的内容所占屏幕的比例会更小，说白话就是字和图片之类的会变小些。<br>有两种方法实现这个功能：</p>
+<ol>
+<li><p>执行命令：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su</div><div class="line">wm density &lt;dpi&gt;</div></pre></td></tr></table></figure>
+<p> 虽然重启手机后就能生效，但会导致一些App在显示一些图片时候出现大小不对 / 错位之类的问题。</p>
+</li>
+<li>修改文件 <code>/system/build.prop</code>。同样也有缺点：需要清空 ART Cache / Cache / Data 再进进入系统 才能避免<em>1</em>里面提到的问题。</li>
+</ol>
+<p>综上，为了尽可能完美的修改DPI值，我选择第二种方法。具体做法如下：</p>
+<ol>
+<li><p>用 <strong>Root Explorer</strong> 打开并编辑 <code>/system/build.prop</code>，在文件末尾加上下面这行文字：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">qemu.sf.lcd_density=&lt;dpi&gt;</div></pre></td></tr></table></figure>
+<p> 比如我写的是 <code>qemu.sf.lcd_density=440</code>，至于这个值多大，看个人喜好而定。<br> 可以用上面提到的执行命令的方式修改DPI，然后重启手机看下效果。如果觉得看着不错 就把数值写到 <code>build.prop</code> 里。</p>
+</li>
+<li>重启手机到 recovery，wipe <code>Dalvik / ART Cache</code> <code>Data</code> 和 <code>Cache</code>，然后重启手机即可。</li>
+</ol>
+<p><strong>注：如果无法在 Root Explorer 里修改的话 需要刷个包，请移步 <a href="#disable_dm-verity">这里</a>。</strong></p>
+<h2 id="Tips-amp-Tricks"><a href="#Tips-amp-Tricks" class="headerlink" title="Tips &amp; Tricks"></a>Tips &amp; Tricks</h2><ol>
+<li>长按电源键 8 秒将强制关机。</li>
+<li>xda论坛上也有说 长按电源键约 40 秒来强制关机。</li>
+<li>BootLoader 解锁后，开机时候可以在5秒钟内按音量键来进入 fastboot / recovery 之类的。</li>
+<li>双击电源键将打开照相机，按任意音量键拍照。</li>
+<li>屏幕截图：同时按下 Power+VolumeDown 一小会儿。</li>
+</ol>
+<h2 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h2><p>04 Jan 2017: 首次发布<br>14 Jan 2017:</p>
+<ol>
+<li>添加：禁用dm-verity的方法。</li>
+<li>添加：修改系统dpi值的办法。</li>
+<li>去除：准备工作里提到了adb却没有使用它，于是去掉有关adb的废话。</li>
+<li>添加：Tips &amp; Tricks: 第5条 屏幕截图</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://forum.xda-developers.com/oneplus-3t/how-to/p-oneplus-3t-resource-t3510236" target="_blank" rel="external">[W.I.P][INDEX]OnePlus 3T Resource - xda-developers</a></li>
+<li><a href="https://twrp.me/devices/oneplus3t.html" target="_blank" rel="external">TWRP Recovery for OnePlus 3T</a></li>
+<li><a href="https://forum.xda-developers.com/android/software-hacking/wip-selinux-capable-superuser-t3216394" target="_blank" rel="external">phh’s SuperUser / OpenSource SELinux-capable SuperUser - xda-developers</a></li>
+<li><a href="http://opengapps.org/" target="_blank" rel="external">Open GApps - opengapps.org</a></li>
+<li><a href="https://github.com/opengapps/opengapps" target="_blank" rel="external">Open GApps on GitHub</a></li>
+<li><a href="https://github.com/opengapps/opengapps/wiki/Package-Comparison" target="_blank" rel="external">Open Gapps Package Comparision</a></li>
+<li><a href="https://github.com/opengapps/opengapps/wiki/Micro-Package" target="_blank" rel="external">Open GApps Micro Package Description</a></li>
+<li><a href="https://github.com/opengapps/opengapps/wiki/FAQ\#user-content-10-i-receive-unfortunately-setup-wizard-has-stopped-working-after-installing-opengapps-on-android-60-or-higher-why" target="_blank" rel="external">Solution for “Unfortunately, setup wizard has stopped working” - Open GApps FAQ - Open GApps Wiki</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=cn.wq.myandroidtools" target="_blank" rel="external">My Android Tools on Google Play</a></li>
+<li><a href="https://apkpure.com/my-android-tools/cn.wq.myandroidtools" target="_blank" rel="external">My Android Tools on apkpure.com</a></li>
+<li><a href="https://source.android.com/security/verifiedboot/" target="_blank" rel="external">Verified Boot(dm-verity) - source.android.com</a></li>
+<li><a href="https://build.nethunter.com/android-tools/no-verity-opt-encrypt/" target="_blank" rel="external">no-verity-opt-encrypt zip download</a></li>
+<li><a href="https://forum.xda-developers.com/oneplus-3t/development/recovery-twrp-oneplus-3t-t3507308" target="_blank" rel="external">[Recovery] Official TWRP for the OnePlus 3T - xda-developers</a></li>
+<li><a href="https://forum.xda-developers.com/oneplus-3t/how-to/guide-how-to-install-xposed-oxygenos-3-t3510367" target="_blank" rel="external">[GUIDE] How to install Xposed on OxygenOS 3.5.3 w/TL;DR - xda-developers</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/OnePlus/" rel="tag"># OnePlus</a>
+          
+            <a href="/blog/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/blog/tags/BootLoader/" rel="tag"># BootLoader</a>
+          
+            <a href="/blog/tags/Xposed/" rel="tag"># Xposed</a>
+          
+            <a href="/blog/tags/TWRP-Recovery/" rel="tag"># TWRP Recovery</a>
+          
+            <a href="/blog/tags/OpenGApps/" rel="tag"># OpenGApps</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/" rel="next" title="v2ray - 比 Shadowsocks 更强大更复杂的替代品">
+                <i class="fa fa-chevron-left"></i> v2ray - 比 Shadowsocks 更强大更复杂的替代品
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
+               alt="oing9179" />
+          <p class="site-author-name" itemprop="name">oing9179</p>
+          <p class="site-description motion-element" itemprop="description">This is description.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/oing9179" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/oing9179" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机"><span class="nav-number">3.</span> <span class="nav-text">开机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解锁-BootLoader"><span class="nav-number">4.</span> <span class="nav-text">解锁 BootLoader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-TWRP-phh’s-Superuser-Google-全家桶-OpenGApps"><span class="nav-number">5.</span> <span class="nav-text">安装 TWRP / phh’s Superuser / Google 全家桶(OpenGApps)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作-1"><span class="nav-number">5.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-TWRP"><span class="nav-number">5.2.</span> <span class="nav-text">安装 TWRP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卡刷-phh’s-Superuser-Google-全家桶-OpenGApps"><span class="nav-number">5.3.</span> <span class="nav-text">卡刷 phh’s Superuser / Google 全家桶(OpenGApps)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-phh’s-Superuser-管理软件"><span class="nav-number">5.4.</span> <span class="nav-text">安装 phh’s Superuser 管理软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-Google-全家桶-OpenGApps"><span class="nav-number">5.5.</span> <span class="nav-text">配置 Google 全家桶(OpenGApps)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Xposed"><span class="nav-number">6.</span> <span class="nav-text">安装 Xposed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#禁用-dm-verity"><span class="nav-number">7.</span> <span class="nav-text">禁用 dm-verity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改系统DPI值"><span class="nav-number">8.</span> <span class="nav-text">修改系统DPI值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips-amp-Tricks"><span class="nav-number">9.</span> <span class="nav-text">Tips & Tricks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新历史"><span class="nav-number">10.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">11.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oing9179</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'oing9179';
+      var disqus_identifier = '2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/';
+
+      var disqus_title = "OnePlus 3T 从解锁 BootLoader 到 Xposed";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
