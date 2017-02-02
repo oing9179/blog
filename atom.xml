@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>oing9179 的记事本儿</title>
+  <title>oing9179 的笔记本儿</title>
   <subtitle>This is subtitle.</subtitle>
   <link href="/blog/atom.xml" rel="self"/>
   
@@ -269,7 +269,7 @@
     <link href="https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/"/>
     <id>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</id>
     <published>2016-11-26T09:25:00.000Z</published>
-    <updated>2017-02-02T09:55:13.400Z</updated>
+    <updated>2017-01-16T16:00:00.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://avatars0.githubusercontent.com/u/14110142?v=3&amp;s=400" alt="V2ray icon"></p>
 <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>为了穿越防火墙，瓷国程序员可谓是想尽办法。</p>

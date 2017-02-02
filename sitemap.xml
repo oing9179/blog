@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://oing9179.github.io/about/index.html</loc>
+    
+    <lastmod>2017-02-02T12:35:29.253Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/</loc>
     
     <lastmod>2017-02-02T10:05:17.042Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://oing9179.github.io/blog/2016/07/Install-Typecho-on-OpenShift/</loc>
     
     <lastmod>2017-02-02T09:57:44.080Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</loc>
-    
-    <lastmod>2017-02-02T09:55:13.400Z</lastmod>
     
   </url>
   
@@ -51,13 +51,6 @@
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/about/index.html</loc>
-    
-    <lastmod>2017-02-02T07:17:33.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://oing9179.github.io/categories/index.html</loc>
     
     <lastmod>2017-02-02T07:14:32.000Z</lastmod>
@@ -68,6 +61,13 @@
     <loc>https://oing9179.github.io/tags/index.html</loc>
     
     <lastmod>2017-02-02T07:14:26.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</loc>
+    
+    <lastmod>2017-01-16T16:00:00.000Z</lastmod>
     
   </url>
   
