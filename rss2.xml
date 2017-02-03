@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>oing9179 的笔记本儿</title>
+    <link>https://oing9179.github.io/</link>
+    <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description>Develop with pleasure!</description>
+    <pubDate>Thu, 02 Feb 2017 09:55:05 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>OnePlus 3T 从解锁 BootLoader 到 Xposed</title>
+      <link>https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</link>
+      <guid>https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</guid>
+      <pubDate>Wed, 04 Jan 2017 11:53:00 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h2&gt;&lt;p&gt;原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;解锁 BootLoader&lt;/li&gt;
+&lt;li&gt;安装 TWRP(Team Win Recovery Project) Recovery&lt;/li&gt;
+&lt;li&gt;卡刷 phh’s Superuser&lt;/li&gt;
+&lt;li&gt;卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶)&lt;/li&gt;
+&lt;li&gt;卡刷 Xposed&lt;/li&gt;
+&lt;/ul&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>v2ray - 比 Shadowsocks 更强大更复杂的替代品</title>
+      <link>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</link>
+      <guid>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</guid>
+      <pubDate>Sat, 26 Nov 2016 09:25:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;img src=&quot;https://avatars0.githubusercontent.com/u/14110142?v=3&amp;amp;s=400&quot; alt=&quot;V2ray icon&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;为了穿越防火墙，瓷国程序员可谓是想尽办法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;VPN：带有非常明显的特征：IP上层的通信协议全是密文。&lt;/li&gt;
+&lt;li&gt;Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。&lt;/p&gt;
+&lt;p&gt;但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。&lt;/p&gt;
+&lt;p&gt;然后有个人写了个纯算法的通信协议叫 &lt;a href=&quot;https://github.com/skywind3000/kcp&quot;&gt;KCP&lt;/a&gt;，然后又有个人用这个协议写了个软件叫 &lt;a href=&quot;https://github.com/v2ray/v2ray-core/&quot;&gt;v2ray&lt;/a&gt;。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。&lt;/li&gt;
+&lt;li&gt;更小的协议头部以躲避特征检查。&lt;/li&gt;
+&lt;li&gt;在协议数据流前面增加伪装，比如伪装成BT下载。&lt;/li&gt;
+&lt;/ol&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>使用 bind9 配合 dnscrypt-proxy 搭建自己的无污染的DNS服务器</title>
+      <link>https://oing9179.github.io/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</link>
+      <guid>https://oing9179.github.io/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</guid>
+      <pubDate>Fri, 02 Sep 2016 09:23:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;img src=&quot;https://dnscrypt.org/dnscrypt.png&quot; alt=&quot;DNSCrypt&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;因为众所周知的原因，&lt;a href=&quot;https://zh.wikipedia.org/zh-cn/%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%93%E5%AD%98%E6%B1%A1%E6%9F%93&quot; title=&quot;DNS缓存投毒 - Wikipedia&quot;&gt;DNS缓存投毒&lt;/a&gt;(aka: &lt;a href=&quot;https://en.wikipedia.org/wiki/DNS_spoofing&quot; title=&quot;DNS Spoofing - Wikipedia&quot;&gt;DNS Spoofing&lt;/a&gt;) 的出现是因为DNS查询通信协议的设计缺陷导致的，因为DNS查询协议的设计者当时并没有预料到现在的网络环境这么糟糕。利用这个缺陷可以实现一些特技，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用浏览器打开Google然后跳转到了Baidu.&lt;/li&gt;
+&lt;li&gt;ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告.&lt;/li&gt;
+&lt;li&gt;这里没能列举出的一些特技.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 &lt;a href=&quot;https://dnscrypt.org&quot; title=&quot;DNSCrypt homepage&quot;&gt;dnscrypt&lt;/a&gt;(&lt;a href=&quot;https://github.com/jedisct1/dnscrypt-proxy&quot; title=&quot;dnscrypt-proxy on GitHub&quot;&gt;GitHub项目主页&lt;/a&gt;)，相比传统的DNS查询有如下优点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;与DNS服务器通信过程中使用SSL加密.&lt;/li&gt;
+&lt;li&gt;可以强制使用TCP，避免因UDP丢包而浪费时间.&lt;/li&gt;
+&lt;li&gt;有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站.&lt;/li&gt;
+&lt;li&gt;有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果.&lt;/li&gt;
+&lt;/ul&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Tails - 注重隐私的Linux发行版 试用</title>
+      <link>https://oing9179.github.io/2016/08/Tails-Linux-Tryout/</link>
+      <guid>https://oing9179.github.io/2016/08/Tails-Linux-Tryout/</guid>
+      <pubDate>Sun, 21 Aug 2016 13:10:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/9/99/Tails-logo-flat-inverted.svg&quot;/&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前几天我浏览网页时候突然想到一件事：有没有什么办法让整个系统都通过洋葱代理，这样的话 在这个系统里不管做什么都是匿名的，而不再限于洋葱浏览器。&lt;br&gt;Google “anonymous linux system” 第一条就给出了 &lt;a href=&quot;https://tails.boum.org&quot;&gt;Tails&lt;/a&gt; 这款Linux发行版，基于Debian sid(Still in develop)。这款Linux发行版的特点是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;匿名的上网：强制所有网络连接从洋葱出去。&lt;/li&gt;
+&lt;li&gt;使用这个系统的电脑上不会留下任何踪迹，除非你非要留下。&lt;blockquote&gt;
+&lt;p&gt;不过官方文档标注了一下：虽然关机/重启时候会把内存擦一遍，但因为技术原因 没能把显存也擦一遍。不过开发团队正着手于这件事。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;自带最先进的加密工具，用来加密文件、邮件和即时通信。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;简单介绍了一下，下面开始下载并试用它。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2016/08/Tails-Linux-Tryout/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解</title>
+      <link>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</link>
+      <guid>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</guid>
+      <pubDate>Mon, 08 Aug 2016 05:29:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg&quot;/&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 &lt;code&gt;MarkdownPad&lt;/code&gt; 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 &lt;a href=&quot;https://plugins.jetbrains.com/plugin/7896?pr=idea&quot;&gt;Markdown Navigator(原名为 Multi Markdown)&lt;/a&gt;，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Mybatis Plus for IntelliJ IDEA 破解</title>
+      <link>https://oing9179.github.io/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/</link>
+      <guid>https://oing9179.github.io/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/</guid>
+      <pubDate>Wed, 20 Jul 2016 11:25:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;img src=&quot;http://mybatis.github.io/images/mybatis-logo.png&quot; /&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前天发现了个不错的插件，叫 &lt;a href=&quot;https://www.codesmagic.com/mybatis&quot;&gt;Mybatis Plus&lt;/a&gt;，是一个 IntelliJ IDEA 插件，用于协助编写使用MyBatis的程序。&lt;br&gt;插件官网上还给出了使用插件的 &lt;a href=&quot;https://www.youtube.com/watch?v=jLisFKsU52A&amp;amp;list=PLAswK8OvyF9fOyW1iXIuwxgt4FEJHR4B9&quot;&gt;效果视频&lt;/a&gt;，感觉这插件能大大提升开发效率，于是安装它打算试试。&lt;br&gt;不料，安装后发现插件不允许试用，只能先购买后使用。于是我查了一些资料，试着自己处理掉DRM。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
+    </item>
+    
+  </channel>
+</rss>
