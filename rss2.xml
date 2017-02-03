@@ -8,8 +8,30 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 02 Feb 2017 09:55:05 GMT</pubDate>
+    <pubDate>Fri, 03 Feb 2017 13:12:32 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>在 github.io 上用 Hexo 搭建博客</title>
+      <link>https://oing9179.github.io/2017/02/Setup-Hexo-on-github-io/</link>
+      <guid>https://oing9179.github.io/2017/02/Setup-Hexo-on-github-io/</guid>
+      <pubDate>Fri, 03 Feb 2017 02:35:52 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;&lt;img alt=&quot;Hexo Logo&quot; src=&quot;https://hexo.io/logo.svg&quot; style=&quot;max-width: 160px;&quot;/&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; 上，因此也带来了一些便利：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;备份博客只需要把 Markdown 文件连同对应的文件夹打包即可&lt;/li&gt;
+&lt;li&gt;自带的域名也更有逼格了：&lt;code&gt;https://oing9179.github.io&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Hexo 社区活跃，出了问题基本都有现成的解决方法&lt;/li&gt;
+&lt;li&gt;猫爪搜索引擎不收录 &lt;code&gt;github.io&lt;/code&gt; 域名，借此来提高访客的门槛&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面开始介绍博客的迁移过程。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/2017/02/Setup-Hexo-on-github-io/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>OnePlus 3T 从解锁 BootLoader 到 Xposed</title>
@@ -123,21 +145,6 @@
       </description>
       
       <comments>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Mybatis Plus for IntelliJ IDEA 破解</title>
-      <link>https://oing9179.github.io/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/</link>
-      <guid>https://oing9179.github.io/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/</guid>
-      <pubDate>Wed, 20 Jul 2016 11:25:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;img src=&quot;http://mybatis.github.io/images/mybatis-logo.png&quot; /&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前天发现了个不错的插件，叫 &lt;a href=&quot;https://www.codesmagic.com/mybatis&quot;&gt;Mybatis Plus&lt;/a&gt;，是一个 IntelliJ IDEA 插件，用于协助编写使用MyBatis的程序。&lt;br&gt;插件官网上还给出了使用插件的 &lt;a href=&quot;https://www.youtube.com/watch?v=jLisFKsU52A&amp;amp;list=PLAswK8OvyF9fOyW1iXIuwxgt4FEJHR4B9&quot;&gt;效果视频&lt;/a&gt;，感觉这插件能大大提升开发效率，于是安装它打算试试。&lt;br&gt;不料，安装后发现插件不允许试用，只能先购买后使用。于是我查了一些资料，试着自己处理掉DRM。&lt;/p&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
     </item>
     
   </channel>
