@@ -4,17 +4,17 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>oing9179 的笔记本儿</title>
-    <link>https://oing9179.github.io/</link>
+    <link>https://oing9179.github.io/blog/</link>
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Fri, 03 Feb 2017 13:12:32 GMT</pubDate>
+    <pubDate>Sat, 04 Feb 2017 10:53:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>在 github.io 上用 Hexo 搭建博客</title>
-      <link>https://oing9179.github.io/2017/02/Setup-Hexo-on-github-io/</link>
-      <guid>https://oing9179.github.io/2017/02/Setup-Hexo-on-github-io/</guid>
+      <link>https://oing9179.github.io/blog/2017/02/Setup-Hexo-on-github-io/</link>
+      <guid>https://oing9179.github.io/blog/2017/02/Setup-Hexo-on-github-io/</guid>
       <pubDate>Fri, 03 Feb 2017 02:35:52 GMT</pubDate>
       <description>
       
@@ -30,13 +30,13 @@
       
       </description>
       
-      <comments>https://oing9179.github.io/2017/02/Setup-Hexo-on-github-io/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2017/02/Setup-Hexo-on-github-io/#disqus_thread</comments>
     </item>
     
     <item>
       <title>OnePlus 3T 从解锁 BootLoader 到 Xposed</title>
-      <link>https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</link>
-      <guid>https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</guid>
+      <link>https://oing9179.github.io/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</link>
+      <guid>https://oing9179.github.io/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</guid>
       <pubDate>Wed, 04 Jan 2017 11:53:00 GMT</pubDate>
       <description>
       
@@ -51,13 +51,13 @@
       
       </description>
       
-      <comments>https://oing9179.github.io/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/#disqus_thread</comments>
     </item>
     
     <item>
       <title>v2ray - 比 Shadowsocks 更强大更复杂的替代品</title>
-      <link>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</link>
-      <guid>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</guid>
+      <link>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</link>
+      <guid>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</guid>
       <pubDate>Sat, 26 Nov 2016 09:25:00 GMT</pubDate>
       <description>
       
@@ -78,13 +78,13 @@
       
       </description>
       
-      <comments>https://oing9179.github.io/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/#disqus_thread</comments>
     </item>
     
     <item>
       <title>使用 bind9 配合 dnscrypt-proxy 搭建自己的无污染的DNS服务器</title>
-      <link>https://oing9179.github.io/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</link>
-      <guid>https://oing9179.github.io/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</guid>
+      <link>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</link>
+      <guid>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</guid>
       <pubDate>Fri, 02 Sep 2016 09:23:00 GMT</pubDate>
       <description>
       
@@ -105,13 +105,13 @@
       
       </description>
       
-      <comments>https://oing9179.github.io/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/#disqus_thread</comments>
     </item>
     
     <item>
       <title>Tails - 注重隐私的Linux发行版 试用</title>
-      <link>https://oing9179.github.io/2016/08/Tails-Linux-Tryout/</link>
-      <guid>https://oing9179.github.io/2016/08/Tails-Linux-Tryout/</guid>
+      <link>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/</link>
+      <guid>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/</guid>
       <pubDate>Sun, 21 Aug 2016 13:10:00 GMT</pubDate>
       <description>
       
@@ -129,13 +129,13 @@
       
       </description>
       
-      <comments>https://oing9179.github.io/2016/08/Tails-Linux-Tryout/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/#disqus_thread</comments>
     </item>
     
     <item>
       <title>Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解</title>
-      <link>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</link>
-      <guid>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</guid>
+      <link>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</link>
+      <guid>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</guid>
       <pubDate>Mon, 08 Aug 2016 05:29:00 GMT</pubDate>
       <description>
       
@@ -144,7 +144,7 @@
       
       </description>
       
-      <comments>https://oing9179.github.io/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
     </item>
     
   </channel>
