@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Sat, 04 Feb 2017 10:53:00 GMT</pubDate>
+    <pubDate>Fri, 10 Feb 2017 13:19:19 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Music Producer</title>
+      <link>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/</link>
+      <guid>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/</guid>
+      <pubDate>Fri, 10 Feb 2017 11:45:32 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;步入音乐坑&quot;&gt;&lt;a href=&quot;#步入音乐坑&quot; class=&quot;headerlink&quot; title=&quot;步入音乐坑&quot;&gt;&lt;/a&gt;步入音乐坑&lt;/h2&gt;&lt;p&gt;一直以来，相比我周围接触过的人，我一直以为他们唱歌音调不准是因为没学过音乐。后来我去做了一些音乐天赋测试才发现，是我
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>在 github.io 上用 Hexo 搭建博客</title>
@@ -130,21 +144,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解</title>
-      <link>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</link>
-      <guid>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</guid>
-      <pubDate>Mon, 08 Aug 2016 05:29:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg&quot;/&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 &lt;code&gt;MarkdownPad&lt;/code&gt; 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 &lt;a href=&quot;https://plugins.jetbrains.com/plugin/7896?pr=idea&quot;&gt;Markdown Navigator(原名为 Multi Markdown)&lt;/a&gt;，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。&lt;/p&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/#disqus_thread</comments>
     </item>
     
   </channel>
