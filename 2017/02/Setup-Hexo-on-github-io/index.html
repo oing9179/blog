@@ -103,7 +103,7 @@ Hexo 社区活跃">
 自带的域名也更有逼格了：https://oing9179.github.io
 Hexo 社区活跃">
 <meta property="og:image" content="https://hexo.io/logo.svg">
-<meta property="og:updated_time" content="2017-02-04T10:53:00.000Z">
+<meta property="og:updated_time" content="2017-02-11T23:50:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 github.io 上用 Hexo 搭建博客">
 <meta name="twitter:description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
@@ -410,7 +410,9 @@ Hexo 社区活跃">
 <p>有以下几点注意事项：</p>
 <ol>
 <li><code>npm install</code> 的时候提示输入密码的话就输入。</li>
-<li>因为众所周知的原因，npm 的下载速度很慢，可以安装并使用 <code>cnpm</code>，或者为其设置 HTTP 代理： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm config set proxy http://127.0.0.1:8080</div><div class="line">npm config set https-proxy http://127.0.0.1:8080</div></pre></td></tr></table></figure>
+<li><p>因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm config set proxy http://127.0.0.1:8080</div><div class="line">npm config set https-proxy http://127.0.0.1:8080</div></pre></td></tr></table></figure>
+<p> 或者使用 taobao 的 npm 镜像，请移步 <a href="https://npm.taobao.org/" target="_blank" rel="external">Taobao npm Mirror</a>.</p>
 </li>
 </ol>
 <h2 id="配置-Hexo"><a href="#配置-Hexo" class="headerlink" title="配置 Hexo"></a>配置 Hexo</h2><p>参考如下命令</p>
@@ -538,6 +540,13 @@ Hexo 社区活跃">
 <ol>
 <li>添加：修复博客放在子目录时 hexo 生成错误的永久链接</li>
 </ol>
+<p>12 Feb 2017:</p>
+<ol>
+<li>删除：”可以安装并使用 cnpm”。原因是 jxpxxzj 提到：<blockquote>
+<p>cnpm 的那种安装方式会导致 electron-packager 几乎无法工作，因此强烈不推荐 cnpm。<br>建议先安装 nrm (Npm Registry Manager) 然后再 <code>nrm use taobao</code>。</p>
+</blockquote>
+</li>
+</ol>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li><a href="https://hexo.io" target="_blank" rel="external">hexo.io</a></li>
 <li><a href="https://jjasonclark.com/how-to-setup-node-behind-web-proxy/" target="_blank" rel="external">npm behind HTTP proxy</a></li>
@@ -548,6 +557,7 @@ Hexo 社区活跃">
 <li><a href="https://github.com/BLumia/Typecho2Hexo-Helper" target="_blank" rel="external">BLumia / Typecho2Hexo-Helper</a></li>
 <li><a href="https://github.com/hexojs/hexo/issues/1812" target="_blank" rel="external">share link wrong with sub path #1812 - GitHub Issue</a></li>
 <li><a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95" target="_blank" rel="external">Fix the wrong share link when the site is in subdirectory - GitHub commit</a></li>
+<li><a href="https://npm.taobao.org/" target="_blank" rel="external">Taobao npm Mirror</a></li>
 </ol>
 
       
