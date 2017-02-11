@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #222404;
+  background: #45ff73;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2758,4 +2758,10 @@ span.logo-line-after {
 }
 figure.highlight {
   padding: 0 !important;
+}
+@media (max-width: 767px) {
+  .sidebar-toggle,
+  .sidebar {
+    display: block !important;
+  }
 }
