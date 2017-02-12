@@ -103,7 +103,7 @@ Hexo 社区活跃">
 自带的域名也更有逼格了：https://oing9179.github.io
 Hexo 社区活跃">
 <meta property="og:image" content="https://hexo.io/logo.svg">
-<meta property="og:updated_time" content="2017-02-11T23:50:00.000Z">
+<meta property="og:updated_time" content="2017-02-12T01:55:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 github.io 上用 Hexo 搭建博客">
 <meta name="twitter:description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
@@ -400,7 +400,7 @@ Hexo 社区活跃">
 <li>备份博客只需要把 Markdown 文件连同对应的文件夹打包即可</li>
 <li>自带的域名也更有逼格了：<code>https://oing9179.github.io</code></li>
 <li>Hexo 社区活跃，出了问题基本都有现成的解决方法</li>
-<li>猫爪搜索引擎不收录 <code>github.io</code> 域名，借此来提高访客的门槛</li>
+<li>github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛</li>
 </ul>
 <p>下面开始介绍博客的迁移过程。</p>
 <a id="more"></a>
@@ -418,9 +418,7 @@ Hexo 社区活跃">
 <h2 id="配置-Hexo"><a href="#配置-Hexo" class="headerlink" title="配置 Hexo"></a>配置 Hexo</h2><p>参考如下命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 创建一个静态网站名为 blog</div><div class="line">hexo init blog</div><div class="line">cd ./blog/</div><div class="line"># 安装 RSS 和 SiteMap 插件，RSS 为了方便读者 SiteMap 为了方便搜索引擎爬虫。</div><div class="line">npm install hexo-generator-feed hexo-generator-sitemap --save</div></pre></td></tr></table></figure>
 <p>编辑 <code>_config.yml</code>，在文件末尾加入下面的代码：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># SiteMap configuration</span></div><div class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-sitemap</span></div><div class="line"><span class="attr">sitemap:</span></div><div class="line"><span class="attr">  path:</span> sitemap.xml</div><div class="line"><span class="attr">  template:</span> sitemap_template.xml</div><div class="line"></div><div class="line"><span class="comment"># RSS configuration</span></div><div class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-feed</span></div><div class="line"><span class="attr">feed:</span></div><div class="line"><span class="attr">  type:</span> rss2</div><div class="line"><span class="attr">  path:</span> rss2.xml</div><div class="line">  <span class="comment"># RSS里最多包含几篇文章</span></div><div class="line"><span class="attr">  limit:</span> <span class="number">6</span></div><div class="line"><span class="attr">  hub:</span></div><div class="line">  <span class="comment"># 是否把文章全部内容也包含进去</span></div><div class="line"><span class="attr">  content:</span> <span class="literal">false</span></div></pre></td></tr></table></figure>
-<p>创建文件 <code>sitemap_template.xml</code> 并置入如下内容：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">urlset</span> <span class="attr">xmlns</span>=<span class="string">"http://www.sitemaps.org/schemas/sitemap/0.9"</span>&gt;</span></div><div class="line">  &#123;% for post in posts %&#125;</div><div class="line">  <span class="tag">&lt;<span class="name">url</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">loc</span>&gt;</span>&#123;&#123; post.permalink | uriencode &#125;&#125;<span class="tag">&lt;/<span class="name">loc</span>&gt;</span></div><div class="line">    &#123;% if post.updated %&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">lastmod</span>&gt;</span>&#123;&#123; post.updated.toISOString() &#125;&#125;<span class="tag">&lt;/<span class="name">lastmod</span>&gt;</span></div><div class="line">    &#123;% elif post.date %&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">lastmod</span>&gt;</span>&#123;&#123; post.date.toISOString() &#125;&#125;<span class="tag">&lt;/<span class="name">lastmod</span>&gt;</span></div><div class="line">    &#123;% endif %&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">url</span>&gt;</span></div><div class="line">  &#123;% endfor %&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">urlset</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># SiteMap configuration</span></div><div class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-sitemap</span></div><div class="line"><span class="attr">sitemap:</span></div><div class="line">  <span class="comment"># 想配置 sitemap.xml 的模板，请移步到 ./node_modules/hexo-generator-sitemap/sitemap.xml</span></div><div class="line"><span class="attr">  path:</span> sitemap.xml</div><div class="line"></div><div class="line"><span class="comment"># RSS configuration</span></div><div class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-feed</span></div><div class="line"><span class="attr">feed:</span></div><div class="line"><span class="attr">  type:</span> rss2</div><div class="line"><span class="attr">  path:</span> rss2.xml</div><div class="line">  <span class="comment"># RSS里最多包含几篇文章</span></div><div class="line"><span class="attr">  limit:</span> <span class="number">6</span></div><div class="line"><span class="attr">  hub:</span></div><div class="line">  <span class="comment"># 是否把文章全部内容也包含进去</span></div><div class="line"><span class="attr">  content:</span> <span class="literal">false</span></div></pre></td></tr></table></figure>
 <p>然后参照 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="external">Hexo configuration</a> 来配置 <code>_config.yml</code>。<br>需要注意的是：因为我要把博客放在 <code>/blog/</code> 目录下，所以要修改 <code>_config.yml</code>：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找到 root 项并修改为 /blog/</span></div><div class="line"><span class="attr">root:</span> /blog/</div></pre></td></tr></table></figure>
 <p>最后在 blog 目录下执行 <code>hexo server --debug</code>，然后打开浏览器访问终端里显示的 URL 来预览网站。</p>
@@ -469,7 +467,7 @@ Hexo 社区活跃">
 <li><p>编辑 <code>./languages/&lt;语言&gt;.yml</code>，我给博客设置的语言是英文 所以我应该编辑 <code>en.yml</code></p>
  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找到 menu 项目</span></div><div class="line"><span class="attr">menu:</span></div><div class="line">  <span class="comment"># 直接在最后添加一行即可，格式：&lt;变量名&gt;: &lt;要显示出来的文字&gt;</span></div><div class="line"><span class="attr">  links:</span> Links</div></pre></td></tr></table></figure>
 </li>
-<li><p>重建 Hexo 缓存，然后 <code>hexo server --debug</code> 并打开网页浏览器查看效果</p>
+<li><p>运行 <code>hexo clean</code> 清空 Hexo 缓存，然后运行 <code>hexo server --debug</code> ，然后打开网页浏览器查看效果</p>
 </li>
 </ol>
 <h2 id="配置-Disqus"><a href="#配置-Disqus" class="headerlink" title="配置 Disqus"></a>配置 Disqus</h2><p>首先到 <a href="https://disqus.com/" target="_blank" rel="external">Disqus</a> 注册一个帐号，然后按照向导（非常简单）创建一个 Site，把 Site 的 Shortname 找出来备用。<br>NexT 主题下只需要非常简单的配置就可以启用 Disqus。</p>
@@ -480,7 +478,7 @@ Hexo 社区活跃">
 <blockquote>
 <p>BLumia 用 PHP 写了段脚本在 <a href="https://github.com/BLumia/Typecho2Hexo-Helper" target="_blank" rel="external">BLumia / Typecho2Hexo-Helper</a>，可以把 Typecho 的博客内容导出来，</p>
 </blockquote>
-<h1 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h1><p>因为我想把博客放在 <code>/blog/</code> 目录下而不是网站的根目录下，为此 我需要创建两个 Repository：一个用来放博客本体，另一个用来把浏览器从 <code>/</code> 重定向到 <code>/blog/</code>。</p>
+<h1 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h1><p>因为我想把博客放在 <code>/blog/</code> 目录下而不是网站的根目录下，为此 我需要创建两个 Repository：一个 <code>blog</code> 仓库 用来放博客本体，一个 <code>&lt;用户名&gt;.github.io</code> 仓库 用来把浏览器从 <code>/</code> 重定向到 <code>/blog/</code>。</p>
 <h2 id="创建-配置-blog-仓库"><a href="#创建-配置-blog-仓库" class="headerlink" title="创建 / 配置 blog 仓库"></a>创建 / 配置 <code>blog</code> 仓库</h2><ol>
 <li>切换到 <code>blog</code> 目录下</li>
 <li><p>使用 hexo 生成静态站点</p>
@@ -502,7 +500,7 @@ Hexo 社区活跃">
 <li><p>在 GitHub 上 <a href="https://github.com/new" target="_blank" rel="external">创建一个新的 Repository</a>，repository 名称随意，本文以 <code>blog</code> 作为 repository 名称</p>
 </li>
 <li><p>为本地仓库添加远程仓库，并 push 到远程仓库</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/oing9179/blog.git</div><div class="line">git push</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/&lt;用户名&gt;/blog.git</div><div class="line">git push</div></pre></td></tr></table></figure>
 <p> 提示输入用户名和密码的话，就输入。</p>
 </li>
 <li>用网页浏览器访问 <code>https://&lt;用户名&gt;.github.io/blog/</code> 来查看效果</li>
@@ -510,7 +508,7 @@ Hexo 社区活跃">
 <h2 id="创建-配置-oing9179-github-io-仓库"><a href="#创建-配置-oing9179-github-io-仓库" class="headerlink" title="创建 / 配置 oing9179.github.io 仓库"></a>创建 / 配置 <code>oing9179.github.io</code> 仓库</h2><ol>
 <li>切换到任意 <strong>不是</strong> blog 的目录下</li>
 <li><p>创建 <code>&lt;用户名&gt;.github.io</code>，这里以 <code>oing9179.github.io</code> 为例</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init &quot;oing9179.github.io&quot;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git init &quot;oing9179.github.io&quot;</div><div class="line">cd ./oing9179.github.io/</div></pre></td></tr></table></figure>
 </li>
 <li><p>创建两个文件，一个是 <code>index.html</code> 文件内容如下，另一个是 <code>.nojekyll</code> 来禁用 GitHub Pages 的 Jekyll 功能</p>
  <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Redirecting...<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 下面这行告诉浏览器 将页面重定向到 /blog/ 目录下 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"refresh"</span> <span class="attr">content</span>=<span class="string">"0;URL='/blog/'"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">Redirecting you to <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/blog/"</span>&gt;</span>/blog/<span class="tag">&lt;/<span class="name">a</span>&gt;</span>...</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -518,10 +516,10 @@ Hexo 社区活跃">
 <li><p>然后执行命令来提交更改到本地仓库</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add --all</div><div class="line">git commit -m &quot;Initial commit.&quot;</div></pre></td></tr></table></figure>
 </li>
-<li><p>在 GitHub 创建一个名为 <code>&lt;用户名&gt;.github.io</code> 的仓库，然后给本地仓库添加远程仓库，然后 push</p>
+<li><p>在 GitHub 创建一个名为 <code>oing9179.github.io</code> 的仓库，然后给本地仓库添加远程仓库，然后 push</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/oing9179/oing9179.github.io.git</div><div class="line">git push</div></pre></td></tr></table></figure>
 </li>
-<li><p>用网页浏览器访问 <code>https://&lt;用户名&gt;.github.io</code>，浏览器应该会自动重定向到 <code>/blog/</code> 页面</p>
+<li><p>用网页浏览器访问 <code>https://oing9179.github.io</code>，浏览器应该会自动重定向到 <code>/blog/</code> 页面</p>
 </li>
 </ol>
 <h1 id="修复博客放在子目录时-hexo-生成错误的永久链接"><a href="#修复博客放在子目录时-hexo-生成错误的永久链接" class="headerlink" title="修复博客放在子目录时 hexo 生成错误的永久链接"></a>修复博客放在子目录时 hexo 生成错误的永久链接</h1><p>我将博客部署到 github.io 上后，把 sitemap.xml 提交到了 Google Search Console。然而 Google 告诉我 我的 sitemap.xml 里部分链接 404，于是发现了下面这个 bug：</p>
@@ -546,6 +544,9 @@ Hexo 社区活跃">
 <p>cnpm 的那种安装方式会导致 electron-packager 几乎无法工作，因此强烈不推荐 cnpm。<br>建议先安装 nrm (Npm Registry Manager) 然后再 <code>nrm use taobao</code>。</p>
 </blockquote>
 </li>
+<li>修改：删除 <code>sitemap_template.xml</code> 及其相关内容，并改用 <code>./node_modules/hexo-generator-sitemap/sitemap.xml</code> 来修改 sitemap 的模板</li>
+<li>添加：清空 Hexo 缓存的命令行</li>
+<li>小修小改</li>
 </ol>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li><a href="https://hexo.io" target="_blank" rel="external">hexo.io</a></li>

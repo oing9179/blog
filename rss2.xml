@@ -38,7 +38,7 @@
 &lt;li&gt;备份博客只需要把 Markdown 文件连同对应的文件夹打包即可&lt;/li&gt;
 &lt;li&gt;自带的域名也更有逼格了：&lt;code&gt;https://oing9179.github.io&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Hexo 社区活跃，出了问题基本都有现成的解决方法&lt;/li&gt;
-&lt;li&gt;猫爪搜索引擎不收录 &lt;code&gt;github.io&lt;/code&gt; 域名，借此来提高访客的门槛&lt;/li&gt;
+&lt;li&gt;github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;下面开始介绍博客的迁移过程。&lt;/p&gt;
       
