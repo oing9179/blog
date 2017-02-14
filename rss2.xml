@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Fri, 10 Feb 2017 13:35:48 GMT</pubDate>
+    <pubDate>Tue, 14 Feb 2017 09:50:58 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>修复 Linux 英文语境下 Chrome 内中文字体问题</title>
+      <link>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/</link>
+      <guid>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/</guid>
+      <pubDate>Tue, 14 Feb 2017 08:27:21 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h2&gt;&lt;p&gt;刚开始用 Linux Mint 的时候 系统语言是设置成中文的，带来的问题就是 想在 tty 里输入中文简直吃屎，甚至连中文都无法显示出来，我要是再装个什么软件包来解决这个问题 没准又要把我装好的系统搞坏掉。&lt;br&gt;于是我干脆在安装系统时候直接把语言设置为英文（en_US）。然后问题又来了，KDE Dolphin 里显示中文文件名的时候，那文字东倒西歪的 有些字甚至还在用不知道什么时候的旧写法。其实这个还好，麻烦更多的还是在浏览器这里。
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>学音乐比编程更需要耐心</title>
@@ -120,30 +134,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Tails - 注重隐私的Linux发行版 试用</title>
-      <link>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/</link>
-      <guid>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/</guid>
-      <pubDate>Sun, 21 Aug 2016 13:10:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/9/99/Tails-logo-flat-inverted.svg&quot;/&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前几天我浏览网页时候突然想到一件事：有没有什么办法让整个系统都通过洋葱代理，这样的话 在这个系统里不管做什么都是匿名的，而不再限于洋葱浏览器。&lt;br&gt;Google “anonymous linux system” 第一条就给出了 &lt;a href=&quot;https://tails.boum.org&quot;&gt;Tails&lt;/a&gt; 这款Linux发行版，基于Debian sid(Still in develop)。这款Linux发行版的特点是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;匿名的上网：强制所有网络连接从洋葱出去。&lt;/li&gt;
-&lt;li&gt;使用这个系统的电脑上不会留下任何踪迹，除非你非要留下。&lt;blockquote&gt;
-&lt;p&gt;不过官方文档标注了一下：虽然关机/重启时候会把内存擦一遍，但因为技术原因 没能把显存也擦一遍。不过开发团队正着手于这件事。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;自带最先进的加密工具，用来加密文件、邮件和即时通信。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;简单介绍了一下，下面开始下载并试用它。&lt;/p&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/#disqus_thread</comments>
     </item>
     
   </channel>
