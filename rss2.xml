@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Wed, 22 Feb 2017 09:03:09 GMT</pubDate>
+    <pubDate>Wed, 22 Feb 2017 13:11:05 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Present - 英语语法</title>
+      <link>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/</link>
+      <guid>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/</guid>
+      <pubDate>Wed, 22 Feb 2017 13:09:12 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h2&gt;&lt;p&gt;在正文开始前先废话几句。&lt;br&gt;以前翻译 &lt;a href=&quot;https://en.wikipedia.org/wiki/MythBusters&quot;&gt;流言终结者(MythBusters)&lt;/a&gt; 的时候，当时的英语水平基本上就是 IELTS 1分的样子。翻译了6集后，不管是词汇量还是语感各方面大幅提升。直到近些日子，总感觉好像碰到了什么瓶颈，一直无法提升自身的英语水平。&lt;br&gt;于是我查了一些资料，发现 我之前翻译视频的这种学习方法适合给幼儿园小孩儿用，成年人应该用更逻辑化的学习方法。&lt;br&gt;于是我就又查了些资料，在知乎上的 &lt;a href=&quot;https://www.zhihu.com/question/20981568/answer/102003655&quot;&gt;这个高票回答&lt;/a&gt; 里推荐了 “English Grammar in Use” 这本书。这一系列的书一共有3本，本文将从第一本 “Essential English Grammar in Use” 开始。&lt;br&gt;借助现有的语感和经验，从零开始系统的学习英语。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>Linux / Windows 加密用户文件夹</title>
@@ -100,33 +114,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>v2ray - 比 Shadowsocks 更强大更复杂的替代品</title>
-      <link>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</link>
-      <guid>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</guid>
-      <pubDate>Sat, 26 Nov 2016 09:25:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;img src=&quot;https://avatars0.githubusercontent.com/u/14110142?v=3&amp;amp;s=400&quot; alt=&quot;V2ray icon&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;为了穿越防火墙，瓷国程序员可谓是想尽办法。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;VPN：带有非常明显的特征：IP上层的通信协议全是密文。&lt;/li&gt;
-&lt;li&gt;Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。&lt;/p&gt;
-&lt;p&gt;但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。&lt;/p&gt;
-&lt;p&gt;然后有个人写了个纯算法的通信协议叫 &lt;a href=&quot;https://github.com/skywind3000/kcp&quot;&gt;KCP&lt;/a&gt;，然后又有个人用这个协议写了个软件叫 &lt;a href=&quot;https://github.com/v2ray/v2ray-core/&quot;&gt;v2ray&lt;/a&gt;。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。&lt;/li&gt;
-&lt;li&gt;更小的协议头部以躲避特征检查。&lt;/li&gt;
-&lt;li&gt;在协议数据流前面增加伪装，比如伪装成BT下载。&lt;/li&gt;
-&lt;/ol&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/#disqus_thread</comments>
     </item>
     
   </channel>
