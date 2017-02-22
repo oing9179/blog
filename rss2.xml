@@ -8,8 +8,28 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Tue, 14 Feb 2017 09:50:58 GMT</pubDate>
+    <pubDate>Wed, 22 Feb 2017 09:03:09 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Linux / Windows 加密用户文件夹</title>
+      <link>https://oing9179.github.io/blog/2017/02/Encrypt-home-directory-on-Linux-and-Windows/</link>
+      <guid>https://oing9179.github.io/blog/2017/02/Encrypt-home-directory-on-Linux-and-Windows/</guid>
+      <pubDate>Wed, 22 Feb 2017 09:02:15 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h2&gt;&lt;p&gt;&lt;code&gt;/home&lt;/code&gt; 下的用户文件夹可谓是隐私重灾区（Windows 下的 &lt;code&gt;C:\Users\&amp;lt;用户名&amp;gt;&lt;/code&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;浏览器的历史记录, 自动填写的表单, Cookies, etc.&lt;/li&gt;
+&lt;li&gt;有些人喜欢在桌面上放各种文件，包括但不限于公务文件&lt;/li&gt;
+&lt;li&gt;大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解决这个问题的办法就是加密用户文件夹。&lt;br&gt;本文分两部分内容，分别针对 Linux 和 Windows。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/02/Encrypt-home-directory-on-Linux-and-Windows/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>修复 Linux 英文语境下 Chrome 内中文字体问题</title>
@@ -107,33 +127,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>使用 bind9 配合 dnscrypt-proxy 搭建自己的无污染的DNS服务器</title>
-      <link>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</link>
-      <guid>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</guid>
-      <pubDate>Fri, 02 Sep 2016 09:23:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;img src=&quot;https://dnscrypt.org/dnscrypt.png&quot; alt=&quot;DNSCrypt&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;因为众所周知的原因，&lt;a href=&quot;https://zh.wikipedia.org/zh-cn/%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%93%E5%AD%98%E6%B1%A1%E6%9F%93&quot; title=&quot;DNS缓存投毒 - Wikipedia&quot;&gt;DNS缓存投毒&lt;/a&gt;(aka: &lt;a href=&quot;https://en.wikipedia.org/wiki/DNS_spoofing&quot; title=&quot;DNS Spoofing - Wikipedia&quot;&gt;DNS Spoofing&lt;/a&gt;) 的出现是因为DNS查询通信协议的设计缺陷导致的，因为DNS查询协议的设计者当时并没有预料到现在的网络环境这么糟糕。利用这个缺陷可以实现一些特技，比如：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用浏览器打开Google然后跳转到了Baidu.&lt;/li&gt;
-&lt;li&gt;ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告.&lt;/li&gt;
-&lt;li&gt;这里没能列举出的一些特技.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 &lt;a href=&quot;https://dnscrypt.org&quot; title=&quot;DNSCrypt homepage&quot;&gt;dnscrypt&lt;/a&gt;(&lt;a href=&quot;https://github.com/jedisct1/dnscrypt-proxy&quot; title=&quot;dnscrypt-proxy on GitHub&quot;&gt;GitHub项目主页&lt;/a&gt;)，相比传统的DNS查询有如下优点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;与DNS服务器通信过程中使用SSL加密.&lt;/li&gt;
-&lt;li&gt;可以强制使用TCP，避免因UDP丢包而浪费时间.&lt;/li&gt;
-&lt;li&gt;有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站.&lt;/li&gt;
-&lt;li&gt;有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果.&lt;/li&gt;
-&lt;/ul&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/#disqus_thread</comments>
     </item>
     
   </channel>
