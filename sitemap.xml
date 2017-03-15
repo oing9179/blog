@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://oing9179.github.io/blog/2017/03/Setup-Nextcloud-using-Docker-and-Nginx/</loc>
+    
+    <lastmod>2017-03-15T07:55:52.854Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/</loc>
     
     <lastmod>2017-03-11T13:09:02.956Z</lastmod>
