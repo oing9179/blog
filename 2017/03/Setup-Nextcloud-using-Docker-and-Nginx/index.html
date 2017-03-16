@@ -98,7 +98,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
 <meta property="og:description" content="Preface前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被”无缘无故”的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
 
 Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还">
-<meta property="og:updated_time" content="2017-03-15T07:55:52.854Z">
+<meta property="og:updated_time" content="2017-03-16T07:04:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）">
 <meta name="twitter:description" content="Preface前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被”无缘无故”的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
@@ -390,7 +390,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
 <ul>
 <li><a href="https://owncloud.org/" target="_blank" rel="external">Owncloud</a><br>  不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。</li>
 <li><a href="https://cozy.io/en/" target="_blank" rel="external">Cozy</a><br>  同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。</li>
-<li><a href="https://nextcloud.com/" target="_blank" rel="external">Nextcloud</a><br>  Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，移动端的 app 也是免费使用（iOS 上售价是 $0.99）。</li>
+<li><a href="https://nextcloud.com/" target="_blank" rel="external">Nextcloud</a><br>  Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。</li>
 </ul>
 <p>综上，我选择 Nextcloud。<br>接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。<br>还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 “<a href="https://letsencrypt.org/" target="_blank" rel="external">Let’s Encrypt</a>“。</p>
 <p><strong>注意：</strong> 本文使用 Ubuntu 作为服务器系统，部分特性（比如 <code>ufw</code>）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 <code>iptables</code> 代替 <code>ufw</code>）。<br><a id="more"></a></p>
@@ -473,11 +473,37 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">'memcache.local'</span> =&gt; <span class="string">'\OC\Memcache\APCu'</span>,</div></pre></td></tr></table></figure>
 <p>最后需要重启 Nextcloud/Docker容器 使配置生效。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker restart nextcloud</div></pre></td></tr></table></figure>
-<h2 id="初始设置"><a href="#初始设置" class="headerlink" title="初始设置"></a>初始设置</h2><p>用浏览器打开 <code>https://yun.example.com</code>，然后按照页面上的提示填写相关参数即可。</p>
-<p>至此，Nextcloud 的安装与配置就全部结束了。移动端 app 可以到这里下载：</p>
+<h2 id="主机的防火墙配置"><a href="#主机的防火墙配置" class="headerlink" title="主机的防火墙配置"></a>主机的防火墙配置</h2><p>因为容器内的 Docker 需要访问主机的 MariaDB，因此需要知道 Docker 容器的网关和 IP 地址。</p>
+<ol>
+<li><p>进入并运行容器内的 <code>bash</code></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -i nextcloud /bin/bash -il</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取容器 IP 和网关（Gateway）</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ip route show default</div></pre></td></tr></table></figure>
+<p> 输出大概是这样：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">default via 172.17.0.1 dev eth0 # via 后面的是网关 IP</div><div class="line">172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.2 # src 后面的是容器的 IP 地址</div></pre></td></tr></table></figure>
+<p> 执行命令 <code>exit</code> 回到主机的 bash.</p>
+</li>
+<li>添加防火墙白名单，允许来自容器（<code>172.17.0.2</code>）的所有 IP 包 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ufw allow from 172.17.0.2</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="初始设置"><a href="#初始设置" class="headerlink" title="初始设置"></a>初始设置</h2><ol>
+<li>用浏览器打开 <code>https://yun.example.com</code></li>
+<li>填写管理员的用户名和密码，以后将使用这个帐号来管理 Nextcloud</li>
+<li><p>数据库设定里，数据库选择 <code>MySQL / MariaDB</code>，其余的参考下面的配置</p>
+<p> | 名称     | 注释                                                         |<br> |:———|:————————————————————-|<br> | 用户名   | <code>nextcloud</code>                                                  |<br> | 密码     | nextcloud 用户的密码                                         |<br> | 地址     | 比如 <code>172.17.0.1</code>, 也可以加上端口号 像这样 <code>172.17.0.2:3306</code> |<br> | 数据库名 | <code>nextcloud</code>                                                  |</p>
+</li>
+</ol>
+<h1 id="部署完成"><a href="#部署完成" class="headerlink" title="部署完成"></a>部署完成</h1><p>至此，Nextcloud 的安装与配置就全部结束了。移动端 app 可以到这里下载：</p>
 <ul>
 <li><a href="https://play.google.com/store/apps/details?id=com.nextcloud.client" target="_blank" rel="external">Nextcloud - play.google.com</a></li>
 <li><a href="https://itunes.apple.com/us/app/nextcloud/id1125420102" target="_blank" rel="external">Nextcloud - itunes.apple.com</a> 售价: $0.99</li>
+</ul>
+<h1 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h1><p>15 Mar 2017: 首次发布<br>16 Mar 2017:</p>
+<ul>
+<li>补上 Docker 容器内访问主机提供的 MariaDB</li>
+<li>详细描述 Android app 和 iOS app 的价格区别.</li>
+<li>详细描述 Nextcloud 初始配置里数据库的设定</li>
 </ul>
 
       
@@ -690,7 +716,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nginx"><span class="nav-number">2.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-配置-MariaDB"><span class="nav-number">3.</span> <span class="nav-text">安装 / 配置 MariaDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nextcloud"><span class="nav-number">4.</span> <span class="nav-text">安装 Nextcloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-SSL-证书-amp-Nginx-amp-子域名"><span class="nav-number">5.</span> <span class="nav-text">配置 SSL 证书 & Nginx & 子域名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建子域名"><span class="nav-number">5.1.</span> <span class="nav-text">创建子域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSL-证书"><span class="nav-number">5.2.</span> <span class="nav-text">配置 SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Nginx"><span class="nav-number">5.3.</span> <span class="nav-text">配置 Nginx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Nextcloud"><span class="nav-number">6.</span> <span class="nav-text">配置 Nextcloud</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-trusted-domains"><span class="nav-number">6.1.</span> <span class="nav-text">配置 trusted_domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-overwritehost"><span class="nav-number">6.2.</span> <span class="nav-text">配置 overwritehost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置缓存"><span class="nav-number">6.3.</span> <span class="nav-text">配置缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始设置"><span class="nav-number">6.4.</span> <span class="nav-text">初始设置</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nginx"><span class="nav-number">2.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-配置-MariaDB"><span class="nav-number">3.</span> <span class="nav-text">安装 / 配置 MariaDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nextcloud"><span class="nav-number">4.</span> <span class="nav-text">安装 Nextcloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-SSL-证书-amp-Nginx-amp-子域名"><span class="nav-number">5.</span> <span class="nav-text">配置 SSL 证书 & Nginx & 子域名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建子域名"><span class="nav-number">5.1.</span> <span class="nav-text">创建子域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSL-证书"><span class="nav-number">5.2.</span> <span class="nav-text">配置 SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Nginx"><span class="nav-number">5.3.</span> <span class="nav-text">配置 Nginx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Nextcloud"><span class="nav-number">6.</span> <span class="nav-text">配置 Nextcloud</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-trusted-domains"><span class="nav-number">6.1.</span> <span class="nav-text">配置 trusted_domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-overwritehost"><span class="nav-number">6.2.</span> <span class="nav-text">配置 overwritehost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置缓存"><span class="nav-number">6.3.</span> <span class="nav-text">配置缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主机的防火墙配置"><span class="nav-number">6.4.</span> <span class="nav-text">主机的防火墙配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始设置"><span class="nav-number">6.5.</span> <span class="nav-text">初始设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署完成"><span class="nav-number">7.</span> <span class="nav-text">部署完成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">8.</span> <span class="nav-text">更新历史</span></a></li></ol></div>
             
 
           </div>

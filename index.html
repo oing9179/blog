@@ -387,7 +387,7 @@
 <ul>
 <li><a href="https://owncloud.org/">Owncloud</a><br>  不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。</li>
 <li><a href="https://cozy.io/en/">Cozy</a><br>  同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。</li>
-<li><a href="https://nextcloud.com/">Nextcloud</a><br>  Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，移动端的 app 也是免费使用（iOS 上售价是 $0.99）。</li>
+<li><a href="https://nextcloud.com/">Nextcloud</a><br>  Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。</li>
 </ul>
 <p>综上，我选择 Nextcloud。<br>接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。<br>还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 “<a href="https://letsencrypt.org/">Let’s Encrypt</a>“。</p>
 <p><strong>注意：</strong> 本文使用 Ubuntu 作为服务器系统，部分特性（比如 <code>ufw</code>）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 <code>iptables</code> 代替 <code>ufw</code>）。<br>
