@@ -8,8 +8,34 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 16 Mar 2017 07:04:00 GMT</pubDate>
+    <pubDate>Mon, 10 Apr 2017 09:22:47 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>我不知道的JS</title>
+      <link>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/</link>
+      <guid>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/</guid>
+      <pubDate>Mon, 10 Apr 2017 07:05:39 GMT</pubDate>
+      <description>
+      
+        &lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;《你不知道的JS》 (You don’t know JS) 读书笔记&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。&lt;br&gt;JS 有一些 Java 没有的特性，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;拿 &lt;code&gt;function&lt;/code&gt; 当对象用（看过书后发现 &lt;code&gt;function&lt;/code&gt; 真的是个对象）&lt;/li&gt;
+&lt;li&gt;除了 &lt;code&gt;null&lt;/code&gt; 还有 &lt;code&gt;undefined&lt;/code&gt; 还有 &lt;code&gt;undecleared&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var&lt;/code&gt; 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;this&lt;/code&gt; is not this.&lt;/li&gt;
+&lt;li&gt;“半残”的面向对象概念&lt;/li&gt;
+&lt;li&gt;etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。&lt;br&gt;下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）</title>
@@ -107,20 +133,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>学音乐比编程更需要耐心</title>
-      <link>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/</link>
-      <guid>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/</guid>
-      <pubDate>Fri, 10 Feb 2017 11:45:32 GMT</pubDate>
-      <description>
-      
-        &lt;h2 id=&quot;步入音乐坑&quot;&gt;&lt;a href=&quot;#步入音乐坑&quot; class=&quot;headerlink&quot; title=&quot;步入音乐坑&quot;&gt;&lt;/a&gt;步入音乐坑&lt;/h2&gt;&lt;p&gt;一直以来，相比我周围接触过的人，我一直以为他们唱歌音调不准是因为没学过音乐。后来我去做了一些音乐天赋测试才发现，是我基因里有这个功能而不是别人没学过音乐。&lt;br&gt;于是本着 “有这个天赋不去开发多可惜呀” 的想法就去找各种学习资料，比如：&lt;/p&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/#disqus_thread</comments>
     </item>
     
   </channel>
