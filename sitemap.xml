@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/</loc>
+    
+    <lastmod>2017-04-13T06:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/</loc>
     
     <lastmod>2017-04-11T01:55:00.000Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</loc>
     
     <lastmod>2017-04-10T16:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/</loc>
-    
-    <lastmod>2017-04-10T09:22:47.628Z</lastmod>
     
   </url>
   
