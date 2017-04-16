@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 13 Apr 2017 06:00:00 GMT</pubDate>
+    <pubDate>Sun, 16 Apr 2017 05:21:23 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Java 并发 &amp; 多线程 - 基础知识</title>
+      <link>https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/</link>
+      <guid>https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/</guid>
+      <pubDate>Thu, 13 Apr 2017 01:21:06 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。&lt;br&gt;本文将涵盖目前入门 Java 并
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>我不知道的JS</title>
@@ -119,20 +133,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/02/Encrypt-home-directory-on-Linux-and-Windows/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>修复 Linux 英文语境下 Chrome 内中文字体问题</title>
-      <link>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/</link>
-      <guid>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/</guid>
-      <pubDate>Tue, 14 Feb 2017 08:27:21 GMT</pubDate>
-      <description>
-      
-        &lt;h2 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h2&gt;&lt;p&gt;刚开始用 Linux Mint 的时候 系统语言是设置成中文的，带来的问题就是 想在 tty 里输入中文简直吃屎，甚至连中文都无法显示出来，我要是再装个什么软件包来解决这个问题 没准又要把我装好的系统搞坏掉。&lt;br&gt;于是我干脆在安装系统时候直接把语言设置为英文（en_US）。然后问题又来了，KDE Dolphin 里显示中文文件名的时候，那文字东倒西歪的 有些字甚至还在用不知道什么时候的旧写法。其实这个还好，麻烦更多的还是在浏览器这里。
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/#disqus_thread</comments>
     </item>
     
   </channel>

@@ -1,0 +1,887 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next mist" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Concurrency,Parallelism,Multi-Threading,Java Memory Model,Linearizability,Serializability," />
+
+
+
+
+
+  <link rel="alternate" href="/blog/rss2.xml" title="oing9179 的笔记本儿" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
+
+我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）
+
+内存模型理解 Java 内存模型是学习 Java 多线程的基础中的基础。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 并发 & 多线程 - 基础知识">
+<meta property="og:url" content="https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/index.html">
+<meta property="og:site_name" content="oing9179 的笔记本儿">
+<meta property="og:description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
+
+我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）
+
+内存模型理解 Java 内存模型是学习 Java 多线程的基础中的基础。">
+<meta property="og:image" content="https://oing9179.github.io/blog/java-memory-model-1.png">
+<meta property="og:image" content="https://oing9179.github.io/blog/java-memory-model-2.png">
+<meta property="og:image" content="https://oing9179.github.io/blog/java-memory-model-3.png">
+<meta property="og:image" content="https://oing9179.github.io/blog/hardware-memory-model.png">
+<meta property="og:image" content="https://oing9179.github.io/blog/java-and-hardware-memory-model-combined.png">
+<meta property="og:updated_time" content="2017-04-16T05:21:23.872Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 并发 & 多线程 - 基础知识">
+<meta name="twitter:description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
+
+我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）
+
+内存模型理解 Java 内存模型是学习 Java 多线程的基础中的基础。">
+<meta name="twitter:image" content="https://oing9179.github.io/blog/java-memory-model-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/"/>
+
+
+
+
+
+  <title> Java 并发 & 多线程 - 基础知识 | oing9179 的笔记本儿 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-91332739-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">oing9179 的笔记本儿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">This is subtitle.</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/blog/links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br />
+            
+            Links
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://oing9179.github.io/blog/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="oing9179">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="oing9179 的笔记本儿">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="oing9179 的笔记本儿" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java 并发 & 多线程 - 基础知识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-13T09:21:06+08:00">
+                13 April 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Programming/" itemprop="url" rel="index">
+                    <span itemprop="name">Programming</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Programming/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/Java-Concurrency-Multi-Threading-Introduction/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。<br>本文将涵盖目前入门 Java 并发 &amp; 并行编程的基本理论知识。</p>
+<blockquote>
+<p>我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。<br>- 某位不愿意透露姓名的人（不是我）</p>
+</blockquote>
+<h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p>理解 Java 内存模型是学习 Java 多线程的基础中的基础。</p>
+<blockquote>
+<p>强烈建议阅读原文：<a href="http://tutorials.jenkov.com/java-concurrency/java-memory-model.html" target="_blank" rel="external">Java Memory Model - tutorials.jenkov.com</a></p>
+</blockquote>
+<h2 id="Java-内存模型"><a href="#Java-内存模型" class="headerlink" title="Java 内存模型"></a>Java 内存模型</h2><p>先从基本的开始：</p>
+<p><img src="java-memory-model-1.png" alt="Java Memory Model - Simple"></p>
+<ul>
+<li>内存被分为两个部分：<strong>堆（Stack）内存</strong> 和 <strong>栈（Heap）内存</strong><br>  <strong>Stack</strong> 就相当于许多书整齐的摞起来;<br>  <strong>Heap</strong> 就相当于许多书乱七八糟的散在那里.<br>  每个线程都有自己的 Stack 内存，所有线程共用一个 Heap 内存。</li>
+</ul>
+<p>现在加入方法和变量：<br><img src="java-memory-model-2.png" alt="Java Memory Model - with Methods and Variables"></p>
+<ul>
+<li>所有基本数据类型（就是所有小写字母开头的数据类型，包括 <code>boolean</code>, <code>byte</code>, <code>short</code>, <code>char</code>, <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>），由哪个线程创建的就只能由哪个线程访问。</li>
+<li>所有对象都存放在 <strong>Heap</strong> 里，<code>Integer</code> <code>Byte</code> 之类的也算。</li>
+</ul>
+<p>现在标出它们之间的关系：</p>
+<p><img src="java-memory-model-3.png" alt="Java Memory Model - Object Relationships"></p>
+<ul>
+<li>如果变量的数据类型是基本数据类型，那它就只存放于当前线程 Stack 内。</li>
+<li>如果变量指向一个对象，这个变量存放于当前线程 Stack 内，但变量指向的对象存放于 Heap 里。</li>
+<li>如果某个对象里包含方法，方法里包含一些变量，这些变量会存放于线程 Stack 内，即使这个对象存放在 Heap 里。</li>
+<li>对象存放在 Heap 里，对象里的成员变量也存放在 Heap 里，不管这个成员变量是个基本数据类型还是一个对象的引用。</li>
+<li>静态类只有一个实例，这个实例和其他对象一样存放在 Heap 里，静态类里的成员变量也跟着存放在 Heap 里。</li>
+<li>综合上面几条得出：线程可以访问 Heap 内的任意对象，只要该线程有那个对象的引用，也就是线程内的某个变量指向 Heap 内的某个对象。</li>
+</ul>
+<h2 id="硬件内存模型"><a href="#硬件内存模型" class="headerlink" title="硬件内存模型"></a>硬件内存模型</h2><p><img src="hardware-memory-model.png" alt="Hardware Memory Model"></p>
+<p>以前的那些还在用单核 CPU 的计算机，系统必须对线程进行调度，也就意味着 同一时刻只能有一个线程占用 CPU，也就不是真正的并行运算（就像 Python 那样的 “假” 多线程）。现在的计算机基本上都在用多核 CPU（有些时候还能看到主板上有多个 CPU），也就意味着 可以有多个线程同时运行。<br>CPU 会自带一点儿内存，它们称之为 寄存器（Registers）。CPU 还可以有一层或多层缓存内存（Cache Memory），一般来说 它们的容量都比寄存器大，但速度肯定没有 CPU 直接访问寄存器快。还有一个就是主内存（Main Memory），也就是存放在插在主板上的内存条里的数据。因为距离的原因导致 <code>CPU 访问寄存器的速度 &gt; CPU 访问缓存内存的速度 &gt; CPU 访问主内存的速度</code>。<br>当 CPU 需要主内存里的数据时候，就读取一部分数据然后存到缓存内存里，然后再从缓存内存里读取读取一部分数据到寄存器里，然后再进行运算。当 CPU 想把寄存器里的运算结果写回主内存里时 就把它先写到缓存内存里，然后由缓存内存决定何时把数据写回内存里。<br>一般情况下，当 CPU 需要的数据不存在于缓存内存里 并且 缓存内存里没有地方存放要从主内存读入新的数据 时，缓存内存就会把缓存的 CPU 运算结果写回主内存，然后再从主内存读入新的数据供 CPU 使用。</p>
+<h2 id="Java-内存模型-与-硬件内存模型"><a href="#Java-内存模型-与-硬件内存模型" class="headerlink" title="Java 内存模型 与 硬件内存模型"></a>Java 内存模型 与 硬件内存模型</h2><p><img src="java-and-hardware-memory-model-combined.png" alt="Java and Hardware Memory Model Combined"></p>
+<p>如前面一节所述，缓存内存架在 CPU 寄存器和内存之间。当多个 CPU 同时读取同一个位置的数据 又想同时写回同一个位置的数据时，因为缓存内存将数据写回主内存的时机是不确定的（至少不能人为干预），也就意味着 下一次从主内存读取出的数据也是不确定的，也就是所谓的 “<a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)" target="_blank" rel="external">脏读（Dirty read）</a>“。<br>我觉得举个例子能更进一步的描述这种情况：</p>
+<ol>
+<li>假设2个线程并行运行同样的代码，它们要做的事是 每次访问一个数字的时候就把那个数字 <code>+1</code>。我们希望的最终结果是 两个线程把数字从 <code>0</code> 加到 <code>2</code>。</li>
+<li>现在 主内存里有个数字 值为 <code>0</code></li>
+<li>线程1从主内存读取数字并存放到寄存器，数字值为 <code>0</code>，此时线程2也从主内存读取数字存放到寄存器，数字值也是 <code>0</code></li>
+<li>线程1把数字值 <code>+1</code> 后值为 <code>1</code> 并写到 CPU 内存缓存里，线程2也跟着把数字值加到 <code>1</code> 也把它写到 CPU 内存缓存里了</li>
+<li>然后其中一颗 CPU 的内存缓存把 <code>1</code> 写回主内存</li>
+<li>然后另一颗 CPU 的内存缓存把 <code>1</code> 写回主内存</li>
+</ol>
+<p>这种现象就叫做 <strong>竞争状况（Race Condition）</strong>。</p>
+<blockquote>
+<p>有些地方把 <em>Race Condition</em> 翻译成 <em>竞态条件</em>，我认为这个翻译是错误的。我觉得这里的 Condition 一词不是 <em>条件</em> 的意思，而是 <em>一种状况</em>，两个线程在争抢同一个资源是 <em>一种状况</em> 而不是 <em>一个条件</em>。</p>
+</blockquote>
+<h1 id="Linearizability-Serializability-Atomicity（原子性）"><a href="#Linearizability-Serializability-Atomicity（原子性）" class="headerlink" title="Linearizability, Serializability, Atomicity（原子性）"></a>Linearizability, Serializability, Atomicity（原子性）</h1><p><strong>注：</strong> 本小节内容可能难记又难懂，如果看不懂没关系，以后在看 Java 的锁的具体应用时候可以时不时的回顾&amp;应用这里的知识。<br><del><span style="color: grey;">反正我是看懂了。</span></del></p>
+<h2 id="Linearizability"><a href="#Linearizability" class="headerlink" title="Linearizability"></a><a href="http://www.bailis.org/blog/linearizability-versus-serializability/" target="_blank" rel="external">Linearizability</a></h2><blockquote>
+<p>Once a write completes, all later reads (where “later” is defined by wall-clock start time) should return the value of that write or the value of a later write. Once a read returns a particular value, all later reads should return that value or the value of a later write.</p>
+</blockquote>
+<p>当一个写操作完成后，在其之后的所有读操作都应该读出那个写操作写进去的值，或者也可以是之后的写操作写进去的值。<br>当一个读操作返回一个特定的值后，在其之后的所有读操作都应该返回那个值，或者也可以是之后的写操作写进去的值。</p>
+<h2 id="Serializability"><a href="#Serializability" class="headerlink" title="Serializability"></a><a href="http://www.cs.unc.edu/~dewan/242/s01/notes/trans/node3.html" target="_blank" rel="external">Serializability</a></h2><blockquote>
+<p>Serializability is the classical concurrency scheme. It ensures that a schedule for executing concurrent transactions is equivalent to one that executes the transactions serially in some order. It assumes that all accesses to the database are done using read and write operations. A schedule is called <strong>correct</strong> if we can find a serial schedule that is <strong>equivalent</strong> to it. Given a set of transactions T1…Tn, two schedules S1 and S2 of these transactions are equivalent if the following conditions are satisfied:</p>
+</blockquote>
+<p>Serializability 是一个经典的并发程序的可选特性，这个特性能确保：一个计划任务（Schedule）里并发执行的一些事务（Transactions） 等同于 这些事务以某种顺序逐个执行，假设所有对数据库的操作都是由读和写操作构成的。如果能找到一个（并行执行的）计划任务与一个顺序执行的计划任务 <strong>相同</strong> 的话，这个计划任务则称之为 <strong>correct</strong>（我实在是不知道该如何翻译这个 correct）。给定一组事务名为 <code>T1 ... Tn</code> 和两个计划任务 <code>S1</code> 和 <code>S2</code>，满足以下条件则说明这两个计划任务是相同的：</p>
+<blockquote>
+<p>Read-Write Synchronization: If a transaction reads a value written by another transaction in one schedule, then it also does so in the other schedule.</p>
+</blockquote>
+<p>读写同步：在一个计划任务里，如果一个事务会读取由另一个事务写入的值，那这件事也会在另一个计划任务里发生。</p>
+<blockquote>
+<p>Write-Write Synchronization: If a transaction overwrites the value of another transaction in one schedule, it also does so in the other schedule.</p>
+</blockquote>
+<p>写写同步：在一个计划任务里，如果一个事务会覆写由另一个事务写入的值，那这件事也会在另一个计划任务里发生。</p>
+<blockquote>
+<p>These two properties ensure that there can be no difference in the effects of the two schedules. As an example, consider the schedule in Figure 1.</p>
+</blockquote>
+<p>这两个属性能确保执行两个计划任务后产生的结果是相同的，比如 可以参考下面的图：<br>（原文的图片无法加载，原因：HTTP 404）</p>
+<blockquote>
+<p>It is equivalent to a schedule in which T2 is executed after T1.</p>
+</blockquote>
+<p>（图中）这两个计划任务是等价的，尽管 T2 在 T1 之后执行。</p>
+<blockquote>
+<p>There are several approaches to enforcing serializability.</p>
+</blockquote>
+<p>有那么几种方法可以实施 Serializability。</p>
+<h2 id="Atomicity"><a href="#Atomicity" class="headerlink" title="Atomicity"></a>Atomicity</h2><p>作为数据库事务的4大特性（<a href="https://en.wikipedia.org/wiki/ACID" target="_blank" rel="external">ACID</a>）之一的 Atomicity（原子性）这个概念，也是可以应用在并发/并行环境里的。<br>比如修改一个变量 <code>counter</code> 需要3个步骤：</p>
+<ol>
+<li>读取变量 <code>counter</code> 的值</li>
+<li>创建新的值</li>
+<li>把值写入变量 <code>counter</code></li>
+</ol>
+<p>原子（Atom）是化学反应里的最小单位，化学反应时，它要么有反应 要么什么也没发生。原子操作（Atomic Operation）也是同样的概念，上面3个步骤必须都执行或者都不执行，不能只执行其中某几个。<br>几个并行运行的线程想访问（读取并修改）某个变量，想确保 Atomicity 特性，就必须确保同一时刻只能有一个线程访问该变量，并且独占该变量的访问权，直至该线程完成对该变量的操作。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li><a href="http://tutorials.jenkov.com/java-concurrency/java-memory-model.html" target="_blank" rel="external">Java Memory Model - tutorials.jenkov.com</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Isolation_(database_systems)" target="_blank" rel="external">Dirty Read - wikipedia.org</a></li>
+<li><a href="http://www.bailis.org/blog/linearizability-versus-serializability/" target="_blank" rel="external">Linearizability versus Serializability</a></li>
+<li><a href="http://www.cs.unc.edu/~dewan/242/s01/notes/trans/node3.html" target="_blank" rel="external">Serializability</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ACID" target="_blank" rel="external">Atomicity, Consistency, Isolation, Durability - wikipedia.org</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/blog/tags/Concurrency/" rel="tag"># Concurrency</a>
+          
+            <a href="/blog/tags/Parallelism/" rel="tag"># Parallelism</a>
+          
+            <a href="/blog/tags/Multi-Threading/" rel="tag"># Multi-Threading</a>
+          
+            <a href="/blog/tags/Java-Memory-Model/" rel="tag"># Java Memory Model</a>
+          
+            <a href="/blog/tags/Linearizability/" rel="tag"># Linearizability</a>
+          
+            <a href="/blog/tags/Serializability/" rel="tag"># Serializability</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/04/I-dont-know-JS/" rel="next" title="我不知道的JS">
+                <i class="fa fa-chevron-left"></i> 我不知道的JS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
+               alt="oing9179" />
+          <p class="site-author-name" itemprop="name">oing9179</p>
+          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/blog/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/blog/rss2.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/oing9179" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/oing9179" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/blog/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存模型"><span class="nav-number">2.</span> <span class="nav-text">内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-内存模型"><span class="nav-number">2.1.</span> <span class="nav-text">Java 内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬件内存模型"><span class="nav-number">2.2.</span> <span class="nav-text">硬件内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-内存模型-与-硬件内存模型"><span class="nav-number">2.3.</span> <span class="nav-text">Java 内存模型 与 硬件内存模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linearizability-Serializability-Atomicity（原子性）"><span class="nav-number">3.</span> <span class="nav-text">Linearizability, Serializability, Atomicity（原子性）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linearizability"><span class="nav-number">3.1.</span> <span class="nav-text">Linearizability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Serializability"><span class="nav-number">3.2.</span> <span class="nav-text">Serializability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Atomicity"><span class="nav-number">3.3.</span> <span class="nav-text">Atomicity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oing9179</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'oing9179-blog';
+      var disqus_identifier = '2017/04/Java-Concurrency-Multi-Threading-Introduction/';
+
+      var disqus_title = "Java 并发 & 多线程 - 基础知识";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
