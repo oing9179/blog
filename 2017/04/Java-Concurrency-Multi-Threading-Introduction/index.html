@@ -90,31 +90,25 @@
 
 <meta name="description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
 
-我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）
-
-内存模型理解 Java 内存模型是学习 Java 多线程的基础中的基础。">
+我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 并发 & 多线程 - 基础知识">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
 <meta property="og:description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
 
-我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）
-
-内存模型理解 Java 内存模型是学习 Java 多线程的基础中的基础。">
+我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）">
 <meta property="og:image" content="https://oing9179.github.io/blog/java-memory-model-1.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/java-memory-model-2.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/java-memory-model-3.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/hardware-memory-model.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/java-and-hardware-memory-model-combined.png">
-<meta property="og:updated_time" content="2017-04-16T05:21:23.872Z">
+<meta property="og:updated_time" content="2017-04-16T07:09:40.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 并发 & 多线程 - 基础知识">
 <meta name="twitter:description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
 
-我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）
-
-内存模型理解 Java 内存模型是学习 Java 多线程的基础中的基础。">
+我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）">
 <meta name="twitter:image" content="https://oing9179.github.io/blog/java-memory-model-1.png">
 
 
@@ -413,6 +407,7 @@
 <blockquote>
 <p>我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。<br>- 某位不愿意透露姓名的人（不是我）</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><p>理解 Java 内存模型是学习 Java 多线程的基础中的基础。</p>
 <blockquote>
 <p>强烈建议阅读原文：<a href="http://tutorials.jenkov.com/java-concurrency/java-memory-model.html" target="_blank" rel="external">Java Memory Model - tutorials.jenkov.com</a></p>

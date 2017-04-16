@@ -8,7 +8,7 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Sun, 16 Apr 2017 05:21:23 GMT</pubDate>
+    <pubDate>Sun, 16 Apr 2017 07:09:40 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -18,7 +18,10 @@
       <pubDate>Thu, 13 Apr 2017 01:21:06 GMT</pubDate>
       <description>
       
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。&lt;br&gt;本文将涵盖目前入门 Java 并
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。&lt;br&gt;本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。&lt;br&gt;- 某位不愿意透露姓名的人（不是我）&lt;/p&gt;
+&lt;/blockquote&gt;
       
       </description>
       
