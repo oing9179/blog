@@ -106,7 +106,7 @@
 分类 &amp;amp; 标签：比如钱都花在那些类目上了。
 交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易
 存钱罐（Pig">
-<meta property="og:updated_time" content="2017-04-18T13:58:53.316Z">
+<meta property="og:updated_time" content="2017-04-19T00:45:52.844Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 Docker & Nginx 搭建自己的账本（Firefly）">
 <meta name="twitter:description" content="Preface“我辛辛苦苦挣的钱都去哪儿了”，我可不希望以后什么什么时候开始说这种话，于是 搭建个记账软件来记录自己的收支吧。该软件优点如下：
@@ -413,8 +413,9 @@
 </ul>
 <p>目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。<br>另外，该软件作者表示 “不支持自动支付重复性交易”，原因是：</p>
 <blockquote>
-<p>I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will <em>feel</em> what you spend.<br>我认为如果你真的想改变你的财务习惯的话，你应该更关心你的账户，你花的钱还有你挣的钱。通过手动地录入每次交易，让你<em>切实体会到</em>钱都花在哪里了。<br><a id="more"></a></p>
+<p>I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will <em>feel</em> what you spend.<br>我认为如果你真的想改变你的财务习惯的话，你应该更关心你的账户，你花的钱还有你挣的钱。通过手动地录入每次交易，让你<em>切实体会到</em>钱都花在哪里了。</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="安装-amp-更新-Docker-docker-ce"><a href="#安装-amp-更新-Docker-docker-ce" class="headerlink" title="安装 &amp; 更新 Docker (docker-ce)"></a>安装 &amp; 更新 Docker (<code>docker-ce</code>)</h1><p>近些天 Docker 更新了，连软件包名字也变了。<code>docker-ce</code> 对应 Docker 社区版（Community Edition），<code>docker-ee</code> 对应 Docker 企业版（Enterprise Edition）。</p>
 <ol>
 <li><p>如果原来安装过 Docker 的话，先卸载旧版</p>
@@ -467,6 +468,8 @@
 <li><p>执行下面命令来创建新的 Docker 容器</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># kill 掉正在运行的 Docker 容器</div><div class="line">docker kill firefly</div><div class="line"># 删掉容器和旧的 Docker Image</div><div class="line">docker rm firefly</div><div class="line">docker rmi firefly-iii</div><div class="line"># 创建新的 Docker 容器，这将应用前面对 docker-compose.my.yml 的修改</div><div class="line">docker-compose -f docker-compose.my.yml create</div><div class="line"># 改名</div><div class="line">docker rename fireflyiii_firefly-app_1 firefly</div><div class="line"># 启动 Docker 容器</div><div class="line">docker start firefly</div></pre></td></tr></table></figure>
 </li>
+<li><p>执行命令 <code>curl http://127.0.0.1:8082</code>，应该会有 HTML 输出</p>
+</li>
 </ol>
 <p>接下来开始弄 Nginx。</p>
 <h1 id="安装-amp-配置-Nginx"><a href="#安装-amp-配置-Nginx" class="headerlink" title="安装 &amp; 配置 Nginx"></a>安装 &amp; 配置 Nginx</h1><h2 id="安装-Nginx"><a href="#安装-Nginx" class="headerlink" title="安装 Nginx"></a>安装 Nginx</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install nginx</div></pre></td></tr></table></figure>
@@ -495,6 +498,11 @@
 </ol>
 <h2 id="注册并登录"><a href="#注册并登录" class="headerlink" title="注册并登录"></a>注册并登录</h2><p>打开浏览器访问 <code>https://qian.example.com</code>，注册一个帐号即可。注册完成后 注册功能会自动关闭，默认情况下只允许单个用户使用这个网站，如果想多人使用的话 可以在设置里取消勾选 “Single user mode”。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>有了之前搭建 Nextcloud 的经验，这次搭建起来省了不少时间。</p>
+<h1 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h1><p>18 Apr 2017: 首次发布<br>19 Apr 2017:</p>
+<ul>
+<li>在 “构建和部署 Docker Image” 中增加 <code>curl</code> 命令来验证 Docker 容器是否启动</li>
+<li>小修小改</li>
+</ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li><a href="https://docs.docker.com/engine/installation/linux/ubuntu/" target="_blank" rel="external">Get Docker for Ubuntu - docs.docker.com</a></li>
 <li><a href="https://github.com/docker/compose/releases" target="_blank" rel="external">Releases · docker/compose - github.com</a></li>
@@ -712,7 +720,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-更新-Docker-docker-ce"><span class="nav-number">2.</span> <span class="nav-text">安装 & 更新 Docker (docker-ce)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建和部署-Docker-Image"><span class="nav-number">3.</span> <span class="nav-text">构建和部署 Docker Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-配置-Nginx"><span class="nav-number">4.</span> <span class="nav-text">安装 & 配置 Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Nginx"><span class="nav-number">4.1.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-Let’s-Encrypt-SSL-证书"><span class="nav-number">4.2.</span> <span class="nav-text">生成 Let’s Encrypt SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Nginx-使用-SSL"><span class="nav-number">4.3.</span> <span class="nav-text">配置 Nginx 使用 SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化-Firefly"><span class="nav-number">5.</span> <span class="nav-text">初始化 Firefly</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化数据库"><span class="nav-number">5.1.</span> <span class="nav-text">初始化数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册并登录"><span class="nav-number">5.2.</span> <span class="nav-text">注册并登录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-更新-Docker-docker-ce"><span class="nav-number">2.</span> <span class="nav-text">安装 & 更新 Docker (docker-ce)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建和部署-Docker-Image"><span class="nav-number">3.</span> <span class="nav-text">构建和部署 Docker Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-配置-Nginx"><span class="nav-number">4.</span> <span class="nav-text">安装 & 配置 Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Nginx"><span class="nav-number">4.1.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成-Let’s-Encrypt-SSL-证书"><span class="nav-number">4.2.</span> <span class="nav-text">生成 Let’s Encrypt SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Nginx-使用-SSL"><span class="nav-number">4.3.</span> <span class="nav-text">配置 Nginx 使用 SSL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化-Firefly"><span class="nav-number">5.</span> <span class="nav-text">初始化 Firefly</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化数据库"><span class="nav-number">5.1.</span> <span class="nav-text">初始化数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册并登录"><span class="nav-number">5.2.</span> <span class="nav-text">注册并登录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">7.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
