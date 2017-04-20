@@ -98,7 +98,7 @@ In Linux, the kernel can be configured to provide functions for system debugging
 <meta property="og:description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
 
 In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
-<meta property="og:updated_time" content="2017-04-20T12:34:14.021Z">
+<meta property="og:updated_time" content="2017-04-20T12:40:35.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SysRq 键 - Linux 系统崩掉前最后的救命稻草">
 <meta name="twitter:description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
@@ -390,8 +390,8 @@ In Linux, the kernel can be configured to provide functions for system debugging
 <blockquote>
 <p>In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”.<br>在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 “Magic SysRq key”。<br>- <a href="https://en.wikipedia.org/wiki/System_request#Modern_uses" target="_blank" rel="external">System request - wikipedia.org</a></p>
 </blockquote>
-<p>当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这颗最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。<br><a id="more"></a></p>
-<h1 id="sysctl-简单介绍"><a href="#sysctl-简单介绍" class="headerlink" title="sysctl 简单介绍"></a><code>sysctl</code> 简单介绍</h1><p>有些发行版上的 sysrq 功能是关闭的，想开启它的话需要修改配置文件 <code>/etc/sysctl.conf</code> 并配合 <code>sysctl</code> 命令使配置生效。<br><code>sysctl.conf</code> 文件的基本格式：每一行放一条属性，格式为 <code>&lt;variable&gt;=&lt;value&gt;</code>，比如开启 SysRq 的话就是 <code>kernel.sysrq=1</code>。<br>修改 <code>sysctl.conf</code> 后不会立即生效，需要执行命令 <code>sysctl -p</code> 来重新载入 <code>/etc/sysctl.conf</code>。<br>还有一种方法可以使配置立即生效：使用命令 <code>sysctl -w &lt;variable&gt;=&lt;value&gt;</code>，但重启系统后会失效。</p>
+<p>当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。<br><a id="more"></a></p>
+<h1 id="sysctl-简单介绍"><a href="#sysctl-简单介绍" class="headerlink" title="sysctl 简单介绍"></a><code>sysctl</code> 简单介绍</h1><p>有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 <code>/etc/sysctl.conf</code> 并配合 <code>sysctl</code> 命令使配置生效。<br><code>sysctl.conf</code> 文件的基本格式：每一行放一条属性，格式为 <code>&lt;variable&gt;=&lt;value&gt;</code>，比如开启 SysRq 的话就是 <code>kernel.sysrq=1</code>。<br>修改 <code>sysctl.conf</code> 后不会立即生效，需要执行命令 <code>sysctl -p</code> 来重新载入 <code>/etc/sysctl.conf</code>。<br>还有一种方法可以使配置立即生效：使用命令 <code>sysctl -w &lt;variable&gt;=&lt;value&gt;</code>，但重启系统后会失效。</p>
 <blockquote>
 <p>其实 <code>sysctl -w</code> 的 <code>-w</code> 不写也行，有 <code>-w</code> 参数的话 在按 <code>Tab</code> 自动补全时候会在 <code>&lt;variable&gt;</code> 末尾自动加上个 <code>=</code>，仅此而已。</p>
 </blockquote>

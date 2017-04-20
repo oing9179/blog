@@ -8,7 +8,7 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 20 Apr 2017 12:34:14 GMT</pubDate>
+    <pubDate>Thu, 20 Apr 2017 12:40:35 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -22,7 +22,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”.&lt;br&gt;在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 “Magic SysRq key”。&lt;br&gt;- &lt;a href=&quot;https://en.wikipedia.org/wiki/System_request#Modern_uses&quot;&gt;System request - wikipedia.org&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这颗最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。&lt;br&gt;
+&lt;p&gt;当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。&lt;br&gt;
       
       </description>
       
