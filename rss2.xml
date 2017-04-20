@@ -8,8 +8,26 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Wed, 19 Apr 2017 00:45:52 GMT</pubDate>
+    <pubDate>Thu, 20 Apr 2017 12:34:14 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>SysRq 键 - Linux 系统崩掉前最后的救命稻草</title>
+      <link>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/</link>
+      <guid>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/</guid>
+      <pubDate>Thu, 20 Apr 2017 04:24:48 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 &lt;code&gt;pause&lt;/code&gt; &lt;code&gt;break&lt;/code&gt; 和 &lt;code&gt;scroll&lt;/code&gt; 这几个键以外，还有个 &lt;code&gt;SysRq&lt;/code&gt;。然后查了一下，发现这个键在 Linux 下大有用途：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”.&lt;br&gt;在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 “Magic SysRq key”。&lt;br&gt;- &lt;a href=&quot;https://en.wikipedia.org/wiki/System_request#Modern_uses&quot;&gt;System request - wikipedia.org&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这颗最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>用 Docker &amp; Nginx 搭建自己的账本（Firefly）</title>
@@ -132,20 +150,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Present - 英语语法</title>
-      <link>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/</link>
-      <guid>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/</guid>
-      <pubDate>Wed, 22 Feb 2017 13:09:12 GMT</pubDate>
-      <description>
-      
-        &lt;h2 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h2&gt;&lt;p&gt;在正文开始前先废话几句。&lt;br&gt;以前翻译 &lt;a href=&quot;https://en.wikipedia.org/wiki/MythBusters&quot;&gt;流言终结者(MythBusters)&lt;/a&gt; 的时候，当时的英语水平基本上就是 IELTS 1分的样子。翻译了6集后，不管是词汇量还是语感各方面大幅提升。直到近些日子，总感觉好像碰到了什么瓶颈，一直无法提升自身的英语水平。&lt;br&gt;于是我查了一些资料，发现 我之前翻译视频的这种学习方法适合给幼儿园小孩儿用，成年人应该用更逻辑化的学习方法。&lt;br&gt;于是我就又查了些资料，在知乎上的 &lt;a href=&quot;https://www.zhihu.com/question/20981568/answer/102003655&quot;&gt;这个高票回答&lt;/a&gt; 里推荐了 “English Grammar in Use” 这本书。这一系列的书一共有3本，本文将从第一本 “Essential English Grammar in Use” 开始。&lt;br&gt;借助现有的语感和经验，从零开始系统的学习英语。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/#disqus_thread</comments>
     </item>
     
   </channel>
