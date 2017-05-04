@@ -8,8 +8,26 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 20 Apr 2017 12:40:35 GMT</pubDate>
+    <pubDate>Thu, 04 May 2017 14:31:44 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>日记 - python-pytun scapy / Depression</title>
+      <link>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/</link>
+      <guid>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/</guid>
+      <pubDate>Thu, 04 May 2017 13:33:47 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用 python-pytun 和 scapy 试着弄个包转发工具&lt;/li&gt;
+&lt;li&gt;Depression 与自我恢复&lt;/li&gt;
+&lt;/ul&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>SysRq 键 - Linux 系统崩掉前最后的救命稻草</title>
@@ -121,35 +139,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/03/Setup-Nextcloud-using-Docker-and-Nginx/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>用 Nginx 转发 V2Ray 的 WebSocket 连接</title>
-      <link>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/</link>
-      <guid>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/</guid>
-      <pubDate>Sat, 11 Mar 2017 13:00:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;有些地方网络环境很糟糕，比如：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;防火墙 Drop 掉所有 UDP 包但是 DNS 除外&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;除 80 和 443 之类的端口外的数据包传输速率都很低&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;TCP 并开启 HTTP 伪装&lt;/li&gt;
-&lt;li&gt;WebSocket&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。&lt;a href=&quot;https://github.com/v2ray/v2ray-core/issues/386&quot;&gt;这个 Issue&lt;/a&gt; 内提到了 “http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。”，那我就用 WebSocket 吧。&lt;br&gt;哦对还有，有的更奇葩网络环境连 WebSocket 都不支持，具体可以到 &lt;a href=&quot;http://websocketstest.com/&quot;&gt;websocketstest.com&lt;/a&gt; 测试一下。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/#disqus_thread</comments>
     </item>
     
   </channel>
