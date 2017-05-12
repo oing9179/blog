@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 04 May 2017 14:31:44 GMT</pubDate>
+    <pubDate>Fri, 12 May 2017 11:55:22 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Linux Tunnel Device and Route</title>
+      <link>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/</link>
+      <guid>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/</guid>
+      <pubDate>Sun, 07 May 2017 04:04:33 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。&lt;br&gt;先说路由，然后再带着路由的知识谈 tun 设备。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>日记 - python-pytun scapy / Depression</title>
@@ -118,27 +132,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）</title>
-      <link>https://oing9179.github.io/blog/2017/03/Setup-Nextcloud-using-Docker-and-Nginx/</link>
-      <guid>https://oing9179.github.io/blog/2017/03/Setup-Nextcloud-using-Docker-and-Nginx/</guid>
-      <pubDate>Wed, 15 Mar 2017 02:09:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被”无缘无故”的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://owncloud.org/&quot;&gt;Owncloud&lt;/a&gt;&lt;br&gt;  不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://cozy.io/en/&quot;&gt;Cozy&lt;/a&gt;&lt;br&gt;  同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://nextcloud.com/&quot;&gt;Nextcloud&lt;/a&gt;&lt;br&gt;  Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;综上，我选择 Nextcloud。&lt;br&gt;接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。&lt;br&gt;还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 “&lt;a href=&quot;https://letsencrypt.org/&quot;&gt;Let’s Encrypt&lt;/a&gt;“。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 本文使用 Ubuntu 作为服务器系统，部分特性（比如 &lt;code&gt;ufw&lt;/code&gt;）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 &lt;code&gt;iptables&lt;/code&gt; 代替 &lt;code&gt;ufw&lt;/code&gt;）。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/03/Setup-Nextcloud-using-Docker-and-Nginx/#disqus_thread</comments>
     </item>
     
   </channel>
