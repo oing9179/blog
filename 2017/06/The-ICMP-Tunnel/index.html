@@ -92,9 +92,9 @@
 
 包从哪里来的?
 包去哪儿了?
-Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上就解决了。
+Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
 
-本文包含如下内容:ICM">
+本文包含如下内容:ICMP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The ICMP Tunnel">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/06/The-ICMP-Tunnel/index.html">
@@ -103,22 +103,22 @@ Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发�
 
 包从哪里来的?
 包去哪儿了?
-Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上就解决了。
+Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
 
-本文包含如下内容:ICM">
+本文包含如下内容:ICMP">
 <meta property="og:image" content="https://oing9179.github.io/blog/./ICMP_Tunnel.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/./ICMP_echo-request_header.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/./ICMP_echo-request_header.png">
-<meta property="og:updated_time" content="2017-06-03T03:41:06.714Z">
+<meta property="og:updated_time" content="2017-06-03T03:54:53.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The ICMP Tunnel">
 <meta name="twitter:description" content="Preface经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。研究这项技术期间，出现次数对多的问题大概就是下面这几个：
 
 包从哪里来的?
 包去哪儿了?
-Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上就解决了。
+Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
 
-本文包含如下内容:ICM">
+本文包含如下内容:ICMP">
 <meta name="twitter:image" content="https://oing9179.github.io/blog/./ICMP_Tunnel.png">
 
 
@@ -406,7 +406,7 @@ Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发�
 <ol>
 <li>包从哪里来的?</li>
 <li>包去哪儿了?</li>
-<li>Tunnel 的另一端是谁?<br> 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上就解决了。</li>
+<li>Tunnel 的另一端是谁?<br> 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。</li>
 </ol>
 <p>本文包含如下内容:<br>ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、<code>iptables</code>、Python 代码.</p>
 <a id="more"></a>
@@ -472,10 +472,17 @@ Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发�
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 告诉 Linux kernel 开启 IP 包转发.</span></div><div class="line">sysctl -w net.ipv4.ip_forward=1</div><div class="line"><span class="comment"># SNAT(MASQUERADE 可以当作自动的 SNAT), 自动转换源IP地址(10.0.0.0/8) 转换成发送数据的网卡上的 IP 地址.</span></div><div class="line">iptables -t nat -A POSTROUTING <span class="_">-s</span> 10.0.0.0/8 -o eth0 -j MASQUERADE</div><div class="line"><span class="comment"># 将 tun0 设备上的包转发到 eth0 上, 当然 有包从 eth0 进来也会自动的转发到 tun0 上.</span></div><div class="line">iptables -A FORWARD -i tun0 -o eth0 -j ACCEPT</div></pre></td></tr></table></figure>
 <p>然后无脑的读写 <code>tun0</code> 就能正常的与 Internet 上的主机进行通信了.</p>
 <h1 id="GitHub-Project"><a href="#GitHub-Project" class="headerlink" title="GitHub Project"></a>GitHub Project</h1><p>在 GitHub 上挖了个坑，也不知道什么时候能填完，并且在写这篇 Blog 的时候我几乎不会 Python。感兴趣的话可以到 GitHub 上贡献代码或开个 Issue 之类的。<br><a href="https://github.com/oing9179/python-icmp-tunnel" target="_blank" rel="external">python-icmp-tunnel - A Python implementation of ICMP Tunnel - github.com</a></p>
+<h1 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h1><p>3 Jun 2017:</p>
+<ul>
+<li>首次发布</li>
+<li>添加：引用文章 <a href="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/">Linux Tunnel Device and Route</a></li>
+<li>小修小改</li>
+</ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li><a href="http://www.h3c.com.cn/MiniSite/Technology_Circle/Net_Reptile/The_Five/Home/Catalog/201206/747040_97665_0.htm" target="_blank" rel="external">NAT的特殊处理 (ICMP 包是如何穿透 NAT 的)</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Ping_(networking_utility)" target="_blank" rel="external">ping (networking utility)</a></li>
 <li><a href="https://github.com/oing9179/python-icmp-tunnel" target="_blank" rel="external">python-icmp-tunnel - A Python implementation of ICMP Tunnel - github.com</a></li>
+<li><a href="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/">Linux Tunnel Device and Route</a></li>
 </ol>
 
       
@@ -692,7 +699,7 @@ Tunnel 的另一端是谁? 答：操作系统，由操作系统进行包转发�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-ICMP-Tunnel"><span class="nav-number">2.</span> <span class="nav-text">The ICMP Tunnel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-lrarr-2-默认路由所有包到-tun0"><span class="nav-number">2.1.</span> <span class="nav-text">1 ⇆ 2: 默认路由所有包到 tun0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-lrarr-3-tun0-NAT-IP-包-Python-程序-读写-tun0-的-IP-包"><span class="nav-number">2.2.</span> <span class="nav-text">2 ⇆ 3: tun0 NAT IP 包 / Python 程序 读写 tun0 的 IP 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-lrarr-4-特定静态路由-IP-over-ICMP"><span class="nav-number">2.3.</span> <span class="nav-text">3 ⇆ 4: 特定静态路由 / IP over ICMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用特定路由让包出站"><span class="nav-number">2.3.1.</span> <span class="nav-text">用特定路由让包出站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Payload-传输实际数据"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用 Payload 传输实际数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-读写某个-interface（或者说-网卡）上的-ICMP-包"><span class="nav-number">2.3.3.</span> <span class="nav-text">Python 读写某个 interface（或者说 网卡）上的 ICMP 包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-lrarr-5-amp-lrarr-6-ICMP-包穿透-NAT"><span class="nav-number">2.4.</span> <span class="nav-text">4 ⇆ 5 & ⇆ 6: ICMP 包穿透 NAT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-对-ICMP-包的映射"><span class="nav-number">2.4.1.</span> <span class="nav-text">NAT 对 ICMP 包的映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP-Keepalive"><span class="nav-number">2.4.2.</span> <span class="nav-text">ICMP Keepalive</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-lrarr-7-读写服务器上的网卡上的-ICMP-包"><span class="nav-number">2.5.</span> <span class="nav-text">6 ⇆ 7: 读写服务器上的网卡上的 ICMP 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-lrarr-8-服务器端的-tunnel-读写"><span class="nav-number">2.6.</span> <span class="nav-text">7 ⇆ 8: 服务器端的 tunnel 读写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-lrarr-9-tunnel-与实际目的交互"><span class="nav-number">2.7.</span> <span class="nav-text">8 ⇆ 9: tunnel 与实际目的交互</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GitHub-Project"><span class="nav-number">3.</span> <span class="nav-text">GitHub Project</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-ICMP-Tunnel"><span class="nav-number">2.</span> <span class="nav-text">The ICMP Tunnel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-lrarr-2-默认路由所有包到-tun0"><span class="nav-number">2.1.</span> <span class="nav-text">1 ⇆ 2: 默认路由所有包到 tun0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-lrarr-3-tun0-NAT-IP-包-Python-程序-读写-tun0-的-IP-包"><span class="nav-number">2.2.</span> <span class="nav-text">2 ⇆ 3: tun0 NAT IP 包 / Python 程序 读写 tun0 的 IP 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-lrarr-4-特定静态路由-IP-over-ICMP"><span class="nav-number">2.3.</span> <span class="nav-text">3 ⇆ 4: 特定静态路由 / IP over ICMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用特定路由让包出站"><span class="nav-number">2.3.1.</span> <span class="nav-text">用特定路由让包出站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Payload-传输实际数据"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用 Payload 传输实际数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-读写某个-interface（或者说-网卡）上的-ICMP-包"><span class="nav-number">2.3.3.</span> <span class="nav-text">Python 读写某个 interface（或者说 网卡）上的 ICMP 包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-lrarr-5-amp-lrarr-6-ICMP-包穿透-NAT"><span class="nav-number">2.4.</span> <span class="nav-text">4 ⇆ 5 & ⇆ 6: ICMP 包穿透 NAT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-对-ICMP-包的映射"><span class="nav-number">2.4.1.</span> <span class="nav-text">NAT 对 ICMP 包的映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICMP-Keepalive"><span class="nav-number">2.4.2.</span> <span class="nav-text">ICMP Keepalive</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-lrarr-7-读写服务器上的网卡上的-ICMP-包"><span class="nav-number">2.5.</span> <span class="nav-text">6 ⇆ 7: 读写服务器上的网卡上的 ICMP 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-lrarr-8-服务器端的-tunnel-读写"><span class="nav-number">2.6.</span> <span class="nav-text">7 ⇆ 8: 服务器端的 tunnel 读写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-lrarr-9-tunnel-与实际目的交互"><span class="nav-number">2.7.</span> <span class="nav-text">8 ⇆ 9: tunnel 与实际目的交互</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GitHub-Project"><span class="nav-number">3.</span> <span class="nav-text">GitHub Project</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">4.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
