@@ -70,7 +70,7 @@
 <link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,tun,Tunnel Device,gateway,route," />
+  <meta name="keywords" content="tun,Linux,route,Tunnel Device,gateway," />
 
 
 
@@ -96,7 +96,7 @@
 <meta property="og:description" content="Preface通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。先说路由，然后再带着路由的知识谈 tun 设备。">
 <meta property="og:image" content="https://oing9179.github.io/blog/./wireshark_pcap_ping_10.0.8.7.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/./wireshark_pcap_ping_8.8.8.8.png">
-<meta property="og:updated_time" content="2017-05-13T09:02:38.941Z">
+<meta property="og:updated_time" content="2017-06-02T03:52:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Tunnel Device and Route">
 <meta name="twitter:description" content="Preface通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。先说路由，然后再带着路由的知识谈 tun 设备。">
@@ -416,9 +416,9 @@
 <p>下面来解释一下这么做的用途。</p>
 <h2 id="解释几个路由的例子"><a href="#解释几个路由的例子" class="headerlink" title="解释几个路由的例子"></a>解释几个路由的例子</h2><p>下面来解释上面的5条里前3条路由信息的具体意思，后2条通过下面的解释自己就能猜出来了：</p>
 <ul>
-<li><code>dst: 10.0.8.0, gateway: 0.0.0.0, mask: 255.255.255.0, iface: tun0</code><br>  去往 <code>10.0.8.0</code> 的数据包请通过 <code>tun0</code> 设备的 <code>0.0.0.0</code> 地址发送。<br>  Gateway 为 <code>0.0.0.0</code> 的话，意思就是 不需要通过任何 Gateway （或者说 任何路由器）该数据包就能直接到达 <code>10.0.8.0</code>。<br>  Netmask 在这里意味着：去往 <code>10.0.8.1 ~ 10.0.8.254</code> 的包都行。</li>
-<li><code>dst: 8.8.8.8, gateway: 192.168.1.1, mask: 255.255.255.255, iface: wlan0</code><br>  去往 <code>8.8.8.8</code> 的数据包请通过 <code>wlan0</code> 设备的 <code>192.168.1.1</code> 地址发送。<br>  Netmask 在这里将指定一个确切的地址 <code>8.8.8.8</code>，也就是 只有去往 <code>8.8.8.8</code> 的包才行。</li>
-<li><code>dst: 0.0.0.0, gateway: 192.168.1.1, mask: 0.0.0.0, iface: wlan0</code><br>  去往任意地点的数据包请通过 <code>wlan0</code> 设备的 <code>192.168.1.1</code> 地址发送。<br>  其实这条路由记录代表着 某个数据包没有任何可（相比之下）精确匹配的路由的时候 才使用这个路由，也就是所谓的 “默认路由”。</li>
+<li><code>dst: 10.0.8.0, gateway: 0.0.0.0, mask: 255.255.255.0, iface: tun0</code><br>  去往 <code>10.0.8.0</code> 的数据包请通过 <code>tun0</code> 设备发往网关 <code>0.0.0.0</code>。<br>  Gateway 为 <code>0.0.0.0</code> 的话，意思就是 不需要通过任何 Gateway （或者说 任何路由器）该数据包就能直接到达 <code>10.0.8.0</code>。<br>  Netmask 在这里意味着：去往 <code>10.0.8.1 ~ 10.0.8.254</code> 的包都行。</li>
+<li><code>dst: 8.8.8.8, gateway: 192.168.1.1, mask: 255.255.255.255, iface: wlan0</code><br>  去往 <code>8.8.8.8</code> 的数据包请通过 <code>wlan0</code> 设备发往网关 <code>192.168.1.1</code>。<br>  Netmask 在这里将指定一个确切的地址 <code>8.8.8.8</code>，也就是 只有去往 <code>8.8.8.8</code> 的包才行。</li>
+<li><code>dst: 0.0.0.0, gateway: 192.168.1.1, mask: 0.0.0.0, iface: wlan0</code><br>  去往任意地点的数据包请通过 <code>wlan0</code> 设备发往网关 <code>192.168.1.1</code>。<br>  其实这条路由记录代表着 某个数据包没有任何可（相比之下）精确匹配的路由的时候 才使用这个路由，也就是所谓的 “默认路由”。</li>
 </ul>
 <p>其实到这里我觉得还是解释得不够清楚，请阅读 <a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="external">serverfault.com 的这个答案</a> 后 再来看这小节，应该就能完全明白了。</p>
 <h2 id="Netmask-的简化写法"><a href="#Netmask-的简化写法" class="headerlink" title="Netmask 的简化写法"></a>Netmask 的简化写法</h2><p>比如还是这个：</p>
@@ -452,6 +452,10 @@
 <p><img src="./wireshark_pcap_ping_8.8.8.8.png" alt="wireshark_pcap_ping_8.8.8.8"></p>
 <p>要想恢复默认路由的话，执行下面的命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo route del default</div><div class="line">sudo route add default gw 192.168.1.1 dev wlan0 <span class="comment"># gw 和 dev 填写之前记录下来的默认路由即可</span></div></pre></td></tr></table></figure>
+<h1 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h1><p>12 May 2017: 首次发布<br>2 Jun 2017:</p>
+<ul>
+<li>更正: <code>wlan0</code> 设备不拥有 <code>192.168.1.1</code> 这个地址，而是将包发往 <code>192.168.1.1</code> 这个网关.</li>
+</ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li><a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask" target="_blank" rel="external">Difference between “genmask” and “netmask”? - serverfault.com</a></li>
 <li><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="external">How does IPv4 Subnetting work? - serverfault.com</a></li>
@@ -481,15 +485,15 @@
       
         <div class="post-tags">
           
+            <a href="/blog/tags/tun/" rel="tag"># tun</a>
+          
             <a href="/blog/tags/Linux/" rel="tag"># Linux</a>
           
-            <a href="/blog/tags/tun/" rel="tag"># tun</a>
+            <a href="/blog/tags/route/" rel="tag"># route</a>
           
             <a href="/blog/tags/Tunnel-Device/" rel="tag"># Tunnel Device</a>
           
             <a href="/blog/tags/gateway/" rel="tag"># gateway</a>
-          
-            <a href="/blog/tags/route/" rel="tag"># route</a>
           
         </div>
       
@@ -507,6 +511,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2017/06/Diary-Recruitment/" rel="prev" title="Diary - Recruitment">
+                Diary - Recruitment <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -583,7 +591,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -601,7 +609,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">70</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -669,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由（Route）"><span class="nav-number">2.</span> <span class="nav-text">路由（Route）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IPv4-地址格式科普"><span class="nav-number">2.1.</span> <span class="nav-text">IPv4 地址格式科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Destination-amp-Netmask"><span class="nav-number">2.2.</span> <span class="nav-text">Destination & Netmask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释几个路由的例子"><span class="nav-number">2.3.</span> <span class="nav-text">解释几个路由的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netmask-的简化写法"><span class="nav-number">2.4.</span> <span class="nav-text">Netmask 的简化写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tun-设备"><span class="nav-number">3.</span> <span class="nav-text">tun 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Peer-to-Peer-Point-to-Point"><span class="nav-number">3.1.</span> <span class="nav-text">Peer-to-Peer / Point-to-Point</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-tun-设备"><span class="nav-number">3.2.</span> <span class="nav-text">什么是 tun 设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序操作-tun-设备，那这个程序在-tun-的哪一边呢"><span class="nav-number">3.3.</span> <span class="nav-text">一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Destination-Address-是什么"><span class="nav-number">3.3.1.</span> <span class="nav-text">Destination Address 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-到哪儿了"><span class="nav-number">3.3.2.</span> <span class="nav-text">ping 到哪儿了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截获整个系统的-IP-包"><span class="nav-number">3.3.3.</span> <span class="nav-text">截获整个系统的 IP 包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由（Route）"><span class="nav-number">2.</span> <span class="nav-text">路由（Route）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IPv4-地址格式科普"><span class="nav-number">2.1.</span> <span class="nav-text">IPv4 地址格式科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Destination-amp-Netmask"><span class="nav-number">2.2.</span> <span class="nav-text">Destination & Netmask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释几个路由的例子"><span class="nav-number">2.3.</span> <span class="nav-text">解释几个路由的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netmask-的简化写法"><span class="nav-number">2.4.</span> <span class="nav-text">Netmask 的简化写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tun-设备"><span class="nav-number">3.</span> <span class="nav-text">tun 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Peer-to-Peer-Point-to-Point"><span class="nav-number">3.1.</span> <span class="nav-text">Peer-to-Peer / Point-to-Point</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-tun-设备"><span class="nav-number">3.2.</span> <span class="nav-text">什么是 tun 设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序操作-tun-设备，那这个程序在-tun-的哪一边呢"><span class="nav-number">3.3.</span> <span class="nav-text">一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Destination-Address-是什么"><span class="nav-number">3.3.1.</span> <span class="nav-text">Destination Address 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-到哪儿了"><span class="nav-number">3.3.2.</span> <span class="nav-text">ping 到哪儿了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截获整个系统的-IP-包"><span class="nav-number">3.3.3.</span> <span class="nav-text">截获整个系统的 IP 包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">4.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
