@@ -8,8 +8,27 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Sat, 03 Jun 2017 03:54:53 GMT</pubDate>
+    <pubDate>Wed, 14 Jun 2017 14:53:13 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>日记 - Android 实习测试题</title>
+      <link>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/</link>
+      <guid>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/</guid>
+      <pubDate>Wed, 14 Jun 2017 13:57:00 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;有个小伙伴给我介绍了一家互联网公司，说让我投份简历看看能不能争取到一份校招实习资格。后来和这个公司的 HR 联系了一下，说让我先做做题。题目一共两道：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;第1题可能涉及到公司的业务，这里不做透露。&lt;/li&gt;
+&lt;li&gt;第2题是写一个 Android 自定义控件，是个尺子控件，要求使用系统提供的绘图API（&lt;code&gt;android.graphics.Canvas&lt;/code&gt;）来做。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下面我就说下这次做自定义尺子控件都学到了什么。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>The ICMP Tunnel</title>
@@ -98,36 +117,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>用 Docker &amp; Nginx 搭建自己的账本（Firefly）</title>
-      <link>https://oing9179.github.io/blog/2017/04/Setup-Firefly-the-Financial-Manager-using-Docker-Nginx/</link>
-      <guid>https://oing9179.github.io/blog/2017/04/Setup-Firefly-the-Financial-Manager-using-Docker-Nginx/</guid>
-      <pubDate>Mon, 17 Apr 2017 23:47:03 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;“我辛辛苦苦挣的钱都去哪儿了”，我可不希望以后什么什么时候开始说这种话，于是 搭建个记账软件来记录自己的收支吧。&lt;br&gt;该软件优点如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;资金流向：比如钱都花在哪些类目上了，钱都流向哪些商家了。&lt;/li&gt;
-&lt;li&gt;资金预算：比如打算每个月花多少钱在饮食上。&lt;/li&gt;
-&lt;li&gt;分类 &amp;amp; 标签：比如钱都花在那些类目上了。&lt;/li&gt;
-&lt;li&gt;交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易&lt;/li&gt;
-&lt;li&gt;存钱罐（Piggy Banks）：比如想买个手机但是目前没有那么多预算，可以先弄个存钱罐，然后一点一点的往里面存。相当于一个长远的资金预算。&lt;/li&gt;
-&lt;li&gt;账单：每月水电费之类的。&lt;/li&gt;
-&lt;li&gt;规则：比如填写支出描述时自动填写预设的支出金额。&lt;/li&gt;
-&lt;li&gt;报表（Reports）：按月、季、年生成报表，账户余额、资金流向、短期/长期预算、账单 等等。&lt;/li&gt;
-&lt;li&gt;多货币：软妹币, 美刀, 英镑, 比特币，想用什么就用什么（不支持货币换算，在创建收支记录时候可以手动填写换算前后的金额）。&lt;/li&gt;
-&lt;li&gt;数据导入导出：导入导出 &lt;code&gt;csv&lt;/code&gt; 格式的文件，进一步对资金流向做分析什么的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。&lt;br&gt;另外，该软件作者表示 “不支持自动支付重复性交易”，原因是：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will &lt;em&gt;feel&lt;/em&gt; what you spend.&lt;br&gt;我认为如果你真的想改变你的财务习惯的话，你应该更关心你的账户，你花的钱还有你挣的钱。通过手动地录入每次交易，让你&lt;em&gt;切实体会到&lt;/em&gt;钱都花在哪里了。&lt;/p&gt;
-&lt;/blockquote&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/04/Setup-Firefly-the-Financial-Manager-using-Docker-Nginx/#disqus_thread</comments>
     </item>
     
   </channel>
