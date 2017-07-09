@@ -272,6 +272,174 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://oing9179.github.io/blog/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="oing9179">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="oing9179 的笔记本儿">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="oing9179 的笔记本儿" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/" itemprop="url">
+                  v2ray - 比 Shadowsocks 更强大更复杂的替代品
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-26T17:25:00+08:00">
+                26 November 2016
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://avatars0.githubusercontent.com/u/14110142?v=3&amp;s=400" alt="V2ray icon"></p>
+<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>为了穿越防火墙，瓷国程序员可谓是想尽办法。</p>
+<ol>
+<li>VPN：带有非常明显的特征：IP上层的通信协议全是密文。</li>
+<li>Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。</li>
+</ol>
+<p>后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。</p>
+<p>但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。</p>
+<p>然后有个人写了个纯算法的通信协议叫 <a href="https://github.com/skywind3000/kcp">KCP</a>，然后又有个人用这个协议写了个软件叫 <a href="https://github.com/v2ray/v2ray-core/">v2ray</a>。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：</p>
+<ol>
+<li>使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。</li>
+<li>更小的协议头部以躲避特征检查。</li>
+<li>在协议数据流前面增加伪装，比如伪装成BT下载。</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://oing9179.github.io/blog/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1133,7 +1301,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1151,7 +1319,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">81</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

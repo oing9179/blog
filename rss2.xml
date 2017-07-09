@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 15 Jun 2017 01:44:00 GMT</pubDate>
+    <pubDate>Sun, 09 Jul 2017 04:58:30 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>[Android] 阻止特定 Fragment 被恢复</title>
+      <link>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/</link>
+      <guid>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/</guid>
+      <pubDate>Sun, 09 Jul 2017 04:29:28 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。&lt;br&gt;如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。&lt;br&gt;下面就来解决这个问题。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>日记 - Android 实习测试题</title>
@@ -99,24 +113,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>SysRq 键 - Linux 系统崩掉前最后的救命稻草</title>
-      <link>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/</link>
-      <guid>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/</guid>
-      <pubDate>Thu, 20 Apr 2017 04:24:48 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 &lt;code&gt;pause&lt;/code&gt; &lt;code&gt;break&lt;/code&gt; 和 &lt;code&gt;scroll&lt;/code&gt; 这几个键以外，还有个 &lt;code&gt;SysRq&lt;/code&gt;。然后查了一下，发现这个键在 Linux 下大有用途：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”.&lt;br&gt;在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 “Magic SysRq key”。&lt;br&gt;- &lt;a href=&quot;https://en.wikipedia.org/wiki/System_request#Modern_uses&quot;&gt;System request - wikipedia.org&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/#disqus_thread</comments>
     </item>
     
   </channel>
