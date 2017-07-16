@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Sun, 09 Jul 2017 04:58:30 GMT</pubDate>
+    <pubDate>Sun, 16 Jul 2017 09:46:38 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>[Android] CoordinatorLayout 基本使用方法</title>
+      <link>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/</link>
+      <guid>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/</guid>
+      <pubDate>Sat, 15 Jul 2017 02:28:49 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;近些天在做个 Android app demo，有个需求是 默认情况下放大 App 的图标，向上滚动后把它缩小 给下面的内容留出空间。&lt;br&gt;下面展示的这种效果就是用 &lt;a href=&quot;https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html&quot;&gt;&lt;code&gt;CoordinatorLayout&lt;/code&gt;&lt;/a&gt; 的 &lt;a href=&quot;https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.Behavior.html&quot;&gt;&lt;code&gt;Behavior&lt;/code&gt;&lt;/a&gt; 来做.&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>[Android] 阻止特定 Fragment 被恢复</title>
@@ -95,24 +109,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>日记 - python-pytun scapy / Depression</title>
-      <link>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/</link>
-      <guid>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/</guid>
-      <pubDate>Thu, 04 May 2017 13:33:47 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用 python-pytun 和 scapy 试着弄个包转发工具&lt;/li&gt;
-&lt;li&gt;Depression 与自我恢复&lt;/li&gt;
-&lt;/ul&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/#disqus_thread</comments>
     </item>
     
   </channel>
