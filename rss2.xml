@@ -8,8 +8,26 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Sun, 16 Jul 2017 09:46:38 GMT</pubDate>
+    <pubDate>Fri, 11 Aug 2017 14:01:32 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>[Android] Task &amp; Document / Loader</title>
+      <link>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/</link>
+      <guid>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/</guid>
+      <pubDate>Fri, 11 Aug 2017 13:33:00 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Task 和 Document 的基本概念&lt;/li&gt;
+&lt;li&gt;Loader 的基本概念和用法&lt;/li&gt;
+&lt;/ul&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>[Android] CoordinatorLayout 基本使用方法</title>
@@ -95,20 +113,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/06/Diary-Recruitment/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Linux Tunnel Device and Route</title>
-      <link>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/</link>
-      <guid>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/</guid>
-      <pubDate>Fri, 12 May 2017 04:04:33 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。&lt;br&gt;先说路由，然后再带着路由的知识谈 tun 设备。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/#disqus_thread</comments>
     </item>
     
   </channel>
