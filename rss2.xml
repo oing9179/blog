@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Fri, 11 Aug 2017 14:01:32 GMT</pubDate>
+    <pubDate>Sun, 20 Aug 2017 02:23:57 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）</title>
+      <link>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</link>
+      <guid>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</guid>
+      <pubDate>Sat, 19 Aug 2017 11:40:20 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。&lt;br&gt;今天上午找了一些 Todo-List 软件，然后发现了这个：&lt;a href=&quot;https://github.com/wekan/wekan&quot;&gt;wekan/wekan - github.com&lt;/a&gt;, 已经有 10k+ 个 Star 了。&lt;br&gt;想试用的话，打开 &lt;a href=&quot;https://wekan.github.io/&quot;&gt;wekan.github.io&lt;/a&gt; 然后点击 “Try on Sandstorm”。&lt;br&gt;下面将介绍具体的搭建过程。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>[Android] Task &amp; Document / Loader</title>
@@ -94,25 +108,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/06/The-ICMP-Tunnel/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>Diary - Recruitment</title>
-      <link>https://oing9179.github.io/blog/2017/06/Diary-Recruitment/</link>
-      <guid>https://oing9179.github.io/blog/2017/06/Diary-Recruitment/</guid>
-      <pubDate>Sat, 03 Jun 2017 02:22:41 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;又是好些天没写 blog 了。本篇 blog 包含如下内容:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Grand Theft Auto - Vice City 的哲&amp;#x2642;学版&lt;/li&gt;
-&lt;li&gt;蓝桥 x 拉勾 举办的招聘会&lt;/li&gt;
-&lt;li&gt;招聘会之后到 McDonald’s 就餐&lt;/li&gt;
-&lt;/ul&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/06/Diary-Recruitment/#disqus_thread</comments>
     </item>
     
   </channel>
