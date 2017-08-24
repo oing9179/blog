@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #7daa85;
+  background: #663614;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2772,4 +2772,56 @@ h4 code,
 h5 code,
 h6 code {
   font-size: inherit;
+}
+div.post-body p {
+  margin: 0 !important;
+}
+:target {
+  animation-name: target-blink;
+  animation-duration: 1s;
+  animation-iteration-count: 3;
+}
+@-moz-keyframes target-blink {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #0ff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-webkit-keyframes target-blink {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #0ff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@-o-keyframes target-blink {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #0ff;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes target-blink {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #0ff;
+  }
+  100% {
+    background-color: transparent;
+  }
 }
