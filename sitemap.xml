@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/</loc>
+    
+    <lastmod>2017-10-09T04:15:02.113Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</loc>
     
     <lastmod>2017-08-24T08:58:00.000Z</lastmod>

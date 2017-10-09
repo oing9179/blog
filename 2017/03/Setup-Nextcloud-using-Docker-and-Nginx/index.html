@@ -500,6 +500,15 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
 <li><a href="https://play.google.com/store/apps/details?id=com.nextcloud.client" target="_blank" rel="external">Nextcloud - play.google.com</a></li>
 <li><a href="https://itunes.apple.com/us/app/nextcloud/id1125420102" target="_blank" rel="external">Nextcloud - itunes.apple.com</a> 售价: $0.99</li>
 </ul>
+<h1 id="更新-Nextcloud"><a href="#更新-Nextcloud" class="headerlink" title="更新 Nextcloud"></a>更新 Nextcloud</h1><ol>
+<li><code>git pull</code></li>
+<li><code>docker-compose build</code></li>
+<li><code>docker start --attach nextcloud-app</code> then <code>&lt;CTRL+C&gt;</code> and wait it exits.</li>
+<li><code>docker exec -it --user www-data nextcloud-app /bin/bash -il</code></li>
+<li><code>php occ maintenance:mode --off</code></li>
+<li><code>php occ upgrade</code> then <code>exit</code></li>
+<li>Check it out in web broser.</li>
+</ol>
 <h1 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h1><p>15 Mar 2017: 首次发布<br>16 Mar 2017:</p>
 <ul>
 <li>补上 Docker 容器内访问主机提供的 MariaDB</li>
@@ -642,7 +651,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -651,7 +660,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -660,7 +669,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">87</span>
+                <span class="site-state-item-count">89</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -728,7 +737,7 @@ Owncloud  不错的候选，不过一些高级特性（比如 Android/iOS app, �
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nginx"><span class="nav-number">2.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-配置-MariaDB"><span class="nav-number">3.</span> <span class="nav-text">安装 / 配置 MariaDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nextcloud"><span class="nav-number">4.</span> <span class="nav-text">安装 Nextcloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-SSL-证书-amp-Nginx-amp-子域名"><span class="nav-number">5.</span> <span class="nav-text">配置 SSL 证书 & Nginx & 子域名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建子域名"><span class="nav-number">5.1.</span> <span class="nav-text">创建子域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSL-证书"><span class="nav-number">5.2.</span> <span class="nav-text">配置 SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Nginx"><span class="nav-number">5.3.</span> <span class="nav-text">配置 Nginx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Nextcloud"><span class="nav-number">6.</span> <span class="nav-text">配置 Nextcloud</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-trusted-domains"><span class="nav-number">6.1.</span> <span class="nav-text">配置 trusted_domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-overwritehost"><span class="nav-number">6.2.</span> <span class="nav-text">配置 overwritehost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置缓存"><span class="nav-number">6.3.</span> <span class="nav-text">配置缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主机的防火墙配置"><span class="nav-number">6.4.</span> <span class="nav-text">主机的防火墙配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始设置"><span class="nav-number">6.5.</span> <span class="nav-text">初始设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署完成"><span class="nav-number">7.</span> <span class="nav-text">部署完成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">8.</span> <span class="nav-text">更新历史</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nginx"><span class="nav-number">2.</span> <span class="nav-text">安装 Nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-配置-MariaDB"><span class="nav-number">3.</span> <span class="nav-text">安装 / 配置 MariaDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-Nextcloud"><span class="nav-number">4.</span> <span class="nav-text">安装 Nextcloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-SSL-证书-amp-Nginx-amp-子域名"><span class="nav-number">5.</span> <span class="nav-text">配置 SSL 证书 & Nginx & 子域名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建子域名"><span class="nav-number">5.1.</span> <span class="nav-text">创建子域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSL-证书"><span class="nav-number">5.2.</span> <span class="nav-text">配置 SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Nginx"><span class="nav-number">5.3.</span> <span class="nav-text">配置 Nginx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Nextcloud"><span class="nav-number">6.</span> <span class="nav-text">配置 Nextcloud</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-trusted-domains"><span class="nav-number">6.1.</span> <span class="nav-text">配置 trusted_domains</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-overwritehost"><span class="nav-number">6.2.</span> <span class="nav-text">配置 overwritehost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置缓存"><span class="nav-number">6.3.</span> <span class="nav-text">配置缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主机的防火墙配置"><span class="nav-number">6.4.</span> <span class="nav-text">主机的防火墙配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始设置"><span class="nav-number">6.5.</span> <span class="nav-text">初始设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署完成"><span class="nav-number">7.</span> <span class="nav-text">部署完成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新-Nextcloud"><span class="nav-number">8.</span> <span class="nav-text">更新 Nextcloud</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">9.</span> <span class="nav-text">更新历史</span></a></li></ol></div>
             
 
           </div>

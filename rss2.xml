@@ -8,8 +8,22 @@
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Develop with pleasure!</description>
-    <pubDate>Thu, 24 Aug 2017 08:58:00 GMT</pubDate>
+    <pubDate>Mon, 09 Oct 2017 04:15:02 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Kotlin 入门笔记</title>
+      <link>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/</link>
+      <guid>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/</guid>
+      <pubDate>Mon, 09 Oct 2017 04:13:00 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。&lt;br&gt;下文总结一些学习过程中的疑问和解答。&lt;br&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）</title>
@@ -88,26 +102,6 @@
       </description>
       
       <comments>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>The ICMP Tunnel</title>
-      <link>https://oing9179.github.io/blog/2017/06/The-ICMP-Tunnel/</link>
-      <guid>https://oing9179.github.io/blog/2017/06/The-ICMP-Tunnel/</guid>
-      <pubDate>Sat, 03 Jun 2017 03:36:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。&lt;br&gt;研究这项技术期间，出现次数对多的问题大概就是下面这几个：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;包从哪里来的?&lt;/li&gt;
-&lt;li&gt;包去哪儿了?&lt;/li&gt;
-&lt;li&gt;Tunnel 的另一端是谁?&lt;br&gt; 答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;本文包含如下内容:&lt;br&gt;ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、&lt;code&gt;iptables&lt;/code&gt;、Python 代码.&lt;/p&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/06/The-ICMP-Tunnel/#disqus_thread</comments>
     </item>
     
   </channel>
