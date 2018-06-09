@@ -1685,7 +1685,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #663614;
+  background: #54ffff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2780,6 +2780,12 @@ div.post-body p {
   animation-name: target-blink;
   animation-duration: 1s;
   animation-iteration-count: 3;
+}
+.highlight .line:nth-child(5n) {
+  background-color: #fafafa;
+}
+.highlight .line:hover {
+  background-color: #fcfcfc;
 }
 @-moz-keyframes target-blink {
   0% {

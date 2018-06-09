@@ -70,7 +70,7 @@
 <link href="/blog/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,tun,Tunnel Device,gateway,route," />
+  <meta name="keywords" content="Linux,tun,route,Tunnel Device,gateway," />
 
 
 
@@ -89,18 +89,20 @@
 
 
 <meta name="description" content="Preface通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。先说路由，然后再带着路由的知识谈 tun 设备。">
+<meta name="keywords" content="Linux,tun,route,Tunnel Device,gateway">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux Tunnel Device and Route">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
 <meta property="og:description" content="Preface通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。先说路由，然后再带着路由的知识谈 tun 设备。">
-<meta property="og:image" content="https://oing9179.github.io/blog/./wireshark_pcap_ping_10.0.8.7.png">
-<meta property="og:image" content="https://oing9179.github.io/blog/./wireshark_pcap_ping_8.8.8.8.png">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/wireshark_pcap_ping_10.0.8.7.png">
+<meta property="og:image" content="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/wireshark_pcap_ping_8.8.8.8.png">
 <meta property="og:updated_time" content="2017-06-02T03:52:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux Tunnel Device and Route">
 <meta name="twitter:description" content="Preface通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。先说路由，然后再带着路由的知识谈 tun 设备。">
-<meta name="twitter:image" content="https://oing9179.github.io/blog/./wireshark_pcap_ping_10.0.8.7.png">
+<meta name="twitter:image" content="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/wireshark_pcap_ping_10.0.8.7.png">
 
 
 
@@ -385,31 +387,31 @@
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。<br>先说路由，然后再带着路由的知识谈 tun 设备。<br><a id="more"></a></p>
 <h1 id="路由（Route）"><a href="#路由（Route）" class="headerlink" title="路由（Route）"></a>路由（Route）</h1><p>运行命令 <code>route -n</code> 将得到如下输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Kernel IP routing table</div><div class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</div><div class="line">0.0.0.0         192.168.1.1     0.0.0.0         UG    600    0        0 wlan0</div><div class="line">8.8.8.8         192.168.1.1     255.255.255.255 UGH   0      0        0 wlan0</div><div class="line">10.0.8.0        0.0.0.0         255.255.255.0   U     0      0        0 tun0</div><div class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0</div><div class="line">192.168.1.0     0.0.0.0         255.255.255.0   U     600    0        0 wlan0</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         192.168.1.1     0.0.0.0         UG    600    0        0 wlan0</span><br><span class="line">8.8.8.8         192.168.1.1     255.255.255.255 UGH   0      0        0 wlan0</span><br><span class="line">10.0.8.0        0.0.0.0         255.255.255.0   U     0      0        0 tun0</span><br><span class="line">169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0</span><br><span class="line">192.168.1.0     0.0.0.0         255.255.255.0   U     600    0        0 wlan0</span><br></pre></td></tr></table></figure>
 <p>只看 <code>Destination</code> <code>Gateway</code> <code>Genmask</code> <code>Iface</code> 这4列就够了，下面将对这4列的含义一一进行解释。</p>
 <ul>
 <li>Destination:<br>  数据包想要去的目的地，需要和 Netmask 配合使用。</li>
-<li>Genmask（Netmask）:<br>  与 Destination 配合使用，稍后会举例子。<br>  <strong>注意：</strong> 后面我将使用 <strong>Netmask</strong> 一词来代替 <strong>Genmask</strong>（According to <a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask" target="_blank" rel="external">Reference #1</a>）。</li>
+<li>Genmask（Netmask）:<br>  与 Destination 配合使用，稍后会举例子。<br>  <strong>注意：</strong> 后面我将使用 <strong>Netmask</strong> 一词来代替 <strong>Genmask</strong>（According to <a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask" target="_blank" rel="noopener">Reference #1</a>）。</li>
 <li>Gateway:<br>  数据包想要到达目的地的话，需要从这个地址出去，也就是数据包的出入口。需要和 Iface 配合来确定一个唯一的出口。</li>
 <li>Iface:<br>  全称 Interface，其实指的是具体的设备，比如这里的 <code>wlan0</code> 就是无线网卡。</li>
 </ul>
 <h2 id="IPv4-地址格式科普"><a href="#IPv4-地址格式科普" class="headerlink" title="IPv4 地址格式科普"></a>IPv4 地址格式科普</h2><p>IPv4 地址总长 32 bit，每 8 bit 为一组。如果每个 bit 都是 <code>1</code> 的话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">11111111.11111111.11111111.11111111</div><div class="line">  255   .  255   .  255   .  255</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">11111111.11111111.11111111.11111111</span><br><span class="line">  255   .  255   .  255   .  255</span><br></pre></td></tr></table></figure>
 <p>再拿 OpenDNS 的 resolver1.opendns.com 的 IP 地址为例:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   208  .   67   .   222  .  222</div><div class="line">转换成 二进制 表示的 IP 地址就是:</div><div class="line">10110100.01000011.11011110.11011110</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">   208  .   67   .   222  .  222</span><br><span class="line">转换成 二进制 表示的 IP 地址就是:</span><br><span class="line">10110100.01000011.11011110.11011110</span><br></pre></td></tr></table></figure>
 <h2 id="Destination-amp-Netmask"><a href="#Destination-amp-Netmask" class="headerlink" title="Destination &amp; Netmask"></a>Destination &amp; Netmask</h2><blockquote>
-<p><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="external">How does IPv4 Subnetting work? - serverfault.com</a></p>
+<p><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="noopener">How does IPv4 Subnetting work? - serverfault.com</a></p>
 </blockquote>
 <p>Netmask，中文译名为 子网掩码。把单词拆成 net 和 mask 就能更好的理解了。前面提到 Destination 需要和 Netmask 配合使用，配合的方式也很有意思。下面将以上面输出的第3条（也就是 <code>10.0.8.0</code>）为例：</p>
 <ol>
 <li><p>首先将 Destination 也就是 <code>10.0.8.0</code> 转换成二进制的格式：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">   10   .   0    .   8    .   0</div><div class="line">00001010.00000000.00001000.00000000</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   10   .   0    .   8    .   0</span><br><span class="line">00001010.00000000.00001000.00000000</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>再将 Netmask 转换成二进制的格式：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  255   .  255   .  255   .   0</div><div class="line">11111111.11111111.11111111.00000000</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  255   .  255   .  255   .   0</span><br><span class="line">11111111.11111111.11111111.00000000</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>然后把它们放在一起</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">   10   .   0    .   8    .   0</div><div class="line">00001010.00000000.00001000.00000000</div><div class="line"></div><div class="line">11111111.11111111.11111111.00000000</div><div class="line">  255   .  255   .  255   .   0</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   10   .   0    .   8    .   0</span><br><span class="line">00001010.00000000.00001000.00000000</span><br><span class="line"></span><br><span class="line">11111111.11111111.11111111.00000000</span><br><span class="line">  255   .  255   .  255   .   0</span><br></pre></td></tr></table></figure>
 <p> Netmask 的是用来给网络分片儿的，用它把 IP 地址 “mask” 一下（就是 <code>bit and</code> 操作），然后就只剩下后面的 8bit <code>00000000</code> 了。除去 <code>0</code> 和 <code>255</code> 这两个广播地址，现在剩下了 <code>[1 - 254]</code> 这些地址可用。</p>
 </li>
 </ol>
@@ -420,9 +422,9 @@
 <li><code>dst: 8.8.8.8, gateway: 192.168.1.1, mask: 255.255.255.255, iface: wlan0</code><br>  去往 <code>8.8.8.8</code> 的数据包请通过 <code>wlan0</code> 设备发往网关 <code>192.168.1.1</code>。<br>  Netmask 在这里将指定一个确切的地址 <code>8.8.8.8</code>，也就是 只有去往 <code>8.8.8.8</code> 的包才行。</li>
 <li><code>dst: 0.0.0.0, gateway: 192.168.1.1, mask: 0.0.0.0, iface: wlan0</code><br>  去往任意地点的数据包请通过 <code>wlan0</code> 设备发往网关 <code>192.168.1.1</code>。<br>  其实这条路由记录代表着 某个数据包没有任何可（相比之下）精确匹配的路由的时候 才使用这个路由，也就是所谓的 “默认路由”。</li>
 </ul>
-<p>其实到这里我觉得还是解释得不够清楚，请阅读 <a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="external">serverfault.com 的这个答案</a> 后 再来看这小节，应该就能完全明白了。</p>
+<p>其实到这里我觉得还是解释得不够清楚，请阅读 <a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="noopener">serverfault.com 的这个答案</a> 后 再来看这小节，应该就能完全明白了。</p>
 <h2 id="Netmask-的简化写法"><a href="#Netmask-的简化写法" class="headerlink" title="Netmask 的简化写法"></a>Netmask 的简化写法</h2><p>比如还是这个：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">   10   .   0    .   8    .   0</div><div class="line">00001010.00000000.00001000.00000000</div><div class="line"></div><div class="line">11111111.11111111.11111111.00000000</div><div class="line">  255   .  255   .  255   .   0</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   10   .   0    .   8    .   0</span><br><span class="line">00001010.00000000.00001000.00000000</span><br><span class="line"></span><br><span class="line">11111111.11111111.11111111.00000000</span><br><span class="line">  255   .  255   .  255   .   0</span><br></pre></td></tr></table></figure>
 <p>上面的 IP 地址和 Netmask 可以简化成这样：<code>10.0.8.0/24</code>，<code>24</code> 就是 <code>255.255.255.0</code> 转换成二进制后 <code>11111111.11111111.11111111.00000000</code> 的 <code>1</code> 的数量。</p>
 <h1 id="tun-设备"><a href="#tun-设备" class="headerlink" title="tun 设备"></a><code>tun</code> 设备</h1><blockquote>
 <p>这个不叫 “豚设备”，tun 是 Tunnel 的简称，所以叫 通道设备。</p>
@@ -438,29 +440,29 @@
 </ol>
 <h2 id="一个程序操作-tun-设备，那这个程序在-tun-的哪一边呢"><a href="#一个程序操作-tun-设备，那这个程序在-tun-的哪一边呢" class="headerlink" title="一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?"></a>一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?</h2><p>这个问题困扰了有一个多星期（从上一篇 blog 发布之前就是）。其实最开始我是这样想的：别的程序往 tun 的一头写数据，我的程序从另一头读数据。没错，的确是这样。但后来我通过仔细的研究和了解之后，才敢把这个结论写出来。</p>
 <h3 id="Destination-Address-是什么"><a href="#Destination-Address-是什么" class="headerlink" title="Destination Address 是什么"></a><code>Destination Address</code> 是什么</h3><p><code>python-pytun</code> 这库可以仅通过几行代码就可以创建一个 tun 设备，在启动 tun 设备之前需要配置几个参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">tun = pytun.TunTapDevice(&quot;tun0&quot;, pytun.IFF_TUN | pytun.IFF_NO_PI)</div><div class="line">tun.mtu = 1350 # MTU，就是 最大可以接受多大的 IP 包，单位为 bytes</div><div class="line">tun.addr = &quot;10.0.8.1&quot; # 我的程序从通道里读出来的数据 都将来自于这个地址</div><div class="line">tun.dstaddr = &quot;10.0.8.2&quot; # Point-to-Point 的另一点的地址，稍后做解释</div><div class="line">tun.netmask = &quot;255.255.255.0&quot; # Netmask，不用多说了</div><div class="line">print(&quot;tun created.&quot;)</div><div class="line">tun.up() # 启动 tun 设备</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tun = pytun.TunTapDevice(&quot;tun0&quot;, pytun.IFF_TUN | pytun.IFF_NO_PI)</span><br><span class="line">tun.mtu = 1350 # MTU，就是 最大可以接受多大的 IP 包，单位为 bytes</span><br><span class="line">tun.addr = &quot;10.0.8.1&quot; # 我的程序从通道里读出来的数据 都将来自于这个地址</span><br><span class="line">tun.dstaddr = &quot;10.0.8.2&quot; # Point-to-Point 的另一点的地址，稍后做解释</span><br><span class="line">tun.netmask = &quot;255.255.255.0&quot; # Netmask，不用多说了</span><br><span class="line">print(&quot;tun created.&quot;)</span><br><span class="line">tun.up() # 启动 tun 设备</span><br></pre></td></tr></table></figure>
 <p>创建设备后执行命令 <code>ifconfig</code> 看到了这样的输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  </div><div class="line">          inet addr:10.0.8.1  P-t-P:10.0.8.2  Mask:255.255.255.0</div><div class="line">          inet6 addr: fe80::2912:af21:a6fb:7f01/64 Scope:Link</div><div class="line">          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1350  Metric:1</div><div class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</div><div class="line">          TX packets:3 errors:0 dropped:0 overruns:0 carrier:0</div><div class="line">          collisions:0 txqueuelen:500 </div><div class="line">          RX bytes:0 (0.0 B)  TX bytes:144 (144.0 B)</div></pre></td></tr></table></figure>
-<p><code>inet addr</code> 这个代表的是这个 tunnel 的入口的地址，那那个 <code>P-t-P</code> 地址是做什么用的？<br>经过查阅许多资料后（其中包括 <a href="https://stackoverflow.com/questions/36375530/what-is-the-destination-address-for-a-tap-tun-device/37327065#37327065" target="_blank" rel="external">StackOverflow 上的这个问题</a>）才明白，<code>P-t-P</code> 地址是用来将一个 tunnel 连接到另一个 tunnel 用的，也就是 <code>P-t-P</code> 的意思就是 “Point to Point”。不过现在已经用不上这个了（因为有 Peer-to-Peer 并且 路由器技术也成熟了），但为了兼容性仍然保留这个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  </span><br><span class="line">          inet addr:10.0.8.1  P-t-P:10.0.8.2  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::2912:af21:a6fb:7f01/64 Scope:Link</span><br><span class="line">          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1350  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:3 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:500 </span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:144 (144.0 B)</span><br></pre></td></tr></table></figure>
+<p><code>inet addr</code> 这个代表的是这个 tunnel 的入口的地址，那那个 <code>P-t-P</code> 地址是做什么用的？<br>经过查阅许多资料后（其中包括 <a href="https://stackoverflow.com/questions/36375530/what-is-the-destination-address-for-a-tap-tun-device/37327065#37327065" target="_blank" rel="noopener">StackOverflow 上的这个问题</a>）才明白，<code>P-t-P</code> 地址是用来将一个 tunnel 连接到另一个 tunnel 用的，也就是 <code>P-t-P</code> 的意思就是 “Point to Point”。不过现在已经用不上这个了（因为有 Peer-to-Peer 并且 路由器技术也成熟了），但为了兼容性仍然保留这个参数。</p>
 <h3 id="ping-到哪儿了"><a href="#ping-到哪儿了" class="headerlink" title="ping 到哪儿了"></a><code>ping</code> 到哪儿了</h3><p>执行命令 <code>ping 10.0.8.7</code>，按照路由表里的记录 <code>dst: 10.0.8.0, gateway: 0.0.0.0, netmask: 255.255.255.0, dev: tun0</code>，这个 ICMP echo-request（也就是 ping 请求包）应该发到 <code>10.0.8.7</code> 了，但是 Wireshark 抓包显示 这个ping没有收到 ICMP echo-response（也就是 ping 的响应包）。那这个 ping 包去哪儿了？黑洞？</p>
 <p><img src="./wireshark_pcap_ping_10.0.8.7.png" alt="wireshark_pcap_ping_10.0.8.7"></p>
 <p>后来我才反应过来，既然是 tun 设备，那这个包从 <code>10.0.8.1</code> 发往 <code>10.0.8.7</code> 的路径应该是 包到了通道的出口然后被我的程序收到，但我的程序未做任何处理，相当于直接丢掉包了。<br>本意上我想 ping 这个网段里的 <code>10.0.8.7</code>，但实际情况不是这样。这个 ping 包 ping 的不是 <code>tun0</code> 的 <code>10.0.8.0/24</code> 网段里的客户端，而是希望通过出口发往点对点的另一端的 <code>10.0.8.0/24</code> 网段里的 <code>10.0.8.7</code>。<br>这样的话，ping 丢包的问题 和 destination address 的意义就能互相解释通了。</p>
 <h3 id="截获整个系统的-IP-包"><a href="#截获整个系统的-IP-包" class="headerlink" title="截获整个系统的 IP 包"></a>截获整个系统的 IP 包</h3><p>既然 tun 设备的模型以及工作方式都清楚了，那就好办了，几条命令就能解决：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo route -n <span class="comment"># 把默认路由记录记下来，比如是 "gateway: 192.168.1.1, iface: wlan0"</span></div><div class="line">sudo route del default <span class="comment"># 删除默认路由</span></div><div class="line">sudo route add default gw 10.0.8.2 dev tun0 <span class="comment"># Gateway(gw) 的地址在 10.0.8.0/24 这网段里就行，dev 就写设备名称 比如 tun0.</span></div><div class="line">sudo route -n <span class="comment"># 然后路由表的输出大概就是这样：</span></div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</div><div class="line">0.0.0.0         10.0.8.2        0.0.0.0         UG    0      0        0 tun0</div><div class="line">10.0.8.0        0.0.0.0         255.255.255.0   U     0      0        0 tun0</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo route -n <span class="comment"># 把默认路由记录记下来，比如是 "gateway: 192.168.1.1, iface: wlan0"</span></span><br><span class="line">sudo route del default <span class="comment"># 删除默认路由</span></span><br><span class="line">sudo route add default gw 10.0.8.2 dev tun0 <span class="comment"># Gateway(gw) 的地址在 10.0.8.0/24 这网段里就行，dev 就写设备名称 比如 tun0.</span></span><br><span class="line">sudo route -n <span class="comment"># 然后路由表的输出大概就是这样：</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         10.0.8.2        0.0.0.0         UG    0      0        0 tun0</span><br><span class="line">10.0.8.0        0.0.0.0         255.255.255.0   U     0      0        0 tun0</span><br></pre></td></tr></table></figure>
 <p>上面的路由表翻译出来就是：数据包将默认通过 <code>tun0</code> 设备发往 <code>10.0.8.2</code> 地址，<code>10.0.8.0</code> 这条路由接收来自 <code>10.0.8.2</code> 的包，这样就能把整个系统发往外面的包都拦截了。<code>ping 8.8.8.8</code> 效果如下图：</p>
 <p><img src="./wireshark_pcap_ping_8.8.8.8.png" alt="wireshark_pcap_ping_8.8.8.8"></p>
 <p>要想恢复默认路由的话，执行下面的命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo route del default</div><div class="line">sudo route add default gw 192.168.1.1 dev wlan0 <span class="comment"># gw 和 dev 填写之前记录下来的默认路由即可</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo route del default</span><br><span class="line">sudo route add default gw 192.168.1.1 dev wlan0 <span class="comment"># gw 和 dev 填写之前记录下来的默认路由即可</span></span><br></pre></td></tr></table></figure>
 <h1 id="更新历史"><a href="#更新历史" class="headerlink" title="更新历史"></a>更新历史</h1><p>12 May 2017: 首次发布<br>2 Jun 2017:</p>
 <ul>
 <li>更正: <code>wlan0</code> 设备不拥有 <code>192.168.1.1</code> 这个地址，而是将包发往 <code>192.168.1.1</code> 这个网关.</li>
 </ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
-<li><a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask" target="_blank" rel="external">Difference between “genmask” and “netmask”? - serverfault.com</a></li>
-<li><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="external">How does IPv4 Subnetting work? - serverfault.com</a></li>
-<li><a href="http://www.networking-forum.com/viewtopic.php?t=31077#p210840" target="_blank" rel="external">Difference between Peer-to-Peer and Point-to-Point</a></li>
-<li><a href="https://stackoverflow.com/questions/36375530/what-is-the-destination-address-for-a-tap-tun-device/37327065#37327065" target="_blank" rel="external">What is the “destination address” for a TAP/TUN device?</a></li>
+<li><a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask" target="_blank" rel="noopener">Difference between “genmask” and “netmask”? - serverfault.com</a></li>
+<li><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836" target="_blank" rel="noopener">How does IPv4 Subnetting work? - serverfault.com</a></li>
+<li><a href="http://www.networking-forum.com/viewtopic.php?t=31077#p210840" target="_blank" rel="noopener">Difference between Peer-to-Peer and Point-to-Point</a></li>
+<li><a href="https://stackoverflow.com/questions/36375530/what-is-the-destination-address-for-a-tap-tun-device/37327065#37327065" target="_blank" rel="noopener">What is the “destination address” for a TAP/TUN device?</a></li>
 </ol>
 
       
@@ -489,11 +491,11 @@
           
             <a href="/blog/tags/tun/" rel="tag"># tun</a>
           
+            <a href="/blog/tags/route/" rel="tag"># route</a>
+          
             <a href="/blog/tags/Tunnel-Device/" rel="tag"># Tunnel Device</a>
           
             <a href="/blog/tags/gateway/" rel="tag"># gateway</a>
-          
-            <a href="/blog/tags/route/" rel="tag"># route</a>
           
         </div>
       
@@ -584,14 +586,14 @@
                src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
                alt="oing9179" />
           <p class="site-author-name" itemprop="name">oing9179</p>
-          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+          <p class="site-description motion-element" itemprop="description">A notepad.</p>
         </div>
         <nav class="site-state motion-element">
         
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -600,7 +602,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -609,7 +611,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">90</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -677,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由（Route）"><span class="nav-number">2.</span> <span class="nav-text">路由（Route）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IPv4-地址格式科普"><span class="nav-number">2.1.</span> <span class="nav-text">IPv4 地址格式科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Destination-amp-Netmask"><span class="nav-number">2.2.</span> <span class="nav-text">Destination & Netmask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释几个路由的例子"><span class="nav-number">2.3.</span> <span class="nav-text">解释几个路由的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netmask-的简化写法"><span class="nav-number">2.4.</span> <span class="nav-text">Netmask 的简化写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tun-设备"><span class="nav-number">3.</span> <span class="nav-text">tun 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Peer-to-Peer-Point-to-Point"><span class="nav-number">3.1.</span> <span class="nav-text">Peer-to-Peer / Point-to-Point</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-tun-设备"><span class="nav-number">3.2.</span> <span class="nav-text">什么是 tun 设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序操作-tun-设备，那这个程序在-tun-的哪一边呢"><span class="nav-number">3.3.</span> <span class="nav-text">一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Destination-Address-是什么"><span class="nav-number">3.3.1.</span> <span class="nav-text">Destination Address 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-到哪儿了"><span class="nav-number">3.3.2.</span> <span class="nav-text">ping 到哪儿了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截获整个系统的-IP-包"><span class="nav-number">3.3.3.</span> <span class="nav-text">截获整个系统的 IP 包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">4.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由（Route）"><span class="nav-number">2.</span> <span class="nav-text">路由（Route）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IPv4-地址格式科普"><span class="nav-number">2.1.</span> <span class="nav-text">IPv4 地址格式科普</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Destination-amp-Netmask"><span class="nav-number">2.2.</span> <span class="nav-text">Destination &amp; Netmask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释几个路由的例子"><span class="nav-number">2.3.</span> <span class="nav-text">解释几个路由的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netmask-的简化写法"><span class="nav-number">2.4.</span> <span class="nav-text">Netmask 的简化写法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tun-设备"><span class="nav-number">3.</span> <span class="nav-text">tun 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Peer-to-Peer-Point-to-Point"><span class="nav-number">3.1.</span> <span class="nav-text">Peer-to-Peer / Point-to-Point</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-tun-设备"><span class="nav-number">3.2.</span> <span class="nav-text">什么是 tun 设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序操作-tun-设备，那这个程序在-tun-的哪一边呢"><span class="nav-number">3.3.</span> <span class="nav-text">一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Destination-Address-是什么"><span class="nav-number">3.3.1.</span> <span class="nav-text">Destination Address 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-到哪儿了"><span class="nav-number">3.3.2.</span> <span class="nav-text">ping 到哪儿了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#截获整个系统的-IP-包"><span class="nav-number">3.3.3.</span> <span class="nav-text">截获整个系统的 IP 包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">4.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
@@ -698,7 +700,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

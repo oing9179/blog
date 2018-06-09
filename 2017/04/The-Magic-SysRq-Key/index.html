@@ -88,22 +88,18 @@
 
 
 
-<meta name="description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
-
-In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
+<meta name="description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：  In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
+<meta name="keywords" content="Linux,SysRq">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SysRq 键 - Linux 系统崩掉前最后的救命稻草">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
-<meta property="og:description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
-
-In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
-<meta property="og:updated_time" content="2017-04-20T12:40:35.371Z">
+<meta property="og:description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：  In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-04-20T12:40:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SysRq 键 - Linux 系统崩掉前最后的救命稻草">
-<meta name="twitter:description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
-
-In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
+<meta name="twitter:description" content="Preface今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：  In Linux, the kernel can be configured to provide functions for system debugging and crash recove">
 
 
 
@@ -388,7 +384,7 @@ In Linux, the kernel can be configured to provide functions for system debugging
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 <code>pause</code> <code>break</code> 和 <code>scroll</code> 这几个键以外，还有个 <code>SysRq</code>。然后查了一下，发现这个键在 Linux 下大有用途：</p>
 <blockquote>
-<p>In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”.<br>在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 “Magic SysRq key”。<br>- <a href="https://en.wikipedia.org/wiki/System_request#Modern_uses" target="_blank" rel="external">System request - wikipedia.org</a></p>
+<p>In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”.<br>在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 “Magic SysRq key”。<br>- <a href="https://en.wikipedia.org/wiki/System_request#Modern_uses" target="_blank" rel="noopener">System request - wikipedia.org</a></p>
 </blockquote>
 <p>当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。<br><a id="more"></a></p>
 <h1 id="sysctl-简单介绍"><a href="#sysctl-简单介绍" class="headerlink" title="sysctl 简单介绍"></a><code>sysctl</code> 简单介绍</h1><p>有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 <code>/etc/sysctl.conf</code> 并配合 <code>sysctl</code> 命令使配置生效。<br><code>sysctl.conf</code> 文件的基本格式：每一行放一条属性，格式为 <code>&lt;variable&gt;=&lt;value&gt;</code>，比如开启 SysRq 的话就是 <code>kernel.sysrq=1</code>。<br>修改 <code>sysctl.conf</code> 后不会立即生效，需要执行命令 <code>sysctl -p</code> 来重新载入 <code>/etc/sysctl.conf</code>。<br>还有一种方法可以使配置立即生效：使用命令 <code>sysctl -w &lt;variable&gt;=&lt;value&gt;</code>，但重启系统后会失效。</p>
@@ -529,7 +525,7 @@ In Linux, the kernel can be configured to provide functions for system debugging
 </tbody>
 </table>
 <p>比如如果我需要 “同步命令” “重新挂载为只读” “允许重启/关机” “修改对键盘的控制” “给进程发信号”，那就把它们对应的十进制数字都加起来就行了，也就是 <code>16(同步命令) + 32(重新挂载为只读) + 128(允许重启/关机) + 4(修改对键盘的控制) + 64(给进程发信号) = 244</code>，然后设置 <code>kernel.sysrq=244</code> 就能拥有上述功能了。</p>
-<h1 id="使用-SysRq-快捷键"><a href="#使用-SysRq-快捷键" class="headerlink" title="使用 SysRq 快捷键"></a>使用 SysRq 快捷键</h1><p>使用方法很简单，按下 <code>Alt + SysRq + 下表里任一字母</code>。<br><strong>注：</strong> 有些 SysRq 键和 PrintScreen 是同一个键，但使用方法和上面一样。<br><strong>注2：</strong> 下面表格翻译得很烂，建议阅读 <a href="https://en.wikipedia.org/wiki/Magic_SysRq_key" target="_blank" rel="external">原文</a>。</p>
+<h1 id="使用-SysRq-快捷键"><a href="#使用-SysRq-快捷键" class="headerlink" title="使用 SysRq 快捷键"></a>使用 SysRq 快捷键</h1><p>使用方法很简单，按下 <code>Alt + SysRq + 下表里任一字母</code>。<br><strong>注：</strong> 有些 SysRq 键和 PrintScreen 是同一个键，但使用方法和上面一样。<br><strong>注2：</strong> 下面表格翻译得很烂，建议阅读 <a href="https://en.wikipedia.org/wiki/Magic_SysRq_key" target="_blank" rel="noopener">原文</a>。</p>
 <table>
 <thead>
 <tr>
@@ -637,10 +633,10 @@ In Linux, the kernel can be configured to provide functions for system debugging
 </tbody>
 </table>
 <p>一个比较常见的用法就是当系统几乎完全 down 掉的情况下，依次执行 <code>REISUB</code>，展开来就是 “<strong>R</strong>eboot <strong>E</strong>ven <strong>I</strong>f <strong>S</strong>ystem <strong>U</strong>tterly <strong>B</strong>roken”，解释如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">unRaw       从 X.org 夺回键盘的控制权</div><div class="line"> tErminate  发送 SIGTERM 给所有进程，所有进程正常的结束自己</div><div class="line"> kIll       发送 SIGKILL 给所有进程，强制杀掉所有进程</div><div class="line">  Sync      将所有未写入硬盘的数据立即写入硬盘</div><div class="line">  Unmount   将所有已挂载的文件系统挂载为只读</div><div class="line">reBoot      立即重启系统</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">unRaw       从 X.org 夺回键盘的控制权</span><br><span class="line"> tErminate  发送 SIGTERM 给所有进程，所有进程正常的结束自己</span><br><span class="line"> kIll       发送 SIGKILL 给所有进程，强制杀掉所有进程</span><br><span class="line">  Sync      将所有未写入硬盘的数据立即写入硬盘</span><br><span class="line">  Unmount   将所有已挂载的文件系统挂载为只读</span><br><span class="line">reBoot      立即重启系统</span><br></pre></td></tr></table></figure>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
-<li><a href="https://en.wikipedia.org/wiki/System_request#Modern_uses" target="_blank" rel="external">System request - wikipedia.org</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Magic_SysRq_key" target="_blank" rel="external">Magic SysRq key</a></li>
+<li><a href="https://en.wikipedia.org/wiki/System_request#Modern_uses" target="_blank" rel="noopener">System request - wikipedia.org</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Magic_SysRq_key" target="_blank" rel="noopener">Magic SysRq key</a></li>
 </ol>
 
       
@@ -758,14 +754,14 @@ In Linux, the kernel can be configured to provide functions for system debugging
                src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
                alt="oing9179" />
           <p class="site-author-name" itemprop="name">oing9179</p>
-          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+          <p class="site-description motion-element" itemprop="description">A notepad.</p>
         </div>
         <nav class="site-state motion-element">
         
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -774,7 +770,7 @@ In Linux, the kernel can be configured to provide functions for system debugging
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -783,7 +779,7 @@ In Linux, the kernel can be configured to provide functions for system debugging
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">90</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -872,7 +868,7 @@ In Linux, the kernel can be configured to provide functions for system debugging
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

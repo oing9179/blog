@@ -88,25 +88,18 @@
 
 
 
-<meta name="description" content="Preface好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：
-
-用 python-pytun 和 scapy 试着弄个包转发工具
-Depression 与自我恢复">
+<meta name="description" content="Preface好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：  用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复">
+<meta name="keywords" content="Linux,Python,python-pytun,scapy,tun,tap,Packet Tunneling,Depression">
 <meta property="og:type" content="article">
-<meta property="og:title" content="日记 - python-pytun scapy / Depression">
+<meta property="og:title" content="日记 - python-pytun scapy &#x2F; Depression">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
-<meta property="og:description" content="Preface好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：
-
-用 python-pytun 和 scapy 试着弄个包转发工具
-Depression 与自我恢复">
-<meta property="og:updated_time" content="2017-05-04T14:31:44.744Z">
+<meta property="og:description" content="Preface好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：  用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-05-04T14:31:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="日记 - python-pytun scapy / Depression">
-<meta name="twitter:description" content="Preface好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：
-
-用 python-pytun 和 scapy 试着弄个包转发工具
-Depression 与自我恢复">
+<meta name="twitter:title" content="日记 - python-pytun scapy &#x2F; Depression">
+<meta name="twitter:description" content="Preface好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：  用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复">
 
 
 
@@ -424,13 +417,13 @@ Depression 与自我恢复">
 <li>Various: IP Packet</li>
 </ul>
 <p>只有后面的 IP Packet 才是我要的，前面的 4 bytes 目前没什么用。想关掉它的话，需要在创建 <code>TunTapDevice</code> 对象时加个构造函数参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&quot;&quot;&quot;</div><div class="line">IFF_TUN: 表示我想创建一个 tun 设备</div><div class="line">IFF_NO_PI: 不要提供包信息（Do not provide packet information）</div><div class="line">&quot;&quot;&quot;</div><div class="line">tun = pytun.TunTapDevice(&quot;pytun0&quot;, pytun.IFF_TUN | pytun.IFF_NO_PI)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">IFF_TUN: 表示我想创建一个 tun 设备</span><br><span class="line">IFF_NO_PI: 不要提供包信息（Do not provide packet information）</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">tun = pytun.TunTapDevice(&quot;pytun0&quot;, pytun.IFF_TUN | pytun.IFF_NO_PI)</span><br></pre></td></tr></table></figure>
 <p>使用上面的代码后，<code>tun.read(tun.mtu)</code> 读出的包就只有 IP Packet 的信息了，可以直接扔给 scapy，像这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from scapy import all as scapy3k</div><div class="line"></div><div class="line">lPacketIP = scapy3k.IP(tun.read(tun.mtu))</div><div class="line">lPacketIP.show2()</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from scapy import all as scapy3k</span><br><span class="line"></span><br><span class="line">lPacketIP = scapy3k.IP(tun.read(tun.mtu))</span><br><span class="line">lPacketIP.show2()</span><br></pre></td></tr></table></figure>
 <p>一个 ICMP echo-request（也就是 ping）包的输出大概是这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">###[ IP ]###</div><div class="line">  version   = 4</div><div class="line">  ihl       = 5</div><div class="line">  tos       = 0x0</div><div class="line">  len       = 84</div><div class="line">  id        = 18507</div><div class="line">  flags     = DF</div><div class="line">  frag      = 0</div><div class="line">  ttl       = 64</div><div class="line">  proto     = icmp</div><div class="line">  chksum    = 0xce59</div><div class="line">  src       = 10.0.8.1</div><div class="line">  dst       = 10.0.8.4</div><div class="line">  \options   \</div><div class="line">###[ ICMP ]###</div><div class="line">     type      = echo-request</div><div class="line">     code      = 0</div><div class="line">     chksum    = 0xb85c</div><div class="line">     id        = 0x3ddd</div><div class="line">     seq       = 0x1</div><div class="line">###[ Raw ]###</div><div class="line">        load      = b&apos;\xc6\xeb\nY\x00\x00\x00\x00i\xad\x08\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&apos;()*+,-./01234567&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">###[ IP ]###</span><br><span class="line">  version   = 4</span><br><span class="line">  ihl       = 5</span><br><span class="line">  tos       = 0x0</span><br><span class="line">  len       = 84</span><br><span class="line">  id        = 18507</span><br><span class="line">  flags     = DF</span><br><span class="line">  frag      = 0</span><br><span class="line">  ttl       = 64</span><br><span class="line">  proto     = icmp</span><br><span class="line">  chksum    = 0xce59</span><br><span class="line">  src       = 10.0.8.1</span><br><span class="line">  dst       = 10.0.8.4</span><br><span class="line">  \options   \</span><br><span class="line">###[ ICMP ]###</span><br><span class="line">     type      = echo-request</span><br><span class="line">     code      = 0</span><br><span class="line">     chksum    = 0xb85c</span><br><span class="line">     id        = 0x3ddd</span><br><span class="line">     seq       = 0x1</span><br><span class="line">###[ Raw ]###</span><br><span class="line">        load      = b&apos;\xc6\xeb\nY\x00\x00\x00\x00i\xad\x08\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !&quot;#$%&amp;\&apos;()*+,-./01234567&apos;</span><br></pre></td></tr></table></figure>
 <p>不出意外的话，明天应该开始看 IP 包和 ICMP 包的结构了。</p>
-<h1 id="Depression"><a href="#Depression" class="headerlink" title="Depression"></a>Depression</h1><p>前几天状态有些差，到了觅食的时间 还是得出去吃饭。不过令我欣慰的是，到室外之后心情不是那么差了。回来之后油管刚好还给我推荐了个 <a href="https://youtu.be/L77b57erQ4M" target="_blank" rel="external">The 10’s Beginner Workout (Body Weight Only)</a>（虽然我不胖），然后我就来了一组（1 Repetition），然后，嗯? 效果还不错。于是总结一下吧：</p>
+<h1 id="Depression"><a href="#Depression" class="headerlink" title="Depression"></a>Depression</h1><p>前几天状态有些差，到了觅食的时间 还是得出去吃饭。不过令我欣慰的是，到室外之后心情不是那么差了。回来之后油管刚好还给我推荐了个 <a href="https://youtu.be/L77b57erQ4M" target="_blank" rel="noopener">The 10’s Beginner Workout (Body Weight Only)</a>（虽然我不胖），然后我就来了一组（1 Repetition），然后，嗯? 效果还不错。于是总结一下吧：</p>
 <ol>
 <li>出去走走</li>
 <li>Workout</li>
@@ -566,14 +559,14 @@ Depression 与自我恢复">
                src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
                alt="oing9179" />
           <p class="site-author-name" itemprop="name">oing9179</p>
-          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+          <p class="site-description motion-element" itemprop="description">A notepad.</p>
         </div>
         <nav class="site-state motion-element">
         
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -582,7 +575,7 @@ Depression 与自我恢复">
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -591,7 +584,7 @@ Depression 与自我恢复">
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">90</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -680,7 +673,7 @@ Depression 与自我恢复">
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

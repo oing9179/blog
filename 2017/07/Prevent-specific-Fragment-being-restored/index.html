@@ -89,12 +89,14 @@
 
 
 <meta name="description" content="PrefaceActivity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。下面就来解决这个问题。">
+<meta name="keywords" content="Android,Fragment,FragmentState,FragmentManagerState">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[Android] 阻止特定 Fragment 被恢复">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
 <meta property="og:description" content="PrefaceActivity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。下面就来解决这个问题。">
-<meta property="og:updated_time" content="2017-07-09T04:58:30.245Z">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-07-09T04:58:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Android] 阻止特定 Fragment 被恢复">
 <meta name="twitter:description" content="PrefaceActivity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。下面就来解决这个问题。">
@@ -392,15 +394,15 @@
 
       
         <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。<br>如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。<br>下面就来解决这个问题。<br><a id="more"></a></p>
-<h1 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h1><p>最开始是在 StackOverflow.com 看到了 <a href="https://stackoverflow.com/questions/15519214/prevent-fragment-recovery-in-android" target="_blank" rel="external">这个</a> 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 <code>savedInstanceState.get(FRAGMENTS_TAG)</code> 里，于是只要 <code>savedInstanceState.remove(FRAGMENTS_TAG)</code> 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。<br>后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：</p>
+<h1 id="启发"><a href="#启发" class="headerlink" title="启发"></a>启发</h1><p>最开始是在 StackOverflow.com 看到了 <a href="https://stackoverflow.com/questions/15519214/prevent-fragment-recovery-in-android" target="_blank" rel="noopener">这个</a> 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 <code>savedInstanceState.get(FRAGMENTS_TAG)</code> 里，于是只要 <code>savedInstanceState.remove(FRAGMENTS_TAG)</code> 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。<br>后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：</p>
 <script src="https://gist.github.com/oing9179/f52d5b684b295911b4149a2157b6adb1.js"></script>
 
 <h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><p><code>FragmentStateUtil</code> 也很好用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        FragmentStateUtil lFragmentStateUtil = <span class="keyword">new</span> FragmentStateUtil(<span class="keyword">this</span>, savedInstanceState);</div><div class="line">        lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception ignore) &#123;</div><div class="line">        ignore.printStackTrace();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    <span class="comment">// Your code.</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        FragmentStateUtil lFragmentStateUtil = <span class="keyword">new</span> FragmentStateUtil(<span class="keyword">this</span>, savedInstanceState);</span><br><span class="line">        lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception ignore) &#123;</span><br><span class="line">        ignore.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    <span class="comment">// Your code.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述代码可以使 <code>DontRestoreThisFragment</code> 不会被 <code>FragmentManager</code> 恢复出来。</p>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
-<li><a href="https://stackoverflow.com/questions/15519214/prevent-fragment-recovery-in-android" target="_blank" rel="external">Prevent Fragment recovery in Android - stackoverflow.com</a></li>
-<li><a href="https://gist.github.com/oing9179/f52d5b684b295911b4149a2157b6adb1" target="_blank" rel="external">Utility class help you to drop Fragment state before it’s being restored. - gist.github.com</a></li>
+<li><a href="https://stackoverflow.com/questions/15519214/prevent-fragment-recovery-in-android" target="_blank" rel="noopener">Prevent Fragment recovery in Android - stackoverflow.com</a></li>
+<li><a href="https://gist.github.com/oing9179/f52d5b684b295911b4149a2157b6adb1" target="_blank" rel="noopener">Utility class help you to drop Fragment state before it’s being restored. - gist.github.com</a></li>
 </ol>
 
       
@@ -522,14 +524,14 @@
                src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
                alt="oing9179" />
           <p class="site-author-name" itemprop="name">oing9179</p>
-          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+          <p class="site-description motion-element" itemprop="description">A notepad.</p>
         </div>
         <nav class="site-state motion-element">
         
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -538,7 +540,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -547,7 +549,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">90</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -636,7 +638,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

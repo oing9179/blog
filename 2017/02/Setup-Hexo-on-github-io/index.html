@@ -88,29 +88,19 @@
 
 
 
-<meta name="description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
-
-备份博客只需要把 Markdown 文件连同对应的文件夹打包即可
-自带的域名也更有逼格了：https://oing9179.github.io
-Hexo 社区活跃">
+<meta name="description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：  备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃">
+<meta name="keywords" content="github.io,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 github.io 上用 Hexo 搭建博客">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/02/Setup-Hexo-on-github-io/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
-<meta property="og:description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
-
-备份博客只需要把 Markdown 文件连同对应的文件夹打包即可
-自带的域名也更有逼格了：https://oing9179.github.io
-Hexo 社区活跃">
+<meta property="og:description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：  备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃">
+<meta property="og:locale" content="en">
 <meta property="og:image" content="https://hexo.io/logo.svg">
 <meta property="og:updated_time" content="2017-02-12T01:55:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 github.io 上用 Hexo 搭建博客">
-<meta name="twitter:description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
-
-备份博客只需要把 Markdown 文件连同对应的文件夹打包即可
-自带的域名也更有逼格了：https://oing9179.github.io
-Hexo 社区活跃">
+<meta name="twitter:description" content="Preface之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：  备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃">
 <meta name="twitter:image" content="https://hexo.io/logo.svg">
 
 
@@ -395,7 +385,7 @@ Hexo 社区活跃">
 
       
         <p><img alt="Hexo Logo" src="https://hexo.io/logo.svg" style="max-width: 160px;"></p>
-<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 <a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a> 上，因此也带来了一些便利：</p>
+<h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 上，因此也带来了一些便利：</p>
 <ul>
 <li>备份博客只需要把 Markdown 文件连同对应的文件夹打包即可</li>
 <li>自带的域名也更有逼格了：<code>https://oing9179.github.io</code></li>
@@ -406,32 +396,32 @@ Hexo 社区活跃">
 <a id="more"></a>
 <h1 id="安装-配置-Hexo"><a href="#安装-配置-Hexo" class="headerlink" title="安装 / 配置 Hexo"></a>安装 / 配置 Hexo</h1><p>我看好多人都直接用 <code>&lt;username&gt;.github.io</code> 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 <code>/blog/</code> 目录下，根目录下放个 html 把浏览器重定向到 <code>/blog/</code> 下就行了。</p>
 <h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><p>参考下面的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install nodejs nodejs-legacy</div><div class="line">npm install -g hexo-cli</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nodejs nodejs-legacy</span><br><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <p>有以下几点注意事项：</p>
 <ol>
 <li><code>npm install</code> 的时候提示输入密码的话就输入。</li>
 <li><p>因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm config set proxy http://127.0.0.1:8080</div><div class="line">npm config set https-proxy http://127.0.0.1:8080</div></pre></td></tr></table></figure>
-<p> 或者使用 taobao 的 npm 镜像，请移步 <a href="https://npm.taobao.org/" target="_blank" rel="external">Taobao npm Mirror</a>.</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set proxy http://127.0.0.1:8080</span><br><span class="line">npm config set https-proxy http://127.0.0.1:8080</span><br></pre></td></tr></table></figure>
+<p> 或者使用 taobao 的 npm 镜像，请移步 <a href="https://npm.taobao.org/" target="_blank" rel="noopener">Taobao npm Mirror</a>.</p>
 </li>
 </ol>
 <h2 id="配置-Hexo"><a href="#配置-Hexo" class="headerlink" title="配置 Hexo"></a>配置 Hexo</h2><p>参考如下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 创建一个静态网站名为 blog</div><div class="line">hexo init blog</div><div class="line">cd ./blog/</div><div class="line"># 安装 RSS 和 SiteMap 插件，RSS 为了方便读者 SiteMap 为了方便搜索引擎爬虫。</div><div class="line">npm install hexo-generator-feed hexo-generator-sitemap --save</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 创建一个静态网站名为 blog</span></span><br><span class="line">hexo init blog</span><br><span class="line">cd ./blog/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 RSS 和 SiteMap 插件，RSS 为了方便读者 SiteMap 为了方便搜索引擎爬虫。</span></span><br><span class="line">npm install hexo-generator-feed hexo-generator-sitemap --save</span><br></pre></td></tr></table></figure>
 <p>编辑 <code>_config.yml</code>，在文件末尾加入下面的代码：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># SiteMap configuration</span></div><div class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-sitemap</span></div><div class="line"><span class="attr">sitemap:</span></div><div class="line">  <span class="comment"># 想配置 sitemap.xml 的模板，请移步到 ./node_modules/hexo-generator-sitemap/sitemap.xml</span></div><div class="line"><span class="attr">  path:</span> sitemap.xml</div><div class="line"></div><div class="line"><span class="comment"># RSS configuration</span></div><div class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-feed</span></div><div class="line"><span class="attr">feed:</span></div><div class="line"><span class="attr">  type:</span> rss2</div><div class="line"><span class="attr">  path:</span> rss2.xml</div><div class="line">  <span class="comment"># RSS里最多包含几篇文章</span></div><div class="line"><span class="attr">  limit:</span> <span class="number">6</span></div><div class="line"><span class="attr">  hub:</span></div><div class="line">  <span class="comment"># 是否把文章全部内容也包含进去</span></div><div class="line"><span class="attr">  content:</span> <span class="literal">false</span></div></pre></td></tr></table></figure>
-<p>然后参照 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="external">Hexo configuration</a> 来配置 <code>_config.yml</code>。<br>需要注意的是：因为我要把博客放在 <code>/blog/</code> 目录下，所以要修改 <code>_config.yml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找到 root 项并修改为 /blog/</span></div><div class="line"><span class="attr">root:</span> /blog/</div></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SiteMap configuration</span></span><br><span class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-sitemap</span></span><br><span class="line"><span class="attr">sitemap:</span></span><br><span class="line">  <span class="comment"># 想配置 sitemap.xml 的模板，请移步到 ./node_modules/hexo-generator-sitemap/sitemap.xml</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># RSS configuration</span></span><br><span class="line"><span class="comment"># https://github.com/hexojs/hexo-generator-feed</span></span><br><span class="line"><span class="attr">feed:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">rss2</span></span><br><span class="line"><span class="attr">  path:</span> <span class="string">rss2.xml</span></span><br><span class="line">  <span class="comment"># RSS里最多包含几篇文章</span></span><br><span class="line"><span class="attr">  limit:</span> <span class="number">6</span></span><br><span class="line"><span class="attr">  hub:</span></span><br><span class="line">  <span class="comment"># 是否把文章全部内容也包含进去</span></span><br><span class="line"><span class="attr">  content:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>然后参照 <a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo configuration</a> 来配置 <code>_config.yml</code>。<br>需要注意的是：因为我要把博客放在 <code>/blog/</code> 目录下，所以要修改 <code>_config.yml</code>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到 root 项并修改为 /blog/</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/blog/</span></span><br></pre></td></tr></table></figure>
 <p>最后在 blog 目录下执行 <code>hexo server --debug</code>，然后打开浏览器访问终端里显示的 URL 来预览网站。</p>
 <h2 id="安装-配置-Hexo-theme-NexT"><a href="#安装-配置-Hexo-theme-NexT" class="headerlink" title="安装 / 配置 Hexo theme: NexT"></a>安装 / 配置 Hexo theme: NexT</h2><blockquote>
 <p><span style="color: #0277bd; padding-right: 6px;"><i class="fa fa-info-circle"></i></span> 建议不要在 <code>hexo server</code> 运行的时候安装主题。因为文件的改动会导致 Hexo server 重新生成网站，如果有些文件还没下载完 或者 文件内的语法有问题，就会导致 Hexo server 报错，之后再刷新网页的话就什么也打不开。</p>
 </blockquote>
 <p>参考下面的命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ./themes/</div><div class="line">git clone https://github.com/iissnan/hexo-theme-next.git</div><div class="line"># 回到 blog 目录下</div><div class="line">cd ../</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ./themes/</span><br><span class="line">git clone https://github.com/iissnan/hexo-theme-next.git</span><br><span class="line"><span class="meta">#</span><span class="bash"> 回到 blog 目录下</span></span><br><span class="line">cd ../</span><br></pre></td></tr></table></figure>
 <p>编辑 <code>_config.yml</code>：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找到 theme 并将其设定为 next</span></div><div class="line"><span class="attr">theme:</span> next</div></pre></td></tr></table></figure>
-<p>然后就可以按照 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">官方文档</a> 对 NexT 主题进行配置了。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到 theme 并将其设定为 next</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure>
+<p>然后就可以按照 <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">官方文档</a> 对 NexT 主题进行配置了。</p>
 <h2 id="添加-Categories-Tags-Links-About-页面"><a href="#添加-Categories-Tags-Links-About-页面" class="headerlink" title="添加 Categories / Tags / Links / About 页面"></a>添加 Categories / Tags / Links / About 页面</h2><p>创建这些页面的方法是一样的，需要改动的只有 Markdown 文件头部的 yaml 配置项。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 回到 blog 目录，然后执行如下命令</div><div class="line"># 下面的 &quot;About&quot; 可以换成 &quot;categories&quot; 或者其他的都可以，大小写敏感.</div><div class="line">hexo new page &quot;about&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 回到 blog 目录，然后执行如下命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下面的 <span class="string">"About"</span> 可以换成 <span class="string">"categories"</span> 或者其他的都可以，大小写敏感.</span></span><br><span class="line">hexo new page "about"</span><br></pre></td></tr></table></figure>
 <p>然后编辑 <code>./source/about/index.md</code>，参考下面内容 对 Markdown 头部的 yaml 配置项添加如下内容：</p>
 <table>
 <thead>
@@ -455,52 +445,52 @@ Hexo 社区活跃">
 </tbody>
 </table>
 <p>例如创建了一个 Categories 页面 并关闭页面的评论功能，那它的 yaml 配置项大概就是这样：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attr">title:</span> Tags</div><div class="line"><span class="attr">date:</span> <span class="number">1900</span><span class="bullet">-01</span><span class="bullet">-01</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></div><div class="line"><span class="attr">type:</span> <span class="string">"categories"</span></div><div class="line"><span class="attr">comments:</span> <span class="literal">false</span></div></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">1900</span><span class="bullet">-01</span><span class="bullet">-01</span> <span class="number">00</span><span class="string">:00:00</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">"categories"</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <p>页面创建完成后，如果在预览网站的时候出现错误什么的，尝试执行下面的命令来清空缓存：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在 blog 目录下执行命令</div><div class="line">hexo clean</div><div class="line">rm ./db.json</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 在 blog 目录下执行命令</span></span><br><span class="line">hexo clean</span><br><span class="line">rm ./db.json</span><br></pre></td></tr></table></figure>
 <p>创建 Links 页面的后 需要对主题进行一些简单的配置 才能在博客的导航栏上显示出来：</p>
 <ol>
 <li>切换到主题所在目录：<code>./themes/next/</code></li>
 <li><p>编辑 <code>_config.yml</code></p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导航栏里项目的显示顺序就是下面 menu 项里从上往下的顺序.</span></div><div class="line"><span class="comment"># 找到 menu 项然后直接在下面添加一行即可，像这样：</span></div><div class="line"><span class="attr">menu:</span> </div><div class="line"><span class="attr">  tags:</span> /tags</div><div class="line">  <span class="comment"># 添加 links 项，格式 "&lt;变量名&gt;: &lt;网页路径&gt;"，这个 变量名 稍后还会用到.</span></div><div class="line"><span class="attr">  links:</span> /links</div><div class="line"><span class="attr">  about:</span> /about</div><div class="line"></div><div class="line"><span class="comment"># 然后找 menu_icons 项，为 links 添加一个图标，想要什么图标可以在 http://fontawesome.io/icons/ 找.</span></div><div class="line"><span class="attr">menu_icons:</span></div><div class="line">  <span class="comment"># 格式：&lt;变量名&gt;: &lt;不含 "fa-" 前缀的CSS类名&gt;</span></div><div class="line"><span class="attr">  links:</span> link</div></pre></td></tr></table></figure>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导航栏里项目的显示顺序就是下面 menu 项里从上往下的顺序.</span></span><br><span class="line"><span class="comment"># 找到 menu 项然后直接在下面添加一行即可，像这样：</span></span><br><span class="line"><span class="attr">menu:</span> </span><br><span class="line"><span class="attr">  tags:</span> <span class="string">/tags</span></span><br><span class="line">  <span class="comment"># 添加 links 项，格式 "&lt;变量名&gt;: &lt;网页路径&gt;"，这个 变量名 稍后还会用到.</span></span><br><span class="line"><span class="attr">  links:</span> <span class="string">/links</span></span><br><span class="line"><span class="attr">  about:</span> <span class="string">/about</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后找 menu_icons 项，为 links 添加一个图标，想要什么图标可以在 http://fontawesome.io/icons/ 找.</span></span><br><span class="line"><span class="attr">menu_icons:</span></span><br><span class="line">  <span class="comment"># 格式：&lt;变量名&gt;: &lt;不含 "fa-" 前缀的CSS类名&gt;</span></span><br><span class="line"><span class="attr">  links:</span> <span class="string">link</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>编辑 <code>./languages/&lt;语言&gt;.yml</code>，我给博客设置的语言是英文 所以我应该编辑 <code>en.yml</code></p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 找到 menu 项目</span></div><div class="line"><span class="attr">menu:</span></div><div class="line">  <span class="comment"># 直接在最后添加一行即可，格式：&lt;变量名&gt;: &lt;要显示出来的文字&gt;</span></div><div class="line"><span class="attr">  links:</span> Links</div></pre></td></tr></table></figure>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找到 menu 项目</span></span><br><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="comment"># 直接在最后添加一行即可，格式：&lt;变量名&gt;: &lt;要显示出来的文字&gt;</span></span><br><span class="line"><span class="attr">  links:</span> <span class="string">Links</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>运行 <code>hexo clean</code> 清空 Hexo 缓存，然后运行 <code>hexo server --debug</code> ，然后打开网页浏览器查看效果</p>
 </li>
 </ol>
-<h2 id="配置-Disqus"><a href="#配置-Disqus" class="headerlink" title="配置 Disqus"></a>配置 Disqus</h2><p>首先到 <a href="https://disqus.com/" target="_blank" rel="external">Disqus</a> 注册一个帐号，然后按照向导（非常简单）创建一个 Site，把 Site 的 Shortname 找出来备用。<br>NexT 主题下只需要非常简单的配置就可以启用 Disqus。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 切换到主题文件所在目录</div><div class="line">cd ./themes/next/</div><div class="line"># 编辑 _config.yml</div><div class="line">vim ./_config.yml</div></pre></td></tr></table></figure>
+<h2 id="配置-Disqus"><a href="#配置-Disqus" class="headerlink" title="配置 Disqus"></a>配置 Disqus</h2><p>首先到 <a href="https://disqus.com/" target="_blank" rel="noopener">Disqus</a> 注册一个帐号，然后按照向导（非常简单）创建一个 Site，把 Site 的 Shortname 找出来备用。<br>NexT 主题下只需要非常简单的配置就可以启用 Disqus。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换到主题文件所在目录</span></span><br><span class="line">cd ./themes/next/</span><br><span class="line"><span class="meta">#</span><span class="bash"> 编辑 _config.yml</span></span><br><span class="line">vim ./_config.yml</span><br></pre></td></tr></table></figure>
 <p>查找字段 <code>disqus_shortname</code>，然后改成自己的 shortname 即可。</p>
 <h1 id="迁移旧博客到-Hexo"><a href="#迁移旧博客到-Hexo" class="headerlink" title="迁移旧博客到 Hexo"></a>迁移旧博客到 Hexo</h1><p>这一步骤可谓是最无聊的步骤了。使用命令 <code>hexo new &quot;&lt;文章标题&gt;&quot;</code> 来创建 Post（Post 在这里译为 文章），然后把原来博客的内容复制进去，然后再对新的 Post 的 Markdown 文件头做些编辑，例如下面这样：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">---</span></div><div class="line"><span class="attr">title:</span> 文章标题</div><div class="line"><span class="comment"># 文章的创建时间</span></div><div class="line"><span class="attr">date:</span> <span class="number">2016</span><span class="bullet">-11</span><span class="bullet">-26</span> <span class="number">17</span>:<span class="number">25</span>:<span class="number">00</span></div><div class="line"><span class="comment"># 文章的最后修改时间</span></div><div class="line"><span class="attr">updated:</span> <span class="number">2017</span><span class="bullet">-01</span><span class="bullet">-17</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></div><div class="line"><span class="attr">categories:</span></div><div class="line"><span class="bullet">    -</span> Post 的分类</div><div class="line"><span class="bullet">    -</span> <span class="string">"Post 的分类"</span> 的子分类</div><div class="line"><span class="bullet">    -</span> <span class="string">"Post 的分类 的子分类"</span> 的好多个子分类</div><div class="line"><span class="attr">tags:</span></div><div class="line"><span class="bullet">    -</span> 第一个 tag</div><div class="line"><span class="bullet">    -</span> 第二个 tag</div><div class="line"><span class="bullet">    -</span> 还可以有好多个 tag</div><div class="line"><span class="comment"># 仅对本篇文章禁用评论功能</span></div><div class="line"><span class="attr">comments:</span> <span class="literal">false</span></div><div class="line"><span class="meta">---</span></div><div class="line"></div><div class="line">&lt;文章正文<span class="string">&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">文章标题</span></span><br><span class="line"><span class="comment"># 文章的创建时间</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2016</span><span class="bullet">-11</span><span class="bullet">-26</span> <span class="number">17</span><span class="string">:25:00</span></span><br><span class="line"><span class="comment"># 文章的最后修改时间</span></span><br><span class="line"><span class="attr">updated:</span> <span class="number">2017</span><span class="bullet">-01</span><span class="bullet">-17</span> <span class="number">00</span><span class="string">:00:00</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">Post</span> <span class="string">的分类</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"Post 的分类"</span> <span class="string">的子分类</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">"Post 的分类 的子分类"</span> <span class="string">的好多个子分类</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">第一个</span> <span class="string">tag</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">第二个</span> <span class="string">tag</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">还可以有好多个</span> <span class="string">tag</span></span><br><span class="line"><span class="comment"># 仅对本篇文章禁用评论功能</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="string">&lt;文章正文&gt;</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>BLumia 用 PHP 写了段脚本在 <a href="https://github.com/BLumia/Typecho2Hexo-Helper" target="_blank" rel="external">BLumia / Typecho2Hexo-Helper</a>，可以把 Typecho 的博客内容导出来，</p>
+<p>BLumia 用 PHP 写了段脚本在 <a href="https://github.com/BLumia/Typecho2Hexo-Helper" target="_blank" rel="noopener">BLumia / Typecho2Hexo-Helper</a>，可以把 Typecho 的博客内容导出来，</p>
 </blockquote>
 <h1 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h1><p>因为我想把博客放在 <code>/blog/</code> 目录下而不是网站的根目录下，为此 我需要创建两个 Repository：一个 <code>blog</code> 仓库 用来放博客本体，一个 <code>&lt;用户名&gt;.github.io</code> 仓库 用来把浏览器从 <code>/</code> 重定向到 <code>/blog/</code>。</p>
 <h2 id="创建-配置-blog-仓库"><a href="#创建-配置-blog-仓库" class="headerlink" title="创建 / 配置 blog 仓库"></a>创建 / 配置 <code>blog</code> 仓库</h2><ol>
 <li>切换到 <code>blog</code> 目录下</li>
 <li><p>使用 hexo 生成静态站点</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo generate</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在生成好的站点目录下 创建 git 仓库</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ./public/</div><div class="line">git init</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ./public/</span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>因为我搭建博客用的是 Hexo 而不是 Jekyll，创建文件 <code>.nojekyll</code> 来关闭 GitHub Pages 的 Jekyll 相关功能</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch &quot;.nojekyll&quot;</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ".nojekyll"</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>为仓库创建新的分支名为 <code>gh-pages</code></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b &quot;gh-pages&quot;</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b "gh-pages"</span><br></pre></td></tr></table></figure>
 <p> 分支创建完成后 git 会自动将 gh-pages 设置为当前分支</p>
 </li>
 <li><p>添加所有文件到 git 工作空间并 commit</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add --all</div><div class="line">git commit -m &quot;Created blog with theme settle up.&quot;</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m "Created blog with theme settle up."</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在 GitHub 上 <a href="https://github.com/new" target="_blank" rel="external">创建一个新的 Repository</a>，repository 名称随意，本文以 <code>blog</code> 作为 repository 名称</p>
+<li><p>在 GitHub 上 <a href="https://github.com/new" target="_blank" rel="noopener">创建一个新的 Repository</a>，repository 名称随意，本文以 <code>blog</code> 作为 repository 名称</p>
 </li>
 <li><p>为本地仓库添加远程仓库，并 push 到远程仓库</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/&lt;用户名&gt;/blog.git</div><div class="line">git push</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/&lt;用户名&gt;/blog.git</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 <p> 提示输入用户名和密码的话，就输入。</p>
 </li>
 <li>用网页浏览器访问 <code>https://&lt;用户名&gt;.github.io/blog/</code> 来查看效果</li>
@@ -508,29 +498,29 @@ Hexo 社区活跃">
 <h2 id="创建-配置-oing9179-github-io-仓库"><a href="#创建-配置-oing9179-github-io-仓库" class="headerlink" title="创建 / 配置 oing9179.github.io 仓库"></a>创建 / 配置 <code>oing9179.github.io</code> 仓库</h2><ol>
 <li>切换到任意 <strong>不是</strong> blog 的目录下</li>
 <li><p>创建 <code>&lt;用户名&gt;.github.io</code>，这里以 <code>oing9179.github.io</code> 为例</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git init &quot;oing9179.github.io&quot;</div><div class="line">cd ./oing9179.github.io/</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init "oing9179.github.io"</span><br><span class="line">cd ./oing9179.github.io/</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建两个文件，一个是 <code>index.html</code> 文件内容如下，另一个是 <code>.nojekyll</code> 来禁用 GitHub Pages 的 Jekyll 功能</p>
- <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Redirecting...<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 下面这行告诉浏览器 将页面重定向到 /blog/ 目录下 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"refresh"</span> <span class="attr">content</span>=<span class="string">"0;URL='/blog/'"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">Redirecting you to <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/blog/"</span>&gt;</span>/blog/<span class="tag">&lt;/<span class="name">a</span>&gt;</span>...</div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Redirecting...<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 下面这行告诉浏览器 将页面重定向到 /blog/ 目录下 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"refresh"</span> <span class="attr">content</span>=<span class="string">"0;URL='/blog/'"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">Redirecting you to <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/blog/"</span>&gt;</span>/blog/<span class="tag">&lt;/<span class="name">a</span>&gt;</span>...</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>然后执行命令来提交更改到本地仓库</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add --all</div><div class="line">git commit -m &quot;Initial commit.&quot;</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m "Initial commit."</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在 GitHub 创建一个名为 <code>oing9179.github.io</code> 的仓库，然后给本地仓库添加远程仓库，然后 push</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git remote add origin https://github.com/oing9179/oing9179.github.io.git</div><div class="line">git push</div></pre></td></tr></table></figure>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/oing9179/oing9179.github.io.git</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>用网页浏览器访问 <code>https://oing9179.github.io</code>，浏览器应该会自动重定向到 <code>/blog/</code> 页面</p>
 </li>
 </ol>
 <h1 id="修复博客放在子目录时-hexo-生成错误的永久链接"><a href="#修复博客放在子目录时-hexo-生成错误的永久链接" class="headerlink" title="修复博客放在子目录时 hexo 生成错误的永久链接"></a>修复博客放在子目录时 hexo 生成错误的永久链接</h1><p>我将博客部署到 github.io 上后，把 sitemap.xml 提交到了 Google Search Console。然而 Google 告诉我 我的 sitemap.xml 里部分链接 404，于是发现了下面这个 bug：</p>
 <blockquote>
-<p>受影响版本：<a href="https://github.com/hexojs/hexo/tree/3.2.2" target="_blank" rel="external">v3.2.2</a> (GitHub issue <a href="https://github.com/hexojs/hexo/issues/1812" target="_blank" rel="external">#1812</a>)<br>当网站被放在子目录下的时候（并对 <code>_config.yml</code> 的 <code>url</code> 和 <code>root</code> 做了正确的设置），使用 <code>hexo generate</code> 生成出的网站的永久链接（Permalink）会变成这样（假设 <code>root</code> 设置成 <code>blog</code>）：<code>http://yoursite.com/blog/blog/</code>。</p>
+<p>受影响版本：<a href="https://github.com/hexojs/hexo/tree/3.2.2" target="_blank" rel="noopener">v3.2.2</a> (GitHub issue <a href="https://github.com/hexojs/hexo/issues/1812" target="_blank" rel="noopener">#1812</a>)<br>当网站被放在子目录下的时候（并对 <code>_config.yml</code> 的 <code>url</code> 和 <code>root</code> 做了正确的设置），使用 <code>hexo generate</code> 生成出的网站的永久链接（Permalink）会变成这样（假设 <code>root</code> 设置成 <code>blog</code>）：<code>http://yoursite.com/blog/blog/</code>。</p>
 </blockquote>
-<p>不过还好，这个 bug 已经在 <a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95" target="_blank" rel="external">Commit 5234c4a85d</a> 修复了。按照如下步骤操作以修复本地 hexo：</p>
+<p>不过还好，这个 bug 已经在 <a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95" target="_blank" rel="noopener">Commit 5234c4a85d</a> 修复了。按照如下步骤操作以修复本地 hexo：</p>
 <ol>
 <li>切换到 blog 目录下的 <code>./node_modules/hexo/</code></li>
 <li>把 <code>lib</code> 目录改名为 <code>lib.bak</code></li>
-<li>从 <a href="https://github.com/hexojs/hexo/archive/5234c4a85dc6cd418e9a1c169e43de169cf98e95.zip" target="_blank" rel="external">这里</a> 把修好 bug 的 hexo 下载回来并解压</li>
+<li>从 <a href="https://github.com/hexojs/hexo/archive/5234c4a85dc6cd418e9a1c169e43de169cf98e95.zip" target="_blank" rel="noopener">这里</a> 把修好 bug 的 hexo 下载回来并解压</li>
 <li>将解压出来的目录下的 <code>lib</code> 目录复制到 blog 目录下的 <code>./node_modules/hexo/</code></li>
 <li>执行命令 <code>hexo clean &amp;&amp; hexo generate</code> 来重新生成静态网站<br> <span style="color: red;">警告：</span> 重新生成静态网站会导致 <code>./public/.git</code> 文件夹被删除，在生成静态网站之前需要先把它移走。</li>
 </ol>
@@ -549,16 +539,16 @@ Hexo 社区活跃">
 <li>小修小改</li>
 </ol>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
-<li><a href="https://hexo.io" target="_blank" rel="external">hexo.io</a></li>
-<li><a href="https://jjasonclark.com/how-to-setup-node-behind-web-proxy/" target="_blank" rel="external">npm behind HTTP proxy</a></li>
-<li><a href="https://hexo.io/docs/configuration.html" target="_blank" rel="external">Hexo configuration</a></li>
-<li><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">NexT 主题配置 官方文档</a></li>
-<li><a href="https://disqus.com/" target="_blank" rel="external">Disqus &ndash; The #1 way to build your audience</a></li>
-<li><a href="http://fontawesome.io/icons/" target="_blank" rel="external">Font Awesome Icon Font</a></li>
-<li><a href="https://github.com/BLumia/Typecho2Hexo-Helper" target="_blank" rel="external">BLumia / Typecho2Hexo-Helper</a></li>
-<li><a href="https://github.com/hexojs/hexo/issues/1812" target="_blank" rel="external">share link wrong with sub path #1812 - GitHub Issue</a></li>
-<li><a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95" target="_blank" rel="external">Fix the wrong share link when the site is in subdirectory - GitHub commit</a></li>
-<li><a href="https://npm.taobao.org/" target="_blank" rel="external">Taobao npm Mirror</a></li>
+<li><a href="https://hexo.io" target="_blank" rel="noopener">hexo.io</a></li>
+<li><a href="https://jjasonclark.com/how-to-setup-node-behind-web-proxy/" target="_blank" rel="noopener">npm behind HTTP proxy</a></li>
+<li><a href="https://hexo.io/docs/configuration.html" target="_blank" rel="noopener">Hexo configuration</a></li>
+<li><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">NexT 主题配置 官方文档</a></li>
+<li><a href="https://disqus.com/" target="_blank" rel="noopener">Disqus &ndash; The #1 way to build your audience</a></li>
+<li><a href="http://fontawesome.io/icons/" target="_blank" rel="noopener">Font Awesome Icon Font</a></li>
+<li><a href="https://github.com/BLumia/Typecho2Hexo-Helper" target="_blank" rel="noopener">BLumia / Typecho2Hexo-Helper</a></li>
+<li><a href="https://github.com/hexojs/hexo/issues/1812" target="_blank" rel="noopener">share link wrong with sub path #1812 - GitHub Issue</a></li>
+<li><a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95" target="_blank" rel="noopener">Fix the wrong share link when the site is in subdirectory - GitHub commit</a></li>
+<li><a href="https://npm.taobao.org/" target="_blank" rel="noopener">Taobao npm Mirror</a></li>
 </ol>
 
       
@@ -676,14 +666,14 @@ Hexo 社区活跃">
                src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
                alt="oing9179" />
           <p class="site-author-name" itemprop="name">oing9179</p>
-          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+          <p class="site-description motion-element" itemprop="description">A notepad.</p>
         </div>
         <nav class="site-state motion-element">
         
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -692,7 +682,7 @@ Hexo 社区活跃">
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -701,7 +691,7 @@ Hexo 社区活跃">
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">90</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -790,7 +780,7 @@ Hexo 社区活跃">
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

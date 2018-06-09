@@ -89,11 +89,13 @@
 
 
 <meta name="description" content="Preface明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k+ 个 Star 了。想试用的话，打开 wekan.github.io 然后点击 “Try on Sandstorm”">
+<meta name="keywords" content="Linux,Nginx,Docker,Wekan,Todo-list">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）">
 <meta property="og:url" content="https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/index.html">
 <meta property="og:site_name" content="oing9179 的笔记本儿">
 <meta property="og:description" content="Preface明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k+ 个 Star 了。想试用的话，打开 wekan.github.io 然后点击 “Try on Sandstorm”">
+<meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-08-24T08:58:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）">
@@ -380,7 +382,7 @@
       
 
       
-        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。<br>今天上午找了一些 Todo-List 软件，然后发现了这个：<a href="https://github.com/wekan/wekan" target="_blank" rel="external">wekan/wekan - github.com</a>, 已经有 10k+ 个 Star 了。<br>想试用的话，打开 <a href="https://wekan.github.io/" target="_blank" rel="external">wekan.github.io</a> 然后点击 “Try on Sandstorm”。<br>下面将介绍具体的搭建过程。<br><a id="more"></a></p>
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。<br>今天上午找了一些 Todo-List 软件，然后发现了这个：<a href="https://github.com/wekan/wekan" target="_blank" rel="noopener">wekan/wekan - github.com</a>, 已经有 10k+ 个 Star 了。<br>想试用的话，打开 <a href="https://wekan.github.io/" target="_blank" rel="noopener">wekan.github.io</a> 然后点击 “Try on Sandstorm”。<br>下面将介绍具体的搭建过程。<br><a id="more"></a></p>
 <h1 id="安装-amp-配置-MongoDB"><a href="#安装-amp-配置-MongoDB" class="headerlink" title="安装 &amp; 配置 MongoDB"></a>安装 &amp; 配置 MongoDB</h1><ol>
 <li>执行命令 <code>apt-get install mongodb-server</code></li>
 <li>编辑 <code>/etc/mongodb.conf</code>, 主要修改下面两个参数就够了, 其它的目前用不到.<ul>
@@ -390,15 +392,15 @@
 </ul>
 </li>
 <li><p>执行命令，允许来自 <code>172.0.0.0/8</code> IP段的连接，docker 容器一般会被分配到这个地址</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ufw allow from 172.0.0.0/8</div></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw allow from 172.0.0.0/8</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>执行命令重新启动 MongoDB 使上面修改过的设置生效: <code>systemctl restart mongodb.service</code></p>
 </li>
 </ol>
 <h1 id="安装-amp-配置-Wekan-Docker-Image"><a href="#安装-amp-配置-Wekan-Docker-Image" class="headerlink" title="安装 &amp; 配置 Wekan Docker Image"></a>安装 &amp; 配置 Wekan Docker Image</h1><ol>
-<li>安装 / 更新 <code>docker-compose</code>, 参考 <a href="https://github.com/docker/compose/releases" target="_blank" rel="external">这里</a></li>
+<li>安装 / 更新 <code>docker-compose</code>, 参考 <a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener">这里</a></li>
 <li><p>创建文件 <code>docker-compose.yml</code>, 内容如下</p>
- <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="attr">version:</span> <span class="string">"3"</span></div><div class="line"><span class="attr">services:</span></div><div class="line"><span class="attr">    wekan-app:</span></div><div class="line"><span class="attr">        image:</span> wekanteam/wekan:latest</div><div class="line">        <span class="comment"># 稍后要借助下面这个 command 进入 docker 容器</span></div><div class="line">        <span class="comment"># command: "/bin/cat /dev/stdout &gt; /dev/null"</span></div><div class="line"><span class="attr">        container_name:</span> wekan-app</div><div class="line"><span class="attr">        ports:</span></div><div class="line">            <span class="comment"># 把容器内的 80 端口映射到主机的 127.0.0.1:18081</span></div><div class="line"><span class="bullet">            -</span> <span class="string">"127.0.0.1:18081:80/tcp"</span></div><div class="line"><span class="attr">        environment:</span></div><div class="line"><span class="attr">            MONGO_URL:</span> <span class="string">"mongodb://host-ip:27017/wekan"</span></div><div class="line"><span class="attr">            ROOT_URL:</span> <span class="string">"https://todo.example.com"</span></div></pre></td></tr></table></figure>
+ <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3"</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">    wekan-app:</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">wekanteam/wekan:latest</span></span><br><span class="line">        <span class="comment"># 稍后要借助下面这个 command 进入 docker 容器</span></span><br><span class="line">        <span class="comment"># command: "/bin/cat /dev/stdout &gt; /dev/null"</span></span><br><span class="line"><span class="attr">        container_name:</span> <span class="string">wekan-app</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line">            <span class="comment"># 把容器内的 80 端口映射到主机的 127.0.0.1:18081</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">"127.0.0.1:18081:80/tcp"</span></span><br><span class="line"><span class="attr">        environment:</span></span><br><span class="line"><span class="attr">            MONGO_URL:</span> <span class="string">"mongodb://host-ip:27017/wekan"</span></span><br><span class="line"><span class="attr">            ROOT_URL:</span> <span class="string">"https://todo.example.com"</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在 <code>docker-compose.yml</code> 的同一目录下运行命令 <code>docker-compose up -d</code></p>
 </li>
@@ -406,7 +408,7 @@
 <li>为了让 docker 容器能保持运行 好让我进入容器执行一些命令来获知容器的 IP 地址, 把 <code>docker-compose.yml</code> 里面的 <code># command</code> 那行取消注释, 然后再运行 <code>docker-compose up -d</code>, 现在这个容器就处于运行中的状态了</li>
 <li>运行命令 <code>docker exec -it wekan-app /bin/bash -il</code> 获得容器内的 interactive shell</li>
 <li><p>运行命令获取分配给容器的 IP 地址: <code>ip route show default</code>, 输出内容大概是这样的:</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">default via 172.17.0.1 dev eth0 </div><div class="line">172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.2</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default via 172.17.0.1 dev eth0 </span><br><span class="line">172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.2</span><br></pre></td></tr></table></figure>
 <p> 那段 <code>default via 172.17.0.1</code> 的 <code>172.17.0.1</code> 就是这个 docker 容器的网关（Gateway）了, 用它替换掉 <code>docker-compose.yml</code> 里的 <code>host-ip</code>, 然后再运行 <code>docker-compose up -d</code></p>
 </li>
 <li>执行命令 <code>curl -i http://127.0.0.1:18081</code>, 如果有HTML输出说明这个 docker 容器已经运行起来了.</li>
@@ -416,23 +418,23 @@
 <li>安装 letsencrypt <code>apt-get install letsencrypt</code></li>
 <li>创建静态网站的目录 <code>mkdir --parents /var/www/todo.example.com</code>，稍后 Let’s Encrypt 会用到它</li>
 <li><p>创建文件 <code>/etc/nginx/sites-available/todo.example.com</code> 并编辑</p>
- <figure class="highlight nginxconf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="section">server</span> &#123;</div><div class="line">    <span class="comment"># 域名</span></div><div class="line">    <span class="attribute">server_name</span> todo.example.com;</div><div class="line">    <span class="comment"># 监听 IPv4/6 80 端口</span></div><div class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="attribute">listen</span> [::]:<span class="number">80</span>;</div><div class="line">    <span class="comment"># 静态网站根目录</span></div><div class="line">    <span class="attribute">root</span> /var/www/todo.example.com;</div><div class="line">    <span class="comment"># 提供静态文件服务</span></div><div class="line">    <span class="attribute">location</span> / &#123;</div><div class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ =<span class="number">404</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight nginxconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="comment"># 域名</span></span><br><span class="line">    <span class="attribute">server_name</span> todo.example.com;</span><br><span class="line">    <span class="comment"># 监听 IPv4/6 80 端口</span></span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">80</span>;</span><br><span class="line">    <span class="comment"># 静态网站根目录</span></span><br><span class="line">    <span class="attribute">root</span> /var/www/todo.example.com;</span><br><span class="line">    <span class="comment"># 提供静态文件服务</span></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/ =<span class="number">404</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建软链接</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -s /etc/nginx/sites-available/todo.example.com /etc/nginx/sites-enabled/todo.example.com</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /etc/nginx/sites-available/todo.example.com /etc/nginx/sites-enabled/todo.example.com</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>重启 Nginx <code>systemctl restart nginx</code></p>
 </li>
-<li>执行命令来生成 SSL 证书<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">letsencrypt certonly --webroot -w /var/www/todo.example.com --domain <span class="string">"todo.example.com"</span></div></pre></td></tr></table></figure>
+<li>执行命令来生成 SSL 证书<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">letsencrypt certonly --webroot -w /var/www/todo.example.com --domain <span class="string">"todo.example.com"</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>至此，SSL 证书已经申请好了，接下来将配置 Nginx 使用刚刚申请的 SSL 证书。</p>
 <h2 id="配置-SSL-证书"><a href="#配置-SSL-证书" class="headerlink" title="配置 SSL 证书"></a>配置 SSL 证书</h2><ol>
-<li><p>参考 <a href="https://github.com/wekan/wekan/wiki/Install-Wekan-Docker-in-production" target="_blank" rel="external">Install Wekan Docker in production</a> 编辑配置文件 <code>/etc/nginx/sites-available/todo.example.com</code></p>
- <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">upstream websocket &#123;</div><div class="line">    server 127.0.0.1:18081;</div><div class="line">&#125;</div><div class="line">map $http_upgrade $connection_upgrade &#123;</div><div class="line">    default upgrade;</div><div class="line">    '' close;</div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">    server_name todo.example.com;</div><div class="line">    listen 443;</div><div class="line">    listen [::]:443;</div><div class="line">    access_log /var/log/nginx/todo.example.com_access.log;</div><div class="line"></div><div class="line">    ssl off; </div><div class="line">    ssl_certificate /etc/letsencrypt/live/todo.example.com/fullchain.pem;</div><div class="line">    ssl_certificate_key /etc/letsencrypt/live/todo.example.com/privkey.pem;</div><div class="line">    # index index.html index.php;</div><div class="line">    location / &#123;</div><div class="line">        proxy_read_timeout 300;</div><div class="line">        proxy_connect_timeout 300;</div><div class="line">        proxy_redirect off;</div><div class="line">        proxy_pass http://127.0.0.1:18081;</div><div class="line"></div><div class="line">        proxy_set_header Host $http_host;</div><div class="line">        proxy_set_header X-Real-IP $remote_addr;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">        proxy_set_header X-Forwarded-Proto $scheme;</div><div class="line">    &#125;</div><div class="line">    location ~ websocket$ &#123;</div><div class="line">        proxy_pass http://websocket;</div><div class="line">        proxy_http_version 1.1;</div><div class="line">        proxy_set_header Upgrade $http_upgrade;</div><div class="line">        proxy_set_header Connection $connection_upgrade;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>参考 <a href="https://github.com/wekan/wekan/wiki/Install-Wekan-Docker-in-production" target="_blank" rel="noopener">Install Wekan Docker in production</a> 编辑配置文件 <code>/etc/nginx/sites-available/todo.example.com</code></p>
+ <figure class="highlight nginxconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> websocket &#123;</span><br><span class="line">    <span class="attribute">server</span> <span class="number">127.0.0.1:18081</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">map</span> <span class="variable">$http_upgrade</span> <span class="variable">$connection_upgrade</span> &#123;</span><br><span class="line">    <span class="attribute">default</span> upgrade;</span><br><span class="line">    '' close;</span><br><span class="line">&#125;</span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">server_name</span> todo.example.com;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span>;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">443</span>;</span><br><span class="line">    <span class="attribute">access_log</span> /var/log/nginx/todo.example.com_access.log;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl</span> <span class="literal">off</span>; </span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/letsencrypt/live/todo.example.com/fullchain.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/letsencrypt/live/todo.example.com/privkey.pem;</span><br><span class="line">    <span class="comment"># index index.html index.php;</span></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_read_timeout</span> <span class="number">300</span>;</span><br><span class="line">        <span class="attribute">proxy_connect_timeout</span> <span class="number">300</span>;</span><br><span class="line">        <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:18081;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~ websocket$</span> &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://websocket;</span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="variable">$connection_upgrade</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>验证配置文件语法 并 重启 Nginx</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nginx -t</div><div class="line">systemctl restart nginx</div></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>用网页浏览器打开地址 <code>https://todo.example.com</code> 查看效果</p>
 </li>
@@ -447,11 +449,11 @@
 <li>改进：参考 Wekan 官方文档来编写 Nginx 配置文件</li>
 </ul>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
-<li><a href="https://github.com/wekan/wekan" target="_blank" rel="external">wekan/wekan - github.com</a></li>
-<li><a href="https://wekan.github.io/" target="_blank" rel="external">Wekan - open-source kanban - wekan.github.io</a></li>
-<li><a href="https://github.com/docker/compose/releases" target="_blank" rel="external"><code>docker-compose</code> Releases - github.com</a></li>
-<li><a href="https://github.com/wekan/wekan/wiki/Install-Wekan-Docker-in-production" target="_blank" rel="external">Install Wekan Docker in production - github.com/wekan/wekan</a></li>
-<li><a id="references_5" href="https://github.com/wekan/wekan/issues/741" target="_blank" rel="external">Docker installation; when clicking cards page always reloads #741 - github.com/wekan/wekan/issues</a></li>
+<li><a href="https://github.com/wekan/wekan" target="_blank" rel="noopener">wekan/wekan - github.com</a></li>
+<li><a href="https://wekan.github.io/" target="_blank" rel="noopener">Wekan - open-source kanban - wekan.github.io</a></li>
+<li><a href="https://github.com/docker/compose/releases" target="_blank" rel="noopener"><code>docker-compose</code> Releases - github.com</a></li>
+<li><a href="https://github.com/wekan/wekan/wiki/Install-Wekan-Docker-in-production" target="_blank" rel="noopener">Install Wekan Docker in production - github.com/wekan/wekan</a></li>
+<li><a id="references_5" href="https://github.com/wekan/wekan/issues/741" target="_blank" rel="noopener">Docker installation; when clicking cards page always reloads #741 - github.com/wekan/wekan/issues</a></li>
 </ol>
 
       
@@ -575,14 +577,14 @@
                src="https://www.gravatar.com/avatar/e1bd13468682c8192041be77e8136ea5?s=128"
                alt="oing9179" />
           <p class="site-author-name" itemprop="name">oing9179</p>
-          <p class="site-description motion-element" itemprop="description">Develop with pleasure!</p>
+          <p class="site-description motion-element" itemprop="description">A notepad.</p>
         </div>
         <nav class="site-state motion-element">
         
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -591,7 +593,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/blog/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -600,7 +602,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/blog/tags">
-                <span class="site-state-item-count">89</span>
+                <span class="site-state-item-count">90</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -668,7 +670,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-配置-MongoDB"><span class="nav-number">2.</span> <span class="nav-text">安装 & 配置 MongoDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-配置-Wekan-Docker-Image"><span class="nav-number">3.</span> <span class="nav-text">安装 & 配置 Wekan Docker Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Nginx-amp-SSL-证书"><span class="nav-number">4.</span> <span class="nav-text">配置 Nginx & SSL 证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#申请-SSL-证书"><span class="nav-number">4.1.</span> <span class="nav-text">申请 SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSL-证书"><span class="nav-number">4.2.</span> <span class="nav-text">配置 SSL 证书</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">5.</span> <span class="nav-text">Q & A</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">6.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">7.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-配置-MongoDB"><span class="nav-number">2.</span> <span class="nav-text">安装 &amp; 配置 MongoDB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-amp-配置-Wekan-Docker-Image"><span class="nav-number">3.</span> <span class="nav-text">安装 &amp; 配置 Wekan Docker Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置-Nginx-amp-SSL-证书"><span class="nav-number">4.</span> <span class="nav-text">配置 Nginx &amp; SSL 证书</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#申请-SSL-证书"><span class="nav-number">4.1.</span> <span class="nav-text">申请 SSL 证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSL-证书"><span class="nav-number">4.2.</span> <span class="nav-text">配置 SSL 证书</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">5.</span> <span class="nav-text">Q &amp; A</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">6.</span> <span class="nav-text">结语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新历史"><span class="nav-number">7.</span> <span class="nav-text">更新历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
@@ -689,7 +691,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
