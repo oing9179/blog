@@ -3,105 +3,96 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>oing9179 的笔记本儿</title>
+    <title>Chiyuki&#39;s Notebook</title>
     <link>https://oing9179.github.io/blog/</link>
     <atom:link href="/blog/rss2.xml" rel="self" type="application/rss+xml"/>
     
-    <description>Develop with pleasure!</description>
-    <pubDate>Mon, 09 Oct 2017 04:15:02 GMT</pubDate>
+    <description></description>
+    <pubDate>Sun, 09 Jun 2019 14:11:21 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
+      <title>玩玩真的服务器</title>
+      <link>https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/</link>
+      <guid>https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/</guid>
+      <pubDate>Sun, 09 Jun 2019 03:53:39 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。&lt;br&gt;不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。  &lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>使用 SoftEther VPN 搭建私有局域网</title>
+      <link>https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/</link>
+      <guid>https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/</guid>
+      <pubDate>Thu, 26 Jul 2018 11:45:46 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。&lt;br&gt;本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>为 BIOS 启动的电脑换上 UEFI</title>
+      <link>https://oing9179.github.io/blog/2018/201807-Install-and-boot-OS-on-EFI-supported-PC/</link>
+      <guid>https://oing9179.github.io/blog/2018/201807-Install-and-boot-OS-on-EFI-supported-PC/</guid>
+      <pubDate>Tue, 24 Jul 2018 12:19:46 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。&lt;br&gt;我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2018/201807-Install-and-boot-OS-on-EFI-supported-PC/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>部署 Web Application 到 WildFly 13</title>
+      <link>https://oing9179.github.io/blog/2018/201806-Deploy-Web-Application-to-WildFly-13/</link>
+      <guid>https://oing9179.github.io/blog/2018/201806-Deploy-Web-Application-to-WildFly-13/</guid>
+      <pubDate>Sat, 09 Jun 2018 02:18:00 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2018/201806-Deploy-Web-Application-to-WildFly-13/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>自定义任务触发器 - Spring Framework</title>
+      <link>https://oing9179.github.io/blog/2018/201802-Custom-Trigger-Spring-Framework/</link>
+      <guid>https://oing9179.github.io/blog/2018/201802-Custom-Trigger-Spring-Framework/</guid>
+      <pubDate>Sat, 03 Feb 2018 11:08:02 GMT</pubDate>
+      <description>
+      
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。&lt;/p&gt;
+      
+      </description>
+      
+      <comments>https://oing9179.github.io/blog/2018/201802-Custom-Trigger-Spring-Framework/#disqus_thread</comments>
+    </item>
+    
+    <item>
       <title>Kotlin 入门笔记</title>
-      <link>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/</link>
-      <guid>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/</guid>
+      <link>https://oing9179.github.io/blog/2017/201708-Note-Get-started-with-Kotlin/</link>
+      <guid>https://oing9179.github.io/blog/2017/201708-Note-Get-started-with-Kotlin/</guid>
       <pubDate>Mon, 09 Oct 2017 04:13:00 GMT</pubDate>
       <description>
       
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。&lt;br&gt;下文总结一些学习过程中的疑问和解答。&lt;br&gt;
+        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。&lt;br&gt;下文总结一些学习过程中的疑问和解答。&lt;/p&gt;
       
       </description>
       
-      <comments>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）</title>
-      <link>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</link>
-      <guid>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</guid>
-      <pubDate>Sat, 19 Aug 2017 11:40:20 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。&lt;br&gt;今天上午找了一些 Todo-List 软件，然后发现了这个：&lt;a href=&quot;https://github.com/wekan/wekan&quot;&gt;wekan/wekan - github.com&lt;/a&gt;, 已经有 10k+ 个 Star 了。&lt;br&gt;想试用的话，打开 &lt;a href=&quot;https://wekan.github.io/&quot;&gt;wekan.github.io&lt;/a&gt; 然后点击 “Try on Sandstorm”。&lt;br&gt;下面将介绍具体的搭建过程。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>[Android] Task &amp; Document / Loader</title>
-      <link>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/</link>
-      <guid>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/</guid>
-      <pubDate>Fri, 11 Aug 2017 13:33:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Task 和 Document 的基本概念&lt;/li&gt;
-&lt;li&gt;Loader 的基本概念和用法&lt;/li&gt;
-&lt;/ul&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>[Android] CoordinatorLayout 基本使用方法</title>
-      <link>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/</link>
-      <guid>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/</guid>
-      <pubDate>Sat, 15 Jul 2017 02:28:49 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;近些天在做个 Android app demo，有个需求是 默认情况下放大 App 的图标，向上滚动后把它缩小 给下面的内容留出空间。&lt;br&gt;下面展示的这种效果就是用 &lt;a href=&quot;https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.html&quot;&gt;&lt;code&gt;CoordinatorLayout&lt;/code&gt;&lt;/a&gt; 的 &lt;a href=&quot;https://developer.android.com/reference/android/support/design/widget/CoordinatorLayout.Behavior.html&quot;&gt;&lt;code&gt;Behavior&lt;/code&gt;&lt;/a&gt; 来做.&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>[Android] 阻止特定 Fragment 被恢复</title>
-      <link>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/</link>
-      <guid>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/</guid>
-      <pubDate>Sun, 09 Jul 2017 04:29:28 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。&lt;br&gt;如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。&lt;br&gt;下面就来解决这个问题。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>日记 - Android 实习测试题</title>
-      <link>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/</link>
-      <guid>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/</guid>
-      <pubDate>Wed, 14 Jun 2017 13:57:00 GMT</pubDate>
-      <description>
-      
-        &lt;h1 id=&quot;Preface&quot;&gt;&lt;a href=&quot;#Preface&quot; class=&quot;headerlink&quot; title=&quot;Preface&quot;&gt;&lt;/a&gt;Preface&lt;/h1&gt;&lt;p&gt;有个小伙伴给我介绍了一家互联网公司，说让我投份简历看看能不能争取到一份校招实习资格。后来和这个公司的 HR 联系了一下，说让我先做做题。题目一共两道：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;第1题可能涉及到公司的业务，这里不做透露。&lt;/li&gt;
-&lt;li&gt;第2题是写一个 Android 自定义控件，是个尺子控件，要求使用系统提供的绘图API（&lt;code&gt;android.graphics.Canvas&lt;/code&gt;）来做。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;下面我就说下这次做自定义尺子控件都学到了什么。&lt;br&gt;
-      
-      </description>
-      
-      <comments>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/#disqus_thread</comments>
+      <comments>https://oing9179.github.io/blog/2017/201708-Note-Get-started-with-Kotlin/#disqus_thread</comments>
     </item>
     
   </channel>

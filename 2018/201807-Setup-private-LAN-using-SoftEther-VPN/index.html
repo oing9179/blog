@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html class="theme-next mist" lang="zh, en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":true,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="PrefaceLinux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。">
+<meta name="keywords" content="SoftEther VPN,LAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 SoftEther VPN 搭建私有局域网">
+<meta property="og:url" content="https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/index.html">
+<meta property="og:site_name" content="Chiyuki&#39;s Notebook">
+<meta property="og:description" content="PrefaceLinux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。">
+<meta property="og:locale" content="zh, en">
+<meta property="og:updated_time" content="2019-06-09T04:35:56.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 SoftEther VPN 搭建私有局域网">
+<meta name="twitter:description" content="PrefaceLinux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。">
+
+
+
+  <link rel="alternate" href="/blog/rss2.xml" title="Chiyuki's Notebook" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>使用 SoftEther VPN 搭建私有局域网 | Chiyuki's Notebook</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh, en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chiyuki's Notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://oing9179.github.io/blog/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="oing9179">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chiyuki's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用 SoftEther VPN 搭建私有局域网
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-26 19:45:46" itemprop="dateCreated datePublished" datetime="2018-07-26T19:45:46+08:00">2018-07-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-09 12:35:56" itemprop="dateModified" datetime="2019-06-09T12:35:56+08:00">2019-06-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/Server/" itemprop="url" rel="index"><span itemprop="name">Server</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/Server/Deployment/" itemprop="url" rel="index"><span itemprop="name">Deployment</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h1><p>Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。<br>本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。</p>
+<a id="more"></a>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li>到 <a href="https://www.softether.org" target="_blank" rel="noopener">softether.org</a> 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包</li>
+<li>Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面</li>
+<li>GCC 用来编译 Linux 版的 sevpn</li>
+</ol>
+<h1 id="sevpn-的编译和安装"><a href="#sevpn-的编译和安装" class="headerlink" title="sevpn 的编译和安装"></a>sevpn 的编译和安装</h1><h2 id="编译-Linux-版的可执行文件"><a href="#编译-Linux-版的可执行文件" class="headerlink" title="编译 Linux 版的可执行文件"></a>编译 Linux 版的可执行文件</h2><p>前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 <code>.install.sh</code> 来编译成可执行文件。<br>编译完成后，一共有3个文件，{<code>vpnserver</code> 或 <code>vpnclient</code>, <code>vpncmd</code>, <code>hamcore.se2</code>} 是运行 sevpn 的必备文件。</p>
+<h2 id="安装管理工具"><a href="#安装管理工具" class="headerlink" title="安装管理工具"></a>安装管理工具</h2><p><strong>注：</strong> 该工具可以用 Wine 安装和运行。</p>
+<p>安装很简单，在 “Select Software Components to Install” 界面选择 “Admin Tools Only” 那一项即可。</p>
+<h1 id="搭建-sevpn-服务器"><a href="#搭建-sevpn-服务器" class="headerlink" title="搭建 sevpn 服务器"></a>搭建 sevpn 服务器</h1><h2 id="启动-vpnserver"><a href="#启动-vpnserver" class="headerlink" title="启动 vpnserver"></a>启动 vpnserver</h2><ol>
+<li>在服务器上运行 <code>sudo vpnserver start</code></li>
+<li>打开 SEVPN Server Manager（也就是 GUI 版的管理工具）</li>
+<li>点击 “New Setting”，在弹出的窗口中设置如下信息<br>Server Name: 显示在管理工具主界面的服务器名称<br>Host Name: 服务器的IP地址或域名<br>Port Number: 端口号<br>然后点击 OK</li>
+<li>回到主界面后，列表里会多出一项，双击它，会要求设置新密码，请设置一个复杂的密码</li>
+<li>设置完密码后点OK，然后会提示密码设置成功，点击OK</li>
+</ol>
+<h2 id="搭建-Virtual-Hub"><a href="#搭建-Virtual-Hub" class="headerlink" title="搭建 Virtual Hub"></a>搭建 Virtual Hub</h2><ol>
+<li>弹出 SEVPN Easy Setup，关掉它即可</li>
+<li>然后会弹出 “Do you want to seup the IPSec?”，点 No 即可</li>
+<li>删掉列表里名为 “DEFAULT” 的 HUB</li>
+<li>点击 “Create New Hub”，给 Hub 起个名字，以后会用到这个名字。<br> 然后设置该 Hub 的密码，请务必设置一个复杂的密码。<br> 然后勾选 “No Enumerate to Anonymous Users”，勾选此项后，客户端想要连接服务器，必须手动填写 Hub 的名称。<br> 然后点击 OK。</li>
+<li>选中列表中刚创建的 Hub，点击 “Manage Virtual Hub”</li>
+<li>然后点击 “Manage User”，添加一个用户，这个用户用来登录到该 VPN 服务器</li>
+<li>然后回到管理 Hub 的界面（”Management of Virtual Hub”）</li>
+<li>点击 “Virtual NAT and Virtual DHCP Server (SecureNAT)”，然后点击 “Enable SecureNAT”，然后点击 “Yes”。<br> SecureNAT 是用来在服务器上可以自动为客户端分配一个 IP 地址。</li>
+<li>然后按数次 Exit 后回到 Manage VPN Server 界面</li>
+<li>点击 “Encryption and Network”，考虑更换 “Encryption Algorithm”</li>
+<li>取消勾选 “Use Keep Alive Internet Connection”</li>
+<li>可选: 点击 “VPN over ICMP / DNS Settings”，勾选那两个复选框</li>
+<li>点击数次 OK 回到 “Manage VPN Server”</li>
+</ol>
+<h2 id="端口设置"><a href="#端口设置" class="headerlink" title="端口设置"></a>端口设置</h2><p>在 Management of Listeners 列表里删除不需要的端口监听，并按需求添加需要的端口。<br>如果服务器有防火墙，则需要添加规则以放行指定端口的数据包。</p>
+<p>至此，服务器端已经搭建完成。</p>
+<h1 id="使用客户端连接服务器"><a href="#使用客户端连接服务器" class="headerlink" title="使用客户端连接服务器"></a>使用客户端连接服务器</h1><h2 id="启动-vpnclient"><a href="#启动-vpnclient" class="headerlink" title="启动 vpnclient"></a>启动 vpnclient</h2><ol>
+<li>运行 <code>sudo vpnclient start</code></li>
+<li>启动 SEVPN Client Manager，分2种情况<ol>
+<li>使用 Wine 运行 SEVPN Client Manager 的话，直接运行它即可</li>
+<li>在 Windows 虚拟机内运行的话，找到 <code>vpncmgr.exe</code>，使用命令行运行 <code>vpncmgr.exe /remote</code>，然后填写宿主机的IP地址。连接不上的话，请检查防火墙设定。</li>
+</ol>
+</li>
+</ol>
+<h2 id="创建虚拟网卡"><a href="#创建虚拟网卡" class="headerlink" title="创建虚拟网卡"></a>创建虚拟网卡</h2><p>菜单栏 -&gt; Virtual Adapter -&gt; New Virtual Network Adapter，然后按照说明创建一个虚拟网卡即可。假定新建的虚拟网卡名称为 <code>vpn_0</code></p>
+<h2 id="创建-VPN-连接"><a href="#创建-VPN-连接" class="headerlink" title="创建 VPN 连接"></a>创建 VPN 连接</h2><ol>
+<li>运行命令，允许本机直接发送数据包到服务器<br> <code>ip route add &lt;server_ip&gt; via &lt;gateway&gt; dev &lt;interface&gt;</code><br> server_ip: VPN 服务器的 IP<br> gateway: 当前所在网络内的默认 gateway<br> interface: 通过哪个网络设备发送数据包</li>
+<li>菜单栏 -&gt; Connect -&gt; New VPN Connection Setting<br> Server Name: 该 VPN 连接的名称<br> Host Name: VPN 服务器的IP地址或域名<br> Port Number: VPN 服务器的端口号<br> Virtual Hub Name: 填写前面创建的 Virtual Hub 的名字<br> Virtual Network Adapter to Use: 选择刚才创建的虚拟网卡<br> User Authenication Setting: 填写前面创建 Hub 后，在 Hub 里创建的用户名和密码<br> 点击 OK</li>
+<li>右键刚刚新建的连接 -&gt; Connect</li>
+<li>运行命令 <code>dhclient vpn_0</code>，该命令将让虚拟网卡获得一个 IP 地址</li>
+</ol>
+<h2 id="断开-VPN-连接"><a href="#断开-VPN-连接" class="headerlink" title="断开 VPN 连接"></a>断开 VPN 连接</h2><ol>
+<li>在 VPN 连接上右键 -&gt; Disconnect</li>
+<li>删除虚拟网卡，这样就会在路由表里自动删除虚拟网卡的路由</li>
+<li>文件 <code>/etc/resolv.conf</code> 会在连接 VPN 后被修改成 VPN 内的网关，断开 VPN 后需要改回原来的 nameserver</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>oing9179</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/" title="使用 SoftEther VPN 搭建私有局域网">https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/blog/tags/SoftEther-VPN/" rel="tag"># SoftEther VPN</a>
+          
+            <a href="/blog/tags/LAN/" rel="tag"># LAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/201807-Install-and-boot-OS-on-EFI-supported-PC/" rel="next" title="为 BIOS 启动的电脑换上 UEFI">
+                <i class="fa fa-chevron-left"></i> 为 BIOS 启动的电脑换上 UEFI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/201906-Playing-with-My-New-Server/" rel="prev" title="玩玩真的服务器">
+                玩玩真的服务器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">oing9179</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">32</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">97</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/blog/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/oing9179" title="GitHub &rarr; https://github.com/oing9179" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/oing9179" title="Twitter &rarr; https://twitter.com/oing9179" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/blog/images/cc-by-nc.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sevpn-的编译和安装"><span class="nav-number">3.</span> <span class="nav-text">sevpn 的编译和安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译-Linux-版的可执行文件"><span class="nav-number">3.1.</span> <span class="nav-text">编译 Linux 版的可执行文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装管理工具"><span class="nav-number">3.2.</span> <span class="nav-text">安装管理工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搭建-sevpn-服务器"><span class="nav-number">4.</span> <span class="nav-text">搭建 sevpn 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动-vpnserver"><span class="nav-number">4.1.</span> <span class="nav-text">启动 vpnserver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建-Virtual-Hub"><span class="nav-number">4.2.</span> <span class="nav-text">搭建 Virtual Hub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#端口设置"><span class="nav-number">4.3.</span> <span class="nav-text">端口设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用客户端连接服务器"><span class="nav-number">5.</span> <span class="nav-text">使用客户端连接服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动-vpnclient"><span class="nav-number">5.1.</span> <span class="nav-text">启动 vpnclient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建虚拟网卡"><span class="nav-number">5.2.</span> <span class="nav-text">创建虚拟网卡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-VPN-连接"><span class="nav-number">5.3.</span> <span class="nav-text">创建 VPN 连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断开-VPN-连接"><span class="nav-number">5.4.</span> <span class="nav-text">断开 VPN 连接</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oing9179</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.2"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.2"></script>
+<script src="/blog/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

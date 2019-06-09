@@ -2,212 +2,240 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/10/Note-Get-started-with-Kotlin/</loc>
+    <loc>https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/</loc>
     
-    <lastmod>2017-10-09T04:15:02.113Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/08/Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</loc>
-    
-    <lastmod>2017-08-24T08:58:00.000Z</lastmod>
+    <lastmod>2019-06-09T14:11:21.081Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/08/Android-Task-Document-Loader/</loc>
+    <loc>https://oing9179.github.io/blog/2018/201807-Setup-private-LAN-using-SoftEther-VPN/</loc>
     
-    <lastmod>2017-08-11T14:01:32.164Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/07/Getting-Started-with-CoordinatorLayout/</loc>
-    
-    <lastmod>2017-07-16T09:46:38.815Z</lastmod>
+    <lastmod>2019-06-09T04:35:56.784Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/07/Prevent-specific-Fragment-being-restored/</loc>
+    <loc>https://oing9179.github.io/blog/2018/201807-Install-and-boot-OS-on-EFI-supported-PC/</loc>
     
-    <lastmod>2017-07-09T04:58:30.245Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/06/Diary-Android-internship-test/</loc>
-    
-    <lastmod>2017-06-15T01:44:00.000Z</lastmod>
+    <lastmod>2019-06-09T04:35:27.425Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/06/The-ICMP-Tunnel/</loc>
+    <loc>https://oing9179.github.io/blog/2018/201806-Deploy-Web-Application-to-WildFly-13/</loc>
     
-    <lastmod>2017-06-06T04:47:58.215Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/06/Diary-Recruitment/</loc>
-    
-    <lastmod>2017-06-06T04:47:00.000Z</lastmod>
+    <lastmod>2019-06-09T04:34:52.652Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/</loc>
+    <loc>https://oing9179.github.io/blog/2017/201708-Setup-Wekan-the-Kanban-like-todo-list-using-Docker-Nginx/</loc>
     
-    <lastmod>2017-06-02T03:52:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/04/Setup-Firefly-the-Financial-Manager-using-Docker-Nginx/</loc>
-    
-    <lastmod>2017-05-13T08:53:00.000Z</lastmod>
+    <lastmod>2019-06-09T04:34:32.752Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/05/Diary-Depression-pytun/</loc>
+    <loc>https://oing9179.github.io/blog/2017/201706-The-ICMP-Tunnel/</loc>
     
-    <lastmod>2017-05-04T14:31:44.744Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/04/The-Magic-SysRq-Key/</loc>
-    
-    <lastmod>2017-04-20T12:40:35.371Z</lastmod>
+    <lastmod>2019-06-09T04:33:39.880Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/links/index.html</loc>
+    <loc>https://oing9179.github.io/blog/2017/201705-pytun/</loc>
     
-    <lastmod>2017-04-16T07:49:53.090Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/04/Java-Concurrency-Multi-Threading-Introduction/</loc>
-    
-    <lastmod>2017-04-16T07:09:40.001Z</lastmod>
+    <lastmod>2019-06-09T04:30:26.757Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/04/I-dont-know-JS/</loc>
+    <loc>https://oing9179.github.io/blog/2017/201704-The-Magic-SysRq-Key/</loc>
     
-    <lastmod>2017-04-13T06:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/03/v2ray-as-WebSocket-Proxy-behind-Nginx/</loc>
-    
-    <lastmod>2017-04-11T01:55:00.000Z</lastmod>
+    <lastmod>2019-06-09T04:28:29.047Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2016/11/v2ray-More-Complex-and-Better-than-Shadowsocks/</loc>
+    <loc>https://oing9179.github.io/blog/2016/201608-Tails-Linux-Tryout/</loc>
     
-    <lastmod>2017-04-10T16:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2016/07/Mybatis-Plus-for-IntelliJ-IDEA-Crack/</loc>
-    
-    <lastmod>2017-04-05T07:36:06.372Z</lastmod>
+    <lastmod>2019-06-09T04:26:37.719Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2016/08/Markdown-Navigator-for-IntelliJ-IDEA-Crack/</loc>
+    <loc>https://oing9179.github.io/blog/2017/201702-Encrypt-home-directory-on-Linux-and-Windows/</loc>
     
-    <lastmod>2017-04-05T07:36:05.694Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/02/Fix-Unclear-Font-Display-in-Chrome-Web-Browser/</loc>
-    
-    <lastmod>2017-04-05T07:33:44.181Z</lastmod>
+    <lastmod>2019-06-09T04:25:57.083Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/03/Setup-Nextcloud-using-Docker-and-Nginx/</loc>
+    <loc>https://oing9179.github.io/blog/2016/201609-Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</loc>
     
-    <lastmod>2017-03-16T07:04:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/02/Present-English-Grammar/</loc>
-    
-    <lastmod>2017-02-23T06:19:00.000Z</lastmod>
+    <lastmod>2019-06-09T04:24:35.161Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/02/Encrypt-home-directory-on-Linux-and-Windows/</loc>
+    <loc>https://oing9179.github.io/blog/2016/201607-Install-Typecho-on-OpenShift/</loc>
     
-    <lastmod>2017-02-22T09:03:09.790Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/02/Setup-Hexo-on-github-io/</loc>
-    
-    <lastmod>2017-02-12T01:55:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2017/02/It-takes-years-to-become-a-music-producer/</loc>
-    
-    <lastmod>2017-02-10T13:35:48.172Z</lastmod>
+    <lastmod>2019-06-09T04:24:05.433Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://oing9179.github.io/blog/about/index.html</loc>
     
-    <lastmod>2017-02-03T01:50:00.000Z</lastmod>
+    <lastmod>2019-06-09T03:32:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2016/08/Tails-Linux-Tryout/</loc>
+    <loc>https://oing9179.github.io/blog/2017/201708-Note-Get-started-with-Kotlin/</loc>
     
-    <lastmod>2017-02-02T10:05:17.042Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://oing9179.github.io/blog/2016/07/Install-Typecho-on-OpenShift/</loc>
-    
-    <lastmod>2017-02-02T09:57:44.080Z</lastmod>
+    <lastmod>2019-06-09T03:00:07.755Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2017/01/OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</loc>
+    <loc>https://oing9179.github.io/blog/2018/201802-Custom-Trigger-Spring-Framework/</loc>
     
-    <lastmod>2017-02-02T09:55:05.466Z</lastmod>
+    <lastmod>2019-06-09T02:59:28.350Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://oing9179.github.io/blog/2016/09/Clean-DNS-Server-Setup-Using-bind9-and-dnscrypt-proxy/</loc>
+    <loc>https://oing9179.github.io/blog/2017/201704-Java-Concurrency-Multi-Threading-Introduction/</loc>
     
-    <lastmod>2017-02-02T09:50:28.312Z</lastmod>
+    <lastmod>2019-06-09T02:59:16.887Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2016/201608-Markdown-Navigator-for-IntelliJ-IDEA-Crack/</loc>
+    
+    <lastmod>2019-06-09T02:59:03.137Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/</loc>
+    
+    <lastmod>2019-06-09T02:58:42.238Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201703-v2ray-as-WebSocket-Proxy-behind-Nginx/</loc>
+    
+    <lastmod>2017-10-27T06:55:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201708-Android-Task-Document-Loader/</loc>
+    
+    <lastmod>2017-08-11T14:01:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201707-Getting-Started-with-CoordinatorLayout/</loc>
+    
+    <lastmod>2017-07-16T09:46:38.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201707-Prevent-specific-Fragment-being-restored/</loc>
+    
+    <lastmod>2017-07-09T04:58:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201706-Diary-Android-internship-test/</loc>
+    
+    <lastmod>2017-06-15T01:44:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201706-Diary-Job-Metting/</loc>
+    
+    <lastmod>2017-06-06T04:47:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201705-Linux-Tunnel-Device-and-Route/</loc>
+    
+    <lastmod>2017-06-02T03:52:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201704-Setup-Firefly-the-Financial-Manager-using-Docker-Nginx/</loc>
+    
+    <lastmod>2017-05-13T08:53:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/links/index.html</loc>
+    
+    <lastmod>2017-04-16T07:49:53.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201704-I-dont-know-JS/</loc>
+    
+    <lastmod>2017-04-13T06:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2016/201611-v2ray-More-Complex-and-Better-than-Shadowsocks/</loc>
+    
+    <lastmod>2017-04-10T16:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201703-Setup-Nextcloud-using-Docker-and-Nginx/</loc>
+    
+    <lastmod>2017-03-16T07:04:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201702-Present-English-Grammar/</loc>
+    
+    <lastmod>2017-02-23T06:19:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201702-Setup-Hexo-on-github-io/</loc>
+    
+    <lastmod>2017-02-12T01:55:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201702-It-takes-years-to-become-a-music-producer/</loc>
+    
+    <lastmod>2017-02-10T13:35:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://oing9179.github.io/blog/2017/201701-OnePlus3T-from-Unlocking-Bootloader-to-Xposed-Installed/</loc>
+    
+    <lastmod>2017-02-02T09:55:05.000Z</lastmod>
     
   </url>
   
