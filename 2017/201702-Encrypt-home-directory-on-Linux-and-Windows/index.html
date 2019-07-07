@@ -105,7 +105,7 @@
 <meta property="og:site_name" content="Chiyuki&#39;s Notebook">
 <meta property="og:description" content="Preface/home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&amp;lt;用户名&amp;gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：  浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解">
 <meta property="og:locale" content="zh, en">
-<meta property="og:updated_time" content="2019-06-09T04:25:57.083Z">
+<meta property="og:updated_time" content="2019-06-09T04:25:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux &#x2F; Windows 加密用户文件夹">
 <meta name="twitter:description" content="Preface/home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&amp;lt;用户名&amp;gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：  浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解">
@@ -133,6 +133,17 @@
 
 
 
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91332739-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-91332739-1');
+    }
+  </script>
 
 
 
@@ -432,6 +443,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/blog/2017/201702-Encrypt-home-directory-on-Linux-and-Windows/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/201702-Encrypt-home-directory-on-Linux-and-Windows/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -626,6 +650,13 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
 
   
 
@@ -1166,6 +1197,56 @@
   
 
   
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://oing9179.github.io/blog/2017/201702-Encrypt-home-directory-on-Linux-and-Windows/";
+    this.page.identifier = "2017/201702-Encrypt-home-directory-on-Linux-and-Windows/";
+    this.page.title = 'Linux / Windows 加密用户文件夹';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   

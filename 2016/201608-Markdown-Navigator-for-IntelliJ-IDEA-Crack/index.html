@@ -106,7 +106,7 @@
 <meta property="og:description" content="Preface一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可">
 <meta property="og:locale" content="zh, en">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg">
-<meta property="og:updated_time" content="2019-06-09T02:59:03.137Z">
+<meta property="og:updated_time" content="2019-06-09T02:59:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解">
 <meta name="twitter:description" content="Preface一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可">
@@ -135,6 +135,17 @@
 
 
 
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91332739-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-91332739-1');
+    }
+  </script>
 
 
 
@@ -441,6 +452,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/blog/2016/201608-Markdown-Navigator-for-IntelliJ-IDEA-Crack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/201608-Markdown-Navigator-for-IntelliJ-IDEA-Crack/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -645,6 +669,13 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
 
   
 
@@ -1185,6 +1216,56 @@
   
 
   
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://oing9179.github.io/blog/2016/201608-Markdown-Navigator-for-IntelliJ-IDEA-Crack/";
+    this.page.identifier = "2016/201608-Markdown-Navigator-for-IntelliJ-IDEA-Crack/";
+    this.page.title = 'Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   

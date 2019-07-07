@@ -108,7 +108,7 @@
 <meta property="og:image" content="https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/photo_up_board_with_hdd.jpg">
 <meta property="og:image" content="https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/photo_dell_server.jpg">
 <meta property="og:image" content="https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/photo_server_with_monitor.jpg">
-<meta property="og:updated_time" content="2019-06-09T14:11:21.081Z">
+<meta property="og:updated_time" content="2019-06-09T14:11:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="玩玩真的服务器">
 <meta name="twitter:description" content="最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。">
@@ -137,6 +137,17 @@
 
 
 
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91332739-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-91332739-1');
+    }
+  </script>
 
 
 
@@ -431,6 +442,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/blog/2019/201906-Playing-with-My-New-Server/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/201906-Playing-with-My-New-Server/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -594,6 +618,13 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
 
   
 
@@ -1134,6 +1165,56 @@
   
 
   
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://oing9179.github.io/blog/2019/201906-Playing-with-My-New-Server/";
+    this.page.identifier = "2019/201906-Playing-with-My-New-Server/";
+    this.page.title = '玩玩真的服务器';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   

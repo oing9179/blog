@@ -110,7 +110,7 @@
 <meta property="og:image" content="https://oing9179.github.io/blog/2017/201704-Java-Concurrency-Multi-Threading-Introduction/java-memory-model-3.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/2017/201704-Java-Concurrency-Multi-Threading-Introduction/hardware-memory-model.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/2017/201704-Java-Concurrency-Multi-Threading-Introduction/java-and-hardware-memory-model-combined.png">
-<meta property="og:updated_time" content="2019-06-09T02:59:16.887Z">
+<meta property="og:updated_time" content="2019-06-09T02:59:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 并发 &amp; 多线程 - 基础知识">
 <meta name="twitter:description" content="Preface终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。  我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。- 某位不愿意透露姓名的人（不是我）">
@@ -139,6 +139,17 @@
 
 
 
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91332739-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-91332739-1');
+    }
+  </script>
 
 
 
@@ -445,6 +456,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/blog/2017/201704-Java-Concurrency-Multi-Threading-Introduction/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/201704-Java-Concurrency-Multi-Threading-Introduction/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -667,6 +691,13 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
 
   
 
@@ -1207,6 +1238,56 @@
   
 
   
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://oing9179.github.io/blog/2017/201704-Java-Concurrency-Multi-Threading-Introduction/";
+    this.page.identifier = "2017/201704-Java-Concurrency-Multi-Threading-Introduction/";
+    this.page.title = 'Java 并发 & 多线程 - 基础知识';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   

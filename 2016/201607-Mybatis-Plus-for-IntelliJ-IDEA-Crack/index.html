@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://mybatis.github.io/images/mybatis-logo.png">
 <meta property="og:image" content="https://oing9179.github.io/blog/2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/Project_SDK_for_IDEA_plugin.jpg">
 <meta property="og:image" content="https://oing9179.github.io/blog/2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/Project_File_Structure.jpg">
-<meta property="og:updated_time" content="2019-06-09T02:58:42.238Z">
+<meta property="og:updated_time" content="2019-06-09T02:58:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mybatis Plus for IntelliJ IDEA 破解">
 <meta name="twitter:description" content="Preface前天发现了个不错的插件，叫 Mybatis Plus，是一个 IntelliJ IDEA 插件，用于协助编写使用MyBatis的程序。插件官网上还给出了使用插件的 效果视频，感觉这插件能大大提升开发效率，于是安装它打算试试。不料，安装后发现插件不允许试用，只能先购买后使用。于是我查了一些资料，试着自己处理掉DRM。">
@@ -137,6 +137,17 @@
 
 
 
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91332739-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-91332739-1');
+    }
+  </script>
 
 
 
@@ -443,6 +454,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/blog/2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -715,6 +739,13 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
 
   
 
@@ -1255,6 +1286,56 @@
   
 
   
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://oing9179.github.io/blog/2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/";
+    this.page.identifier = "2016/201607-Mybatis-Plus-for-IntelliJ-IDEA-Crack/";
+    this.page.title = 'Mybatis Plus for IntelliJ IDEA 破解';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://oing9179-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   
