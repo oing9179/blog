@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tun on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/tun/</link>
+    <description>Recent content in tun on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sat, 03 Jun 2017 11:36:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/tun/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The ICMP Tunnel</title>
+      <link>https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/</link>
+      <pubDate>Sat, 03 Jun 2017 11:36:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/</guid>
+      <description>&lt;h1 id=&#34;preface&#34;&gt;Preface&lt;/h1&gt;
+&lt;p&gt;经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;包从哪里来的?&lt;/li&gt;
+&lt;li&gt;包去哪儿了?&lt;/li&gt;
+&lt;li&gt;Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、&lt;code&gt;iptables&lt;/code&gt;、Python 代码.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux Tunnel Device and Route</title>
+      <link>https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/</link>
+      <pubDate>Fri, 12 May 2017 12:04:33 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/</guid>
+      <description>Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。</description>
+    </item>
+    
+    <item>
+      <title>python-pytun scapy</title>
+      <link>https://oing9179.github.io/blog/posts/2017/may/pytun/</link>
+      <pubDate>Thu, 04 May 2017 21:33:47 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/may/pytun/</guid>
+      <description>Preface 好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：
+ 用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复  python-pytun 有些 ISP 会对大流量的 UDP 包进行 QoS，导致的现象就是 上行UDP包100%丢包率 下行没问题，而且还能ping得通服务器。借助这一点，可以琢磨着弄个 ICMP Tunnel，显然 GitHub 上已经有轮子实现这个了，但是我怎么弄都没法让它转发 IP 包。于是干脆自己试着用 python 写一个。（当然，还没写出来，但新学的知识已经够写个笔记了） 选择 python 原因有2：
+ 调试方便一些，写一点调试一下，不用像 Java 那样还得等编译 主要原因还是有 python-pytun 这个现成的库，可以直接在 Linux 下创建 tun 设备（豚设备） 而不用自己搞什么 FileDescriptor ioctl 之类的东西  现在这个世界就是不缺轮子。
+TUN / TAP 设备 直接由 Linux 内核提供。
+ tun 设备：就是 tunnel 设备，可以收发 Network layer （Layer 3，比如 IP, ICMP）的包. tap 设备：就是 tap 设备（反正我没找到 tap 是什么的简写），可以收发 Data link layer（Layer 2，比如 ARP, IEEE 802.</description>
+    </item>
+    
+  </channel>
+</rss>

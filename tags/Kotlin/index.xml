@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kotlin on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/kotlin/</link>
+    <description>Recent content in Kotlin on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Mon, 09 Oct 2017 12:13:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kotlin 入门笔记</title>
+      <link>https://oing9179.github.io/blog/posts/2017/october/note-get-started-with-kotlin/</link>
+      <pubDate>Mon, 09 Oct 2017 12:13:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/october/note-get-started-with-kotlin/</guid>
+      <description>Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
+基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
+ &amp;ldquo;Unit&amp;rdquo; just stands for &amp;ldquo;something that has only one value&amp;rdquo;, it&amp;rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &amp;lsquo;14 at 6:41
+ 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：</description>
+    </item>
+    
+  </channel>
+</rss>

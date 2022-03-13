@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>Kotlin 入门笔记 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="Kotlin 入门笔记" />
+<meta name="description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
+基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
+ &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+ 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：" />
+<meta name="keywords" content="Kotlin,JVM Language," />
+
+
+<meta property="og:title" content="Kotlin 入门笔记" />
+<meta property="og:description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
+基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
+ &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+ 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/october/note-get-started-with-kotlin/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-10-09T12:13:00+00:00" />
+<meta property="article:modified_time" content="2017-10-09T12:13:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kotlin 入门笔记"/>
+<meta name="twitter:description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
+基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
+ &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+ 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因："/>
+
+
+
+<meta itemprop="name" content="Kotlin 入门笔记">
+<meta itemprop="description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
+基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
+ &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+ 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因："><meta itemprop="datePublished" content="2017-10-09T12:13:00+00:00" />
+<meta itemprop="dateModified" content="2017-10-09T12:13:00+00:00" />
+<meta itemprop="wordCount" content="1120">
+<meta itemprop="keywords" content="Kotlin,JVM Language," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>Kotlin 入门笔记</h1>
+<p>
+  <i>
+    <time datetime='2017-10-09' pubdate>
+      09 Oct, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。
+下文总结一些学习过程中的疑问和解答。</p>
+<!-- more -->
+<h1 id="基本语法">基本语法</h1>
+<h2 id="1-函数默认返回-unit-而不是像-java-那样的-void">1. 函数默认返回 <code>Unit</code> 而不是像 Java 那样的 <code>void</code></h2>
+<p>先来看 <code>Unit</code> 的定义:</p>
+<blockquote>
+<p>&ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name.
+– <a href="https://stackoverflow.com/users/445715/andrey-breslav">Andrey Breslav</a> <a href="https://stackoverflow.com/questions/22654932/what-is-the-purpose-of-unit-returning-in-functions#comment34551391_22655381">Mar 27 &lsquo;14 at 6:41</a></p>
+</blockquote>
+<p>综合 StackOverflow 上 <a href="https://stackoverflow.com/questions/22654932/what-is-the-purpose-of-unit-returning-in-functions">这个问题</a> 的两个答案，返回 <code>Unit</code> 主要有2个原因：</p>
+<ol>
+<li><code>return Unit;</code> 意味着方法一定会返回，而 <code>Nothing</code> 则什么也不会返回，可以看一下 <code>Unit</code> 和 <code>Nothing</code> 的源码:
+<code>Unit</code> 是一个单例对象，也就意味着 不管怎样引用它 都会指向同一个 <code>Unit</code> 对象.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> kotlin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * The type with only one value: the Unit object. This type corresponds to the `void` type in Java.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">Unit</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">toString</span>() = <span style="color:#e6db74">&#34;kotlin.Unit&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><code>Nothing</code> 是一个类, 但构造函数是私有的并且没有类似于 <code>getInstance()</code> 之类的函数, 也就意味着 它无法被初始化, 也就意味着无法实例化出一个 <code>Nothing</code> 对象, 也就成为了语义上的 &ldquo;nothing&rdquo;.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">package</span> kotlin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Nothing has no instances. You can use Nothing to represent &#34;a value that never exists&#34;: for example,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * if a function has the return type of Nothing, it means that it never returns (always throws an exception).
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Nothing</span> <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">constructor</span>()
+</span></span></code></pre></div>其中一种使用 <code>Nothing</code> 情景就是 某个函数永远不返回任何东西, 退出该函数的方法只有抛出异常。这样, 在语义上, 这个函数就真的是什么也不返回了.</li>
+<li>为了让泛型更好的工作
+先看一个官方文档里的代码:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Box</span>&lt;T&gt;(t: T) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> value = t
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">val</span> theUnit = Box(Unit) <span style="color:#75715e">// 编译通过, 因为 Unit 是单例 所以不用写成 Unit()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> theNothing = Box(Nothing()) <span style="color:#75715e">// 编译失败
+</span></span></span></code></pre></div><blockquote>
+<p>Why Unit has a value (i.e. is not the same as Nothing): because generic code can work smoothly then. If you pass Unit for a generic parameter T, the code written for any T will expect an object, and there must be an object, the sole value of Unit.
+因为 <code>Nothing</code> 无法被实例化, 也就不存在 Nothing 的实例对象, 因此就无法满足 <code>T</code>.</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="2-primitive-types-boxing--unboxing">2. Primitive types&rsquo; boxing &amp; unboxing</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> unboxedNumber: Int = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">val</span> boxedNumber: Int? = <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>编译器根据 <code>boxedNumber</code> 是有可能为 <code>null</code> 的, 可能为 <code>null</code> 也就意味着 <code>boxedNumber</code> 肯定指向一个对象, 所以 <code>boxedNumber</code> 是 boxed.</p>
+<h2 id="3-char-在-kotlin-里与-java-里的区别">3. <code>Char</code> 在 Kotlin 里与 Java 里的区别</h2>
+<ol>
+<li>不能直接和 Int 进行比较, <code>'a' == 97</code> 会编译错误</li>
+<li><code>'a'.toInt() == 97</code> 是没问题的并且会返回 <code>true</code></li>
+</ol>
+<h2 id="4-数组的初始化和使用">4. 数组的初始化和使用</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#75715e">// 首先是最简单的数组的初始化方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Object[] lArrObjects = new Object[]{new Object(), new Object()};
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> lArrObjects: Array&lt;Any&gt; = arrayOf(Any(), Any())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 针对 primitive types 则使用定制的函数, 这样初始化出来的数组不会被 boxed.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> lArrInts: IntArray = intArrayOf(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 其它的包括但不限于 doubleArrayOf() booleanArrayOf() etc.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 对于初始化复杂对象的数组, 使用这种语法 会创建出长度为5的字符串数组
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> lArrStrings: Array&lt;String&gt; = Array(<span style="color:#ae81ff">5</span>, { index <span style="color:#f92672">-&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;str&#34;</span> + index
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><h2 id="5-定义多行字符串">5. 定义多行字符串</h2>
+<p>和 Python 一样的语法:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> lStrMultiline:String = <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    |The quick brown fox jumps over the lazy dog.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    |Lorem ipsum dolor. Sit amet integer luctus consectetuer sem. Malesuada id eleifend placerat nam odio. Sociosqu nibh ac quisque dictum.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>.trimMargin()
+</span></span></code></pre></div><ol>
+<li>使用 <code>&quot;&quot;&quot;这里写入多行文本&quot;&quot;&quot;</code> 来创建多行字符串</li>
+<li>使用 <code>trimMargin()</code> 来去掉 <code>|</code> 以及它前面的空白字符, 如果文本里使用了不是 <code>|</code> 的字符（比如用了 <code>&gt;</code>）, 调用函数时加个参数即可 比如 <code>trimMargin(&quot;&gt;&quot;)</code>.</li>
+</ol>
+<h2 id="6-重命名-import-的东西">6. 重命名 <code>import</code> 的东西</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> foo.Bar
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> bar.Bar <span style="color:#66d9ef">as</span> bBar
+</span></span></code></pre></div><h2 id="7-statement-和-expression-的区别">7. Statement 和 Expression 的区别</h2>
+<p>Statement: 描述一个事物, 比如 <code>3 = 1 + 2</code>
+Expression: 表达（或者说 代表）一个事物，比如 <code>1 + 2</code> 想表达（想代表）的是 <code>3</code></p>
+<blockquote>
+<p>Expression is a subset of Statement.</p>
+</blockquote>
+<p>用程序员的话来描述 Statement 和 Expression 的区别: Expression 有返回值而 Statement 没有.</p>
+<h2 id="8-if-和-when-的用法">8. <code>if</code> 和 <code>when</code> 的用法</h2>
+<p>Java 里的 <code>if</code> 语法可以照搬过来, 但 Kotlin 提供了一种代替 Ternary Operator 的语法:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> someNum = <span style="color:#66d9ef">if</span> (someCondition <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;someCondition == 1&#34;</span>)
+</span></span><span style="display:flex;"><span>    someCondition + <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;someCondition != 1&#34;</span>)
+</span></span><span style="display:flex;"><span>    someCondition + <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 等同于
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> someNum = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (someCondition <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;someCondition == 1&#34;</span>)
+</span></span><span style="display:flex;"><span>    someNum = someCondition + <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;someCondition != 1&#34;</span>)
+</span></span><span style="display:flex;"><span>    someNum = someCondition + <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>when</code> 是用来代替 Java 里的 <code>switch</code> 的.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> someNum = <span style="color:#66d9ef">when</span>(someCondition) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span> <span style="color:#f92672">-&gt;</span> someCondition + <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> <span style="color:#f92672">-&gt;</span> someCondition + <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="9-for-循环的变化">9. <code>for</code> 循环的变化</h2>
+<p>Kotlin 没有 <code>for (var i: Int = 0; i &lt; length; i++)</code> 这种语法，只有 <code>for (i in somethingIterable)</code>。替代方法基本上就只能用 <code>while</code> 了。
+Kotlin 里的 <code>while</code> 语法和 Java 里是一样的。</p>
+<h2 id="10-return-break-continue-使用-label-返跳转到特定位置">10. <code>return</code> <code>break</code> <code>continue</code> 使用 <code>@label</code> 返跳转到特定位置</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>jumptOut:
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> array<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> j <span style="color:#f92672">&lt;</span> array2<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span> jumpOut<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>对应的 Kotlin:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>jumpOut<span style="color:#960050;background-color:#1e0010">@</span> <span style="color:#66d9ef">for</span> (i <span style="color:#66d9ef">in</span> array.indices) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (j <span style="color:#66d9ef">in</span> array2.indices) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span><span style="color:#a6e22e">@jumpOut</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>return@label</code> 的语法:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">foo</span>() {
+</span></span><span style="display:flex;"><span>    ints.forEach lit<span style="color:#960050;background-color:#1e0010">@</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">it</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#66d9ef">return</span><span style="color:#a6e22e">@lit</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#66d9ef">it</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;This line will be executed.&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>更多详细的请参考官方文档: <a href="https://kotlinlang.org/docs/reference/returns.html">https://kotlinlang.org/docs/reference/returns.html</a></p>
+<h1 id="classes-and-objects">Classes and Objects</h1>
+<h2 id="module-的概念">Module 的概念</h2>
+<p>Module 的概念也很简单，比如:</p>
+<ul>
+<li>一个 IntelliJ IDEA module</li>
+<li>一个 Maven 项目</li>
+<li>一个 Gradle source set</li>
+<li>a set of files compiled with one invocation of the Ant task.</li>
+</ul>
+<h2 id="visibility-modifiers">Visibility Modifiers</h2>
+<p>Kotlin 没有 Java 的 <code>package-private</code>，但多了个 <code>internal</code>，<code>internal</code> 这个修饰符的作用域就是 &ldquo;同一 module 内可见&rdquo;。
+举个例子：用 IntelliJ IDEA 新建一个项目，项目里新建2个 Module 一个叫 <code>Lib</code> 一个叫 <code>Client</code>。<code>Lib</code> 里有个类是 <code>internal class SomeEntity {}</code>，那么 这个类在 <code>Client</code> 里就是不可见的。</p>
+<h2 id="pecs">PECS?</h2>
+<blockquote>
+<p>Producer extends, Consumer super.</p>
+</blockquote>
+<p>What the hack is that? 完全看不懂，那就换个方式思考:</p>
+<blockquote>
+<p>A producer is allowed to produce something more specific, hence extends, a consumer is allowed to accept something more general, hence super.
+- <a href="https://stackoverflow.com/users/402281/feuermurmel">Feuermurmel</a> <a href="https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super#comment23544205_2723538">May 7 &lsquo;13 at 13:11</a></p>
+</blockquote>
+<p>再用 Kotlin 代码来看一下，也许会清晰一些。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#75715e">// Producer out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Source</span>&lt;<span style="color:#66d9ef">out</span> T&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">nextT</span>(): T
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">demo</span>(strs: Source&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 站在 strs 的角度, strs 在做的事就是提供东西, 也就对应 out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">val</span> objects: Source&lt;Any&gt; = strs <span style="color:#75715e">// This is OK, since T is an out-parameter
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Consumer in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Comparable</span>&lt;<span style="color:#66d9ef">in</span> T&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">compareTo</span>(other: T): Int
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">demo</span>(x: Comparable&lt;Number&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 站在 x 的角度, x.compareTo() 做的事情是在消耗东西, 也就对应 in
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    x.compareTo(<span style="color:#ae81ff">1.0</span>) <span style="color:#75715e">// 1.0 has type Double, which is a subtype of Number
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Thus, we can assign x to a variable of type Comparable&lt;Double&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">val</span> y: Comparable&lt;Double&gt; = x <span style="color:#75715e">// OK!
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h2 id="companion-object"><code>companion object</code>?</h2>
+<p>先来看一段 Scala 代码:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">X</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">import</span> X._
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> blah <span style="color:#66d9ef">=</span> foo
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">X</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> foo <span style="color:#66d9ef">=</span> <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>在 <code>class X</code> 的同层级下定义一个单例对象 <code>object X</code>。这样，当访问 <code>X.foo</code> 的时候 访问的就不是 <code>class X</code> 里的 <code>foo</code>，而是单例对象 <code>object X</code> 里的 <code>foo</code>，就产生了一种访问 <code>class X</code> 的静态成员的错觉。
+Kotlin 里，<code>object</code> 用来定义单例对象，<code>companion object</code> 定义的也是单例对象，但是 <code>companion object</code> 需要定义在类里面，像这样:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeClass</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> pesudoStaticMember: String = <span style="color:#e6db74">&#34;pesudo static&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Kotlin 的 <code>companion object</code> 拥有如下特性:</p>
+<ol>
+<li>定义在类内部的成员可以访问类的私有成员，而在类外面则不行
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">tryToAccess</span>() {
+</span></span><span style="display:flex;"><span>    println(SomeClass().privateMember) <span style="color:#75715e">// compile error
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeClass</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> privateMember: Int = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li><code>companion object</code> 的初始化比它外面的类早
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>(args: Array&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;New instance: SomeClass&#34;</span>)
+</span></span><span style="display:flex;"><span>    SomeClass()
+</span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;Accessing SomeClass.NonCompanion&#34;</span>)
+</span></span><span style="display:flex;"><span>    println(SomeClass.NonCompanion)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeClass</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">init</span> {
+</span></span><span style="display:flex;"><span>        println(javaClass.name + <span style="color:#e6db74">&#34;.init{}&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">init</span> {
+</span></span><span style="display:flex;"><span>            println(javaClass.name + <span style="color:#e6db74">&#34;.init{}&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">NonCompanion</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// NonCompanion object get initialized right before accessed.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">init</span> {
+</span></span><span style="display:flex;"><span>            println(javaClass.name + <span style="color:#e6db74">&#34;.init{}&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Output:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">New instance: SomeClass
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">SomeClass$Companion.init{}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">SomeClass.init{}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Accessing SomeClass.NonCompanion
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">SomeClass$NonCompanion.init{}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">SomeClass$NonCompanion@60e53b93
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span></code></pre></div></li>
+<li><code>companion object</code> 内的成员可以直接使用类名来访问，而其它 Singleton 对象则不能
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>(args: Array&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    SomeClass.Companion.directAccess()
+</span></span><span style="display:flex;"><span>    SomeClass.directAccess() <span style="color:#75715e">// Companion can be omitted.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    SomeClass.NonCompanion.indirectAccess()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeClass</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">directAccess</span>() {
+</span></span><span style="display:flex;"><span>            println(javaClass.name + <span style="color:#e6db74">&#34;.directAccess()&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">object</span> <span style="color:#a6e22e">NonCompanion</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">indirectAccess</span>() {
+</span></span><span style="display:flex;"><span>            println(javaClass.name + <span style="color:#e6db74">&#34;.indirectAccess()&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ol>
+<p>至于 为什么设计出 <code>companion object</code> 这种概念，不得而知。</p>
+<h2 id="providedelegate"><code>provideDelegate</code></h2>
+<p><a href="https://kotlinlang.org/docs/reference/delegated-properties.html#providing-a-delegate-since-11">Providing a Delegate (since 1.1)</a>
+这个目前我还想不到实际的应用场景，以后有例子我再在这里补上。</p>
+<h1 id="functions-and-lambdas">Functions and Lambdas</h1>
+<h2 id="infix-fun"><code>infix fun</code></h2>
+<p>除了 operator overloading 外，Kotlin 还提供了一种近似 自定义运算符 的功能.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>(args: Array&lt;String&gt;) {
+</span></span><span style="display:flex;"><span>    println(<span style="color:#ae81ff">1</span> 加上 <span style="color:#ae81ff">2</span>) <span style="color:#75715e">// prints &#34;3&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">infix</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">Int</span>.加上(n: Int): Int = <span style="color:#66d9ef">this</span> + n
+</span></span></code></pre></div><h1 id="references">References</h1>
+<ol>
+<li><a href="https://stackoverflow.com/questions/22654932/what-is-the-purpose-of-unit-returning-in-functions">What is the purpose of Unit-returning in functions</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/kotlin/">#Kotlin</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/jvm-language/">#JVM Language</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

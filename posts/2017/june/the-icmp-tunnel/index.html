@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>The ICMP Tunnel | Hotaru&#39;s Notebook</title>
+<meta name="title" content="The ICMP Tunnel" />
+<meta name="description" content="Preface
+经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：
+
+包从哪里来的?
+包去哪儿了?
+Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
+
+本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、iptables、Python 代码." />
+<meta name="keywords" content="ICMP Tunnel,Packet Tunneling,tun,Linux,route,iptables,IP over ICMP," />
+
+
+<meta property="og:title" content="The ICMP Tunnel" />
+<meta property="og:description" content="Preface
+经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：
+
+包从哪里来的?
+包去哪儿了?
+Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
+
+本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、iptables、Python 代码." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-06-03T11:36:00+00:00" />
+<meta property="article:modified_time" content="2017-06-03T11:36:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="The ICMP Tunnel"/>
+<meta name="twitter:description" content="Preface
+经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：
+
+包从哪里来的?
+包去哪儿了?
+Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
+
+本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、iptables、Python 代码."/>
+
+
+
+<meta itemprop="name" content="The ICMP Tunnel">
+<meta itemprop="description" content="Preface
+经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：
+
+包从哪里来的?
+包去哪儿了?
+Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。
+
+本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、iptables、Python 代码."><meta itemprop="datePublished" content="2017-06-03T11:36:00+00:00" />
+<meta itemprop="dateModified" content="2017-06-03T11:36:00+00:00" />
+<meta itemprop="wordCount" content="544">
+<meta itemprop="keywords" content="ICMP Tunnel,Packet Tunneling,tun,Linux,route,iptables,IP over ICMP," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>The ICMP Tunnel</h1>
+<p>
+  <i>
+    <time datetime='2017-06-03' pubdate>
+      03 Jun, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：</p>
+<ol>
+<li>包从哪里来的?</li>
+<li>包去哪儿了?</li>
+<li>Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。</li>
+</ol>
+<p>本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、<code>iptables</code>、Python 代码.</p>
+<h1 id="the-icmp-tunnel">The ICMP Tunnel</h1>
+<p>首先贴一张图，这张图展示了IP包从客户端到服务器再到客户端的过程。</p>
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201706-The-ICMP-Tunnel/ICMP_Tunnel.png" alt="The ICMP Tunnel"></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名词</th>
+<th style="text-align:left">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">tun0</td>
+<td style="text-align:left">Tunnel 设备的名称</td>
+</tr>
+<tr>
+<td style="text-align:left">Python 程序</td>
+<td style="text-align:left">负责读写 tun0 的数据以及读写 Internet 上的 ICMP 包</td>
+</tr>
+</tbody>
+</table>
+<p>下面将逐步讲解 IP 包的具体流向。</p>
+<h2 id="1-lrarr-2-默认路由所有包到-tun0">1 ⇆ 2: 默认路由所有包到 <code>tun0</code></h2>
+<p>Linux 下使用如下命令 将整个系统的 IP 包都导向 <code>tun0</code> 设备:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo route del default <span style="color:#75715e"># 删除默认路由</span>
+</span></span><span style="display:flex;"><span>sudo route add default gw 10.0.8.2 dev tun0 <span style="color:#75715e"># Gateway(gw) 的地址在 10.0.8.0/24 这网段里就行，dev 就写设备名称 比如 tun0.</span>
+</span></span></code></pre></div><p>反之，<code>tun0</code> 会自动把 <code>Python 程序</code> 写进来的包自动转发到对应的程序.</p>
+<h2 id="2-lrarr-3-tun0-nat-ip-包--python-程序-读写-tun0-的-ip-包">2 ⇆ 3: <code>tun0</code> NAT IP 包 / <code>Python 程序</code> 读写 <code>tun0</code> 的 IP 包</h2>
+<p>Wireshark 抓一下 <code>tun0</code> 的包，发现全部是来自 <code>10.0.2.1</code> 的包。也就是说：</p>
+<ol>
+<li><code>tun0</code> 会对进入 tunnel 的包进行 NAT，导致 <code>Python 程序</code> 读出来的包全是来自 <code>10.0.2.1</code> 的包</li>
+<li>因为上一条，所以 <code>Python 程序</code> 将目标地址为 <code>10.0.2.1</code> 的 IP 包写入 <code>tun0</code>，就会被 <code>tun0</code> 自动将NAT后的地址转换回NAT之前的地址，然后再由操作系统把数据包调配到指定的地点。</li>
+</ol>
+<p><code>Python 程序</code> 读写 <code>tun0</code> 的数据时候要注意:</p>
+<ol>
+<li>每次读取数据的长度应该是 <code>tun0</code> 的 MTU, 这样的话, 每读一次就是一个 IP 包.</li>
+<li>向 <code>tun0</code> 写 IP 包的时候，IP 包的来源地址必须是 <code>tun0</code> 的 <code>addr</code></li>
+<li>不管是由操作系统路由到 <code>tun0</code> 的包 还是 由 <code>Python 程序</code> 写入的数据包, 必须小于等于 <code>tun0</code> 的 MTU, 否则会被分包.</li>
+</ol>
+<p><a id="specific_static_route_and_ip_over_icmp"></a></p>
+<h2 id="3-lrarr-4-特定静态路由--ip-over-icmp">3 ⇆ 4: 特定静态路由 / IP over ICMP</h2>
+<h3 id="用特定路由让包出站">用特定路由让包出站</h3>
+<p>既然整个系统的包都被默认路由截获了，那 <code>Python 程序</code> 想发送 ICMP 包到 <code>Server Linux</code> 怎么办?
+Linux 下使用如下命令 允许到特定地址的包使用特定的路由:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 所有去往 45.76.63.12 的包都将通过 wlan0 设备发往网关 192.168.1.1</span>
+</span></span><span style="display:flex;"><span>route add -host 45.76.63.12 gw 192.168.1.1 dev wlan0
+</span></span></code></pre></div><h3 id="使用-payload-传输实际数据">使用 <code>Payload</code> 传输实际数据</h3>
+<p>这是 ICMP echo-request 的 header:</p>
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201706-The-ICMP-Tunnel/ICMP_echo-request_header.png" alt="ICMP echo-request header"></p>
+<p>最后一个 <code>Payload</code> 字段是可以存放任何数据的，长度的话 理论上 ICMP 包外的 IP 包长度不超过 MTU 即可，但是实际上传不了那么大。</p>
+<h3 id="python-读写某个-interface或者说-网卡上的-icmp-包">Python 读写某个 interface（或者说 网卡）上的 ICMP 包</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建一个读写 IPv4/ICMP 包的 socket</span>
+</span></span><span style="display:flex;"><span>lSocketICMP <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET, socket<span style="color:#f92672">.</span>SOCK_RAW, socket<span style="color:#f92672">.</span>IPPROTO_ICMP)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 绑定到某个地址上, 以后都将通过这个地址读写 ICMP 包</span>
+</span></span><span style="display:flex;"><span>lSocketICMP<span style="color:#f92672">.</span>bind((<span style="color:#e6db74">&#34;192.168.1.101&#34;</span>, socket<span style="color:#f92672">.</span>IPPROTO_ICMP))
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># IP_HDRINCL 设置为 True 后，调用 socket.sendto 时第一个参数必须是整个 IP 包，并且整个 IP 包都需要自己构造，除了 Checksum 和 Total length.</span>
+</span></span><span style="display:flex;"><span>lSocketICMP<span style="color:#f92672">.</span>setsockopt(socket<span style="color:#f92672">.</span>IPPROTO_IP, socket<span style="color:#f92672">.</span>IP_HDRINCL, <span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># socket.sendto(data, (address, port))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># data: 类型 bytes, 完整的 IP 包.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># address: 类型 str, 要把包发送到哪里, 因为IP头里面已经有目的地的IP地址了，所以这个参数既可以填写网关 也可以填写为目的地的IP地址(填写成目的地的IP地址后, 会交给系统根据路由表再发送到网关).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># port: 类型int, 发送到哪个端口号, 因为是 ICMP 协议所以填写 0 即可.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 使用 sendto 而不是 send 的原因: IP 包不像 TCP 那样有状态, 而 send 只能用在已经建立好连接的 socket 上, 因此需要使用 sendto 来收发 IP 包.</span>
+</span></span><span style="display:flex;"><span>lSocketICMP<span style="color:#f92672">.</span>sendto(bytes(ipPacket), (<span style="color:#e6db74">&#34;45.76.63.12&#34;</span>, <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 接收一个 IPv4/ICMP 包, 参数填写绑定的地址(192.168.1.101)对应的设备的 MTU 即可, 这样每调用一次 recv(MTU) 就读出一个 IP 包.</span>
+</span></span><span style="display:flex;"><span>lSocketICMP<span style="color:#f92672">.</span>recv(MTU)
+</span></span></code></pre></div><h2 id="4-lrarr-5--lrarr-6-icmp-包穿透-nat">4 ⇆ 5 &amp; ⇆ 6: ICMP 包穿透 NAT</h2>
+<h3 id="nat-对-icmp-包的映射">NAT 对 ICMP 包的映射</h3>
+<p>NAT 想要进行准确无误的地址转换和 IP 包转发，可以通过下面这5个信息来确定两个对等端（Peer-to-Peer）:</p>
+<ul>
+<li>源 IP 地址</li>
+<li>源端口号</li>
+<li>通信协议</li>
+<li>目的地 IP 地址</li>
+<li>目的地端口号</li>
+</ul>
+<p>TCP 和 UDP 协议都有端口号信息，ICMP 也有类似的信息 叫做 <code>Identifier</code>，参考下图里的 <code>Identifier</code> 字段.</p>
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201706-The-ICMP-Tunnel/ICMP_echo-request_header.png" alt="ICMP echo-request header"></p>
+<h3 id="icmp-keepalive">ICMP Keepalive</h3>
+<p>客户端通过发送一个 ICMP 包到服务器 可以在 NAT 上创建一条 NAT 记录，但这个记录是有时效的。为了维持这个时效，需要客户端向服务器（也可能同时需要服务器向客户端）定时或不定时发送 Keepalive 包。</p>
+<h2 id="6-lrarr-7-读写服务器上的网卡上的-icmp-包">6 ⇆ 7: 读写服务器上的网卡上的 ICMP 包</h2>
+<p>参考 <a href="#specific_static_route_and_ip_over_icmp">3 ⇆ 4: 特定静态路由 / IP over ICMP</a>, 大致思路和原理都是一样的, 但不需要默认路由 也不需要特定路由。</p>
+<h2 id="7-lrarr-8-服务器端的-tunnel-读写">7 ⇆ 8: 服务器端的 tunnel 读写</h2>
+<p>直接取出 ICMP 包的 Payload 然后写入 <code>tun0</code> 即可，但可能需要注意一下:</p>
+<ul>
+<li>如果客户端的 <code>tun0</code> 和服务器的 <code>tun0</code> 的 <code>addr</code> 不一样的话, 可能需要进行 IP 包的源地址进行转换, 要不然包可能发得出去但收不到对应的响应 IP 包(比如TCP, 发出去个 SYN, 很有可能收不到 SYN ACK, 因为 <code>tun0</code> 地址不同导致系统没法把不是 <code>10.0.2.1</code> 的包路由到 <code>tun0</code> 里).</li>
+</ul>
+<h2 id="8-lrarr-9-tunnel-与实际目的交互">8 ⇆ 9: tunnel 与实际目的交互</h2>
+<p>Linux 下执行如下命令来打开 IP 包转发:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 告诉 Linux kernel 开启 IP 包转发.</span>
+</span></span><span style="display:flex;"><span>sysctl -w net.ipv4.ip_forward<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SNAT(MASQUERADE 可以当作自动的 SNAT), 自动转换源IP地址(10.0.0.0/8) 转换成发送数据的网卡上的 IP 地址.</span>
+</span></span><span style="display:flex;"><span>iptables -t nat -A POSTROUTING -s 10.0.0.0/8 -o eth0 -j MASQUERADE
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将 tun0 设备上的包转发到 eth0 上, 当然 有包从 eth0 进来也会自动的转发到 tun0 上.</span>
+</span></span><span style="display:flex;"><span>iptables -A FORWARD -i tun0 -o eth0 -j ACCEPT
+</span></span></code></pre></div><p>然后无脑的读写 <code>tun0</code> 就能正常的与 Internet 上的主机进行通信了.</p>
+<h1 id="github-project">GitHub Project</h1>
+<p>在 GitHub 上挖了个坑，也不知道什么时候能填完，并且在写这篇 Blog 的时候我几乎不会 Python。感兴趣的话可以到 GitHub 上贡献代码或开个 Issue 之类的。
+<a href="https://github.com/oing9179/python-icmp-tunnel">python-icmp-tunnel - A Python implementation of ICMP Tunnel - github.com</a></p>
+<h1 id="更新历史">更新历史</h1>
+<p>3 Jun 2017:</p>
+<ul>
+<li>首次发布</li>
+<li>添加：引用文章 <a href="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/">Linux Tunnel Device and Route</a></li>
+<li>小修小改</li>
+</ul>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="http://www.h3c.com.cn/MiniSite/Technology_Circle/Net_Reptile/The_Five/Home/Catalog/201206/747040_97665_0.htm">NAT的特殊处理 (ICMP 包是如何穿透 NAT 的)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Ping_(networking_utility)">ping (networking utility)</a></li>
+<li><a href="https://github.com/oing9179/python-icmp-tunnel">python-icmp-tunnel - A Python implementation of ICMP Tunnel - github.com</a></li>
+<li><a href="https://oing9179.github.io/blog/2017/05/Linux-Tunnel-Device-and-Route/">Linux Tunnel Device and Route</a></li>
+</ol>
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/icmp-tunnel/">#ICMP Tunnel</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/packet-tunneling/">#Packet Tunneling</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/tun/">#tun</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/linux/">#Linux</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/route/">#route</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/iptables/">#iptables</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/ip-over-icmp/">#IP over ICMP</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

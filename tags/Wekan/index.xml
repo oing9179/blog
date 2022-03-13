@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wekan on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/wekan/</link>
+    <description>Recent content in Wekan on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sat, 19 Aug 2017 19:40:20 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/wekan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）</title>
+      <link>https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/</link>
+      <pubDate>Sat, 19 Aug 2017 19:40:20 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/</guid>
+      <description>Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k+ 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &amp;ldquo;Try on Sandstorm&amp;rdquo;。 下面将介绍具体的搭建过程。
+安装 &amp;amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp;amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose.</description>
+    </item>
+    
+  </channel>
+</rss>

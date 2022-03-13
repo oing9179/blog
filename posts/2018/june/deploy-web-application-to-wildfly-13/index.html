@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>部署 Web Application 到 WildFly 13 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="部署 Web Application 到 WildFly 13" />
+<meta name="description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
+WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+ &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+ &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+去掉它的办法也很简单。
+ 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web." />
+<meta name="keywords" content="Programming,Java,WildFly,JBoss," />
+
+
+<meta property="og:title" content="部署 Web Application 到 WildFly 13" />
+<meta property="og:description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
+WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+ &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+ &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+去掉它的办法也很简单。
+ 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-06-09T10:18:00+00:00" />
+<meta property="article:modified_time" content="2018-06-09T10:18:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="部署 Web Application 到 WildFly 13"/>
+<meta name="twitter:description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
+WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+ &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+ &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+去掉它的办法也很简单。
+ 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web."/>
+
+
+
+<meta itemprop="name" content="部署 Web Application 到 WildFly 13">
+<meta itemprop="description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
+WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+ &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+ &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+去掉它的办法也很简单。
+ 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web."><meta itemprop="datePublished" content="2018-06-09T10:18:00+00:00" />
+<meta itemprop="dateModified" content="2018-06-09T10:18:00+00:00" />
+<meta itemprop="wordCount" content="179">
+<meta itemprop="keywords" content="Programming,Java,WildFly,JBoss," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>部署 Web Application 到 WildFly 13</h1>
+<p>
+  <i>
+    <time datetime='2018-06-09' pubdate>
+      09 Jun, 2018
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。</p>
+<!-- more -->
+<h1 id="wildfly-开发环境搭建">WildFly 开发环境搭建</h1>
+<ol>
+<li>到 <a href="http://wildfly.org/downloads/">这里</a> 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。</li>
+<li>解压缩</li>
+<li>编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;<br>
+<img src="https://oing9179.github.io/blog/static/images/blog/201806-Deploy-Web-Application-to-WildFly-13/Screenshot_20180609_102905.png" alt="Edit Run/Debug Configurations"></li>
+<li>&ldquo;Add New Configuration (Alt+Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo;</li>
+<li>点击图中的 &ldquo;Configure&rdquo;<br>
+<img src="https://oing9179.github.io/blog/static/images/blog/201806-Deploy-Web-Application-to-WildFly-13/Screenshot_20180609_103400.png" alt="Config new WildFly application server"></li>
+<li>&ldquo;Add application server (Alt+Insert)&rdquo;</li>
+<li>填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo;</li>
+<li>然后点击 OK 就可以做开发和调试了</li>
+</ol>
+<h2 id="去掉浏览器-url-里自带的-context-path">去掉浏览器 URL 里自带的 context path</h2>
+<p>IDEA 默认情况下会部署到有 <code>http://localhost:8080/&lt;context_path&gt;</code> 的路径里，就像这样:<br>
+<img src="https://oing9179.github.io/blog/static/images/blog/201806-Deploy-Web-Application-to-WildFly-13/Screenshot_20180609_103923.png" alt="Undesired context path in URL">
+去掉它的办法也很简单。</p>
+<ol>
+<li>首先先把图中的 context path 删掉</li>
+<li>然后到 <code>webapp/WEB-INF/</code> 下创建文件 <code>jboss-web.xml</code>，文件内容如下
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;jboss-web</span> <span style="color:#a6e22e">xmlns=</span><span style="color:#e6db74">&#34;http://www.jboss.com/xml/ns/javaee&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">xmlns:xsi=</span><span style="color:#e6db74">&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">xsi:schemaLocation=</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      http://www.jboss.com/xml/ns/javaee
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      http://www.jboss.org/j2ee/schema/jboss-web_5_1.xsd&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- context-root 填写你想要的 context path --&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;context-root&gt;</span>/<span style="color:#f92672">&lt;/context-root&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/jboss-web&gt;</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>Done.</p>
+<h1 id="在服务器上部署">在服务器上部署</h1>
+<ol>
+<li>进入 <code>WILDFLY_目录/bin</code></li>
+<li>运行 <code>add-user.sh</code> 跟着向导来添加一个管理员用户</li>
+<li>打开两个终端窗口分别运行 <code>standalone.sh</code> 和 <code>jboss-cli.sh</code></li>
+<li>在 <code>jboss-cli</code> 里输入 <code>connect</code> 即可连接到本地运行的 WildFly CLI 控制台
+<ol>
+<li>如果控制台不是默认的 <code>localhost:9990</code>，那就用 <code>connect &lt;地址&gt;:&lt;端口号&gt;</code> 来连接</li>
+</ol>
+</li>
+<li>在 jboss-cli 里运行命令来部署一个 web app
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>deploy &lt;webapp_path&gt; --name<span style="color:#f92672">=</span>&lt;webapp_name&gt;.war --runtime-name<span style="color:#f92672">=</span>&lt;webapp_runtime_name&gt;.war --unmanaged --disabled
+</span></span></code></pre></div>参数说明:
+<ol>
+<li><code>webapp_path</code>: web app 的路径</li>
+<li><code>webapp_name</code>: web app 的实际名称，在整个 WildFly 环境中应该是唯一的</li>
+<li><code>webapp_runtime_name</code>: web app 的运行时名称，后需要用到这个名字</li>
+</ol>
+</li>
+<li>用浏览器打开 <code>http://localhost:9990</code>，用之前添加的管理员用户来登录</li>
+<li>依次打开 <code>Configuration -&gt; Subsystems -&gt; Web -&gt; Server -&gt; default-server -&gt; View -&gt; Hosts</code></li>
+<li>点击 &ldquo;Add&rdquo; 按钮，按下表填写
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Name</td>
+<td style="text-align:left">网站的域名</td>
+</tr>
+<tr>
+<td style="text-align:left">Default Web Module</td>
+<td style="text-align:left">上面填写的 webapp_runtime_name</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>然后回到 <code>Deployments</code>，然后启用刚刚部署的 <code>&lt;webapp_name&gt;</code><br>
+<img src="https://oing9179.github.io/blog/static/images/blog/201806-Deploy-Web-Application-to-WildFly-13/Screenshot_20180609_123818.png" alt="Enable webapp"></li>
+<li>配置一下域名指向这个服务器IP</li>
+</ol>
+<p>现在就可以通过浏览器域名直接访问新部署的webapp了。</p>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="http://wildfly.org/downloads/">WildFly 下载页面 - wildfly.org</a></li>
+<li><a href="http://docs.wildfly.org/13/Admin_Guide.html">WildFly 13 Admin Guide - wildfly.org</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/programming/">#Programming</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/java/">#Java</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/wildfly/">#WildFly</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/jboss/">#JBoss</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

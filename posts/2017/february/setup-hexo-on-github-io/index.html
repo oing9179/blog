@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>在 github.io 上用 Hexo 搭建博客 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="在 github.io 上用 Hexo 搭建博客" />
+<meta name="description" content="Preface 之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
+ 备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃，出了问题基本都有现成的解决方法 github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛  下面开始介绍博客的迁移过程。
+安装 / 配置 Hexo 我看好多人都直接用 &lt;username&gt;.github.io 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 /blog/ 目录下，根目录下放个 html 把浏览器重定向到 /blog/ 下就行了。
+安装 Hexo 参考下面的命令
+sudo apt-get install nodejs nodejs-legacy npm install -g hexo-cli 有以下几点注意事项：
+ npm install 的时候提示输入密码的话就输入。 因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理： npm config set proxy http://127.0.0.1:8080 npm config set https-proxy http://127.0.0.1:8080 或者使用 taobao 的 npm 镜像，请移步 Taobao npm Mirror." />
+<meta name="keywords" content="github.io,hexo," />
+
+
+<meta property="og:title" content="在 github.io 上用 Hexo 搭建博客" />
+<meta property="og:description" content="Preface 之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
+ 备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃，出了问题基本都有现成的解决方法 github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛  下面开始介绍博客的迁移过程。
+安装 / 配置 Hexo 我看好多人都直接用 &lt;username&gt;.github.io 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 /blog/ 目录下，根目录下放个 html 把浏览器重定向到 /blog/ 下就行了。
+安装 Hexo 参考下面的命令
+sudo apt-get install nodejs nodejs-legacy npm install -g hexo-cli 有以下几点注意事项：
+ npm install 的时候提示输入密码的话就输入。 因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理： npm config set proxy http://127.0.0.1:8080 npm config set https-proxy http://127.0.0.1:8080 或者使用 taobao 的 npm 镜像，请移步 Taobao npm Mirror." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/february/setup-hexo-on-github-io/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-02-03T10:35:52+00:00" />
+<meta property="article:modified_time" content="2017-02-03T10:35:52+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在 github.io 上用 Hexo 搭建博客"/>
+<meta name="twitter:description" content="Preface 之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
+ 备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃，出了问题基本都有现成的解决方法 github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛  下面开始介绍博客的迁移过程。
+安装 / 配置 Hexo 我看好多人都直接用 &lt;username&gt;.github.io 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 /blog/ 目录下，根目录下放个 html 把浏览器重定向到 /blog/ 下就行了。
+安装 Hexo 参考下面的命令
+sudo apt-get install nodejs nodejs-legacy npm install -g hexo-cli 有以下几点注意事项：
+ npm install 的时候提示输入密码的话就输入。 因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理： npm config set proxy http://127.0.0.1:8080 npm config set https-proxy http://127.0.0.1:8080 或者使用 taobao 的 npm 镜像，请移步 Taobao npm Mirror."/>
+
+
+
+<meta itemprop="name" content="在 github.io 上用 Hexo 搭建博客">
+<meta itemprop="description" content="Preface 之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
+ 备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃，出了问题基本都有现成的解决方法 github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛  下面开始介绍博客的迁移过程。
+安装 / 配置 Hexo 我看好多人都直接用 &lt;username&gt;.github.io 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 /blog/ 目录下，根目录下放个 html 把浏览器重定向到 /blog/ 下就行了。
+安装 Hexo 参考下面的命令
+sudo apt-get install nodejs nodejs-legacy npm install -g hexo-cli 有以下几点注意事项：
+ npm install 的时候提示输入密码的话就输入。 因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理： npm config set proxy http://127.0.0.1:8080 npm config set https-proxy http://127.0.0.1:8080 或者使用 taobao 的 npm 镜像，请移步 Taobao npm Mirror."><meta itemprop="datePublished" content="2017-02-03T10:35:52+00:00" />
+<meta itemprop="dateModified" content="2017-02-03T10:35:52+00:00" />
+<meta itemprop="wordCount" content="788">
+<meta itemprop="keywords" content="github.io,hexo," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>在 github.io 上用 Hexo 搭建博客</h1>
+<p>
+  <i>
+    <time datetime='2017-02-03' pubdate>
+      03 Feb, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <img alt="Hexo Logo" src="https://hexo.io/logo.svg" style="max-width: 160px;"/>
+<h1 id="preface">Preface</h1>
+<p>之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 <a href="https://pages.github.com/">GitHub Pages</a> 上，因此也带来了一些便利：</p>
+<ul>
+<li>备份博客只需要把 Markdown 文件连同对应的文件夹打包即可</li>
+<li>自带的域名也更有逼格了：<code>https://oing9179.github.io</code></li>
+<li>Hexo 社区活跃，出了问题基本都有现成的解决方法</li>
+<li>github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛</li>
+</ul>
+<p>下面开始介绍博客的迁移过程。</p>
+<!-- more -->
+<h1 id="安装--配置-hexo">安装 / 配置 Hexo</h1>
+<p>我看好多人都直接用 <code>&lt;username&gt;.github.io</code> 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 <code>/blog/</code> 目录下，根目录下放个 html 把浏览器重定向到 <code>/blog/</code> 下就行了。</p>
+<h2 id="安装-hexo">安装 Hexo</h2>
+<p>参考下面的命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt-get install nodejs nodejs-legacy
+</span></span><span style="display:flex;"><span>npm install -g hexo-cli
+</span></span></code></pre></div><p>有以下几点注意事项：</p>
+<ol>
+<li><code>npm install</code> 的时候提示输入密码的话就输入。</li>
+<li>因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>npm config set proxy http://127.0.0.1:8080
+</span></span><span style="display:flex;"><span>npm config set https-proxy http://127.0.0.1:8080
+</span></span></code></pre></div>或者使用 taobao 的 npm 镜像，请移步 <a href="https://npm.taobao.org/">Taobao npm Mirror</a>.</li>
+</ol>
+<h2 id="配置-hexo">配置 Hexo</h2>
+<p>参考如下命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 创建一个静态网站名为 blog</span>
+</span></span><span style="display:flex;"><span>hexo init blog
+</span></span><span style="display:flex;"><span>cd ./blog/
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安装 RSS 和 SiteMap 插件，RSS 为了方便读者 SiteMap 为了方便搜索引擎爬虫。</span>
+</span></span><span style="display:flex;"><span>npm install hexo-generator-feed hexo-generator-sitemap --save
+</span></span></code></pre></div><p>编辑 <code>_config.yml</code>，在文件末尾加入下面的代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># SiteMap configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/hexojs/hexo-generator-sitemap</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">sitemap</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 想配置 sitemap.xml 的模板，请移步到 ./node_modules/hexo-generator-sitemap/sitemap.xml</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">path</span>: <span style="color:#ae81ff">sitemap.xml</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># RSS configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/hexojs/hexo-generator-feed</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">feed</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">rss2</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">path</span>: <span style="color:#ae81ff">rss2.xml</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># RSS里最多包含几篇文章</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">limit</span>: <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hub</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 是否把文章全部内容也包含进去</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">content</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>然后参照 <a href="https://hexo.io/docs/configuration.html">Hexo configuration</a> 来配置 <code>_config.yml</code>。
+需要注意的是：因为我要把博客放在 <code>/blog/</code> 目录下，所以要修改 <code>_config.yml</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># 找到 root 项并修改为 /blog/</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">root</span>: <span style="color:#ae81ff">/blog/</span>
+</span></span></code></pre></div><p>最后在 blog 目录下执行 <code>hexo server --debug</code>，然后打开浏览器访问终端里显示的 URL 来预览网站。</p>
+<h2 id="安装--配置-hexo-theme-next">安装 / 配置 Hexo theme: NexT</h2>
+<blockquote>
+<p><span style="color: #0277bd; padding-right: 6px;"><i class="fa fa-info-circle"></i></span> 建议不要在 <code>hexo server</code> 运行的时候安装主题。因为文件的改动会导致 Hexo server 重新生成网站，如果有些文件还没下载完 或者 文件内的语法有问题，就会导致 Hexo server 报错，之后再刷新网页的话就什么也打不开。</p>
+</blockquote>
+<p>参考下面的命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd ./themes/
+</span></span><span style="display:flex;"><span>git clone https://github.com/iissnan/hexo-theme-next.git
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 回到 blog 目录下</span>
+</span></span><span style="display:flex;"><span>cd ../
+</span></span></code></pre></div><p>编辑 <code>_config.yml</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># 找到 theme 并将其设定为 next</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">theme</span>: <span style="color:#ae81ff">next</span>
+</span></span></code></pre></div><p>然后就可以按照 <a href="http://theme-next.iissnan.com/getting-started.html">官方文档</a> 对 NexT 主题进行配置了。</p>
+<h2 id="添加-categories--tags--links--about-页面">添加 Categories / Tags / Links / About 页面</h2>
+<p>创建这些页面的方法是一样的，需要改动的只有 Markdown 文件头部的 yaml 配置项。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 回到 blog 目录，然后执行如下命令</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 下面的 &#34;About&#34; 可以换成 &#34;categories&#34; 或者其他的都可以，大小写敏感.</span>
+</span></span><span style="display:flex;"><span>hexo new page <span style="color:#e6db74">&#34;about&#34;</span>
+</span></span></code></pre></div><p>然后编辑 <code>./source/about/index.md</code>，参考下面内容 对 Markdown 头部的 yaml 配置项添加如下内容：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">值</th>
+<th style="text-align:left">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">type</td>
+<td style="text-align:left">可选值: tags, categories.</td>
+<td style="text-align:left">设置页面类型. 除 categories 和 tags 外的页面不需要设置 type 字段</td>
+</tr>
+<tr>
+<td style="text-align:left">comments</td>
+<td style="text-align:left">可选值：true, false.</td>
+<td style="text-align:left">设置是否开启页面底部的评论功能</td>
+</tr>
+</tbody>
+</table>
+<p>例如创建了一个 Categories 页面 并关闭页面的评论功能，那它的 yaml 配置项大概就是这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">title</span>: <span style="color:#ae81ff">Tags</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">date</span>: <span style="color:#e6db74">1900-01-01 00:00:00</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">type</span>: <span style="color:#e6db74">&#34;categories&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">comments</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>页面创建完成后，如果在预览网站的时候出现错误什么的，尝试执行下面的命令来清空缓存：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 在 blog 目录下执行命令</span>
+</span></span><span style="display:flex;"><span>hexo clean
+</span></span><span style="display:flex;"><span>rm ./db.json
+</span></span></code></pre></div><p>创建 Links 页面的后 需要对主题进行一些简单的配置 才能在博客的导航栏上显示出来：</p>
+<ol>
+<li>切换到主题所在目录：<code>./themes/next/</code></li>
+<li>编辑 <code>_config.yml</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># 导航栏里项目的显示顺序就是下面 menu 项里从上往下的顺序.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 找到 menu 项然后直接在下面添加一行即可，像这样：</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">menu</span>: 
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">tags</span>: <span style="color:#ae81ff">/tags</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 添加 links 项，格式 &#34;&lt;变量名&gt;: &lt;网页路径&gt;&#34;，这个 变量名 稍后还会用到.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">links</span>: <span style="color:#ae81ff">/links</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">about</span>: <span style="color:#ae81ff">/about</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 然后找 menu_icons 项，为 links 添加一个图标，想要什么图标可以在 http://fontawesome.io/icons/ 找.</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">menu_icons</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 格式：&lt;变量名&gt;: &lt;不含 &#34;fa-&#34; 前缀的CSS类名&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">links</span>: <span style="color:#ae81ff">link</span>
+</span></span></code></pre></div></li>
+<li>编辑 <code>./languages/&lt;语言&gt;.yml</code>，我给博客设置的语言是英文 所以我应该编辑 <code>en.yml</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># 找到 menu 项目</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">menu</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 直接在最后添加一行即可，格式：&lt;变量名&gt;: &lt;要显示出来的文字&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">links</span>: <span style="color:#ae81ff">Links</span>
+</span></span></code></pre></div></li>
+<li>运行 <code>hexo clean</code> 清空 Hexo 缓存，然后运行 <code>hexo server --debug</code> ，然后打开网页浏览器查看效果</li>
+</ol>
+<h2 id="配置-disqus">配置 Disqus</h2>
+<p>首先到 <a href="https://disqus.com/">Disqus</a> 注册一个帐号，然后按照向导（非常简单）创建一个 Site，把 Site 的 Shortname 找出来备用。
+NexT 主题下只需要非常简单的配置就可以启用 Disqus。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 切换到主题文件所在目录</span>
+</span></span><span style="display:flex;"><span>cd ./themes/next/
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 编辑 _config.yml</span>
+</span></span><span style="display:flex;"><span>vim ./_config.yml
+</span></span></code></pre></div><p>查找字段 <code>disqus_shortname</code>，然后改成自己的 shortname 即可。</p>
+<h1 id="迁移旧博客到-hexo">迁移旧博客到 Hexo</h1>
+<p>这一步骤可谓是最无聊的步骤了。使用命令 <code>hexo new &quot;&lt;文章标题&gt;&quot;</code> 来创建 Post（Post 在这里译为 文章），然后把原来博客的内容复制进去，然后再对新的 Post 的 Markdown 文件头做些编辑，例如下面这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#f92672">title</span>: <span style="color:#ae81ff">文章标题</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 文章的创建时间</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">date</span>: <span style="color:#e6db74">2016-11-26 17:25:00</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 文章的最后修改时间</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">updated</span>: <span style="color:#e6db74">2017-01-17 00:00:00</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">categories</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">Post 的分类</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;Post 的分类&#34;</span> <span style="color:#ae81ff">的子分类</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#e6db74">&#34;Post 的分类 的子分类&#34;</span> <span style="color:#ae81ff">的好多个子分类</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">tags</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">第一个 tag</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">第二个 tag</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ae81ff">还可以有好多个 tag</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 仅对本篇文章禁用评论功能</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">comments</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">&lt;文章正文&gt;</span>
+</span></span></code></pre></div><blockquote>
+<p>BLumia 用 PHP 写了段脚本在 <a href="https://github.com/BLumia/Typecho2Hexo-Helper">BLumia / Typecho2Hexo-Helper</a>，可以把 Typecho 的博客内容导出来，</p>
+</blockquote>
+<h1 id="github-pages">GitHub Pages</h1>
+<p>因为我想把博客放在 <code>/blog/</code> 目录下而不是网站的根目录下，为此 我需要创建两个 Repository：一个 <code>blog</code> 仓库 用来放博客本体，一个 <code>&lt;用户名&gt;.github.io</code> 仓库 用来把浏览器从 <code>/</code> 重定向到 <code>/blog/</code>。</p>
+<h2 id="创建--配置-blog-仓库">创建 / 配置 <code>blog</code> 仓库</h2>
+<ol>
+<li>切换到 <code>blog</code> 目录下</li>
+<li>使用 hexo 生成静态站点
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hexo generate
+</span></span></code></pre></div></li>
+<li>在生成好的站点目录下 创建 git 仓库
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd ./public/
+</span></span><span style="display:flex;"><span>git init
+</span></span></code></pre></div></li>
+<li>因为我搭建博客用的是 Hexo 而不是 Jekyll，创建文件 <code>.nojekyll</code> 来关闭 GitHub Pages 的 Jekyll 相关功能
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>touch <span style="color:#e6db74">&#34;.nojekyll&#34;</span>
+</span></span></code></pre></div></li>
+<li>为仓库创建新的分支名为 <code>gh-pages</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git checkout -b <span style="color:#e6db74">&#34;gh-pages&#34;</span>
+</span></span></code></pre></div>分支创建完成后 git 会自动将 gh-pages 设置为当前分支</li>
+<li>添加所有文件到 git 工作空间并 commit
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git add --all
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;Created blog with theme settle up.&#34;</span>
+</span></span></code></pre></div></li>
+<li>在 GitHub 上 <a href="https://github.com/new">创建一个新的 Repository</a>，repository 名称随意，本文以 <code>blog</code> 作为 repository 名称</li>
+<li>为本地仓库添加远程仓库，并 push 到远程仓库
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git remote add origin https://github.com/&lt;用户名&gt;/blog.git
+</span></span><span style="display:flex;"><span>git push
+</span></span></code></pre></div>提示输入用户名和密码的话，就输入。</li>
+<li>用网页浏览器访问 <code>https://&lt;用户名&gt;.github.io/blog/</code> 来查看效果</li>
+</ol>
+<h2 id="创建--配置-oing9179githubio-仓库">创建 / 配置 <code>oing9179.github.io</code> 仓库</h2>
+<ol>
+<li>切换到任意 <strong>不是</strong> blog 的目录下</li>
+<li>创建 <code>&lt;用户名&gt;.github.io</code>，这里以 <code>oing9179.github.io</code> 为例
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git init <span style="color:#e6db74">&#34;oing9179.github.io&#34;</span>
+</span></span><span style="display:flex;"><span>cd ./oing9179.github.io/
+</span></span></code></pre></div></li>
+<li>创建两个文件，一个是 <code>index.html</code> 文件内容如下，另一个是 <code>.nojekyll</code> 来禁用 GitHub Pages 的 Jekyll 功能
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">html</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">title</span>&gt;Redirecting...&lt;/<span style="color:#f92672">title</span>&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">&lt;!-- 下面这行告诉浏览器 将页面重定向到 /blog/ 目录下 --&gt;</span>
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">http-equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;refresh&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0;URL=&#39;/blog/&#39;&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">head</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>Redirecting you to &lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/blog/&#34;</span>&gt;/blog/&lt;/<span style="color:#f92672">a</span>&gt;...
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">html</span>&gt;
+</span></span></code></pre></div></li>
+<li>然后执行命令来提交更改到本地仓库
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git add --all
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#e6db74">&#34;Initial commit.&#34;</span>
+</span></span></code></pre></div></li>
+<li>在 GitHub 创建一个名为 <code>oing9179.github.io</code> 的仓库，然后给本地仓库添加远程仓库，然后 push
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git remote add origin https://github.com/oing9179/oing9179.github.io.git
+</span></span><span style="display:flex;"><span>git push
+</span></span></code></pre></div></li>
+<li>用网页浏览器访问 <code>https://oing9179.github.io</code>，浏览器应该会自动重定向到 <code>/blog/</code> 页面</li>
+</ol>
+<h1 id="修复博客放在子目录时-hexo-生成错误的永久链接">修复博客放在子目录时 hexo 生成错误的永久链接</h1>
+<p>我将博客部署到 github.io 上后，把 sitemap.xml 提交到了 Google Search Console。然而 Google 告诉我 我的 sitemap.xml 里部分链接 404，于是发现了下面这个 bug：</p>
+<blockquote>
+<p>受影响版本：<a href="https://github.com/hexojs/hexo/tree/3.2.2">v3.2.2</a> (GitHub issue <a href="https://github.com/hexojs/hexo/issues/1812">#1812</a>)
+当网站被放在子目录下的时候（并对 <code>_config.yml</code> 的 <code>url</code> 和 <code>root</code> 做了正确的设置），使用 <code>hexo generate</code> 生成出的网站的永久链接（Permalink）会变成这样（假设 <code>root</code> 设置成 <code>blog</code>）：<code>http://yoursite.com/blog/blog/</code>。</p>
+</blockquote>
+<p>不过还好，这个 bug 已经在 <a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95">Commit 5234c4a85d</a> 修复了。按照如下步骤操作以修复本地 hexo：</p>
+<ol>
+<li>切换到 blog 目录下的 <code>./node_modules/hexo/</code></li>
+<li>把 <code>lib</code> 目录改名为 <code>lib.bak</code></li>
+<li>从 <a href="https://github.com/hexojs/hexo/archive/5234c4a85dc6cd418e9a1c169e43de169cf98e95.zip">这里</a> 把修好 bug 的 hexo 下载回来并解压</li>
+<li>将解压出来的目录下的 <code>lib</code> 目录复制到 blog 目录下的 <code>./node_modules/hexo/</code></li>
+<li>执行命令 <code>hexo clean &amp;&amp; hexo generate</code> 来重新生成静态网站
+<span style="color: red;">警告：</span> 重新生成静态网站会导致 <code>./public/.git</code> 文件夹被删除，在生成静态网站之前需要先把它移走。</li>
+</ol>
+<h1 id="更新历史">更新历史</h1>
+<p>03 Feb 2017: 首次发布
+04 Feb 2017:</p>
+<ol>
+<li>添加：修复博客放在子目录时 hexo 生成错误的永久链接</li>
+</ol>
+<p>12 Feb 2017:</p>
+<ol>
+<li>删除：&ldquo;可以安装并使用 cnpm&rdquo;。原因是 jxpxxzj 提到：
+<blockquote>
+<p>cnpm 的那种安装方式会导致 electron-packager 几乎无法工作，因此强烈不推荐 cnpm。
+建议先安装 nrm (Npm Registry Manager) 然后再 <code>nrm use taobao</code>。</p>
+</blockquote>
+</li>
+<li>修改：删除 <code>sitemap_template.xml</code> 及其相关内容，并改用 <code>./node_modules/hexo-generator-sitemap/sitemap.xml</code> 来修改 sitemap 的模板</li>
+<li>添加：清空 Hexo 缓存的命令行</li>
+<li>小修小改</li>
+</ol>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://hexo.io">hexo.io</a></li>
+<li><a href="https://jjasonclark.com/how-to-setup-node-behind-web-proxy/">npm behind HTTP proxy</a></li>
+<li><a href="https://hexo.io/docs/configuration.html">Hexo configuration</a></li>
+<li><a href="http://theme-next.iissnan.com/getting-started.html">NexT 主题配置 官方文档</a></li>
+<li><a href="https://disqus.com/">Disqus – The #1 way to build your audience</a></li>
+<li><a href="http://fontawesome.io/icons/">Font Awesome Icon Font</a></li>
+<li><a href="https://github.com/BLumia/Typecho2Hexo-Helper">BLumia / Typecho2Hexo-Helper</a></li>
+<li><a href="https://github.com/hexojs/hexo/issues/1812">share link wrong with sub path #1812 - GitHub Issue</a></li>
+<li><a href="https://github.com/hexojs/hexo/tree/5234c4a85dc6cd418e9a1c169e43de169cf98e95">Fix the wrong share link when the site is in subdirectory - GitHub commit</a></li>
+<li><a href="https://npm.taobao.org/">Taobao npm Mirror</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/github.io/">#github.io</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/hexo/">#hexo</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

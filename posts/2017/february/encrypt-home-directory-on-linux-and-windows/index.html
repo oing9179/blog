@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>Linux / Windows 加密用户文件夹 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="Linux / Windows 加密用户文件夹" />
+<meta name="description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
+ 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+Linux 下加密用户文件夹 先决条件：
+ 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+ 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/." />
+<meta name="keywords" content="Linux,Encrypt home,Privacy,Security," />
+
+
+<meta property="og:title" content="Linux / Windows 加密用户文件夹" />
+<meta property="og:description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
+ 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+Linux 下加密用户文件夹 先决条件：
+ 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+ 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/february/encrypt-home-directory-on-linux-and-windows/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-02-22T17:02:15+00:00" />
+<meta property="article:modified_time" content="2017-02-22T17:02:15+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux / Windows 加密用户文件夹"/>
+<meta name="twitter:description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
+ 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+Linux 下加密用户文件夹 先决条件：
+ 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+ 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/."/>
+
+
+
+<meta itemprop="name" content="Linux / Windows 加密用户文件夹">
+<meta itemprop="description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
+ 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+Linux 下加密用户文件夹 先决条件：
+ 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+ 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/."><meta itemprop="datePublished" content="2017-02-22T17:02:15+00:00" />
+<meta itemprop="dateModified" content="2017-02-22T17:02:15+00:00" />
+<meta itemprop="wordCount" content="193">
+<meta itemprop="keywords" content="Linux,Encrypt home,Privacy,Security," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>Linux / Windows 加密用户文件夹</h1>
+<p>
+  <i>
+    <time datetime='2017-02-22' pubdate>
+      22 Feb, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h2 id="preface">Preface</h2>
+<p><code>/home</code> 下的用户文件夹可谓是隐私重灾区（Windows 下的 <code>C:\Users\&lt;用户名&gt;</code> 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：</p>
+<ul>
+<li>浏览器的历史记录, 自动填写的表单, Cookies, etc.</li>
+<li>有些人喜欢在桌面上放各种文件，包括但不限于公务文件</li>
+<li>大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息</li>
+</ul>
+<p>解决这个问题的办法就是加密用户文件夹。
+本文分两部分内容，分别针对 Linux 和 Windows。</p>
+<!-- more -->
+<h2 id="linux-下加密用户文件夹">Linux 下加密用户文件夹</h2>
+<p>先决条件：</p>
+<ol>
+<li>以后再登录该账户时需要提供密码</li>
+<li>该操作需要root权限</li>
+</ol>
+<p><em>其实可以用不要 root 权限的 <code>ecryptfs-setup-private</code>，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。</em>
+下文将以 <code>user</code> 用户为例，为其加密home文件夹。以下是具体操作步骤：</p>
+<ol>
+<li>安装 ecryptfs-utils
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt-get install ecryptfs-utils
+</span></span></code></pre></div></li>
+<li>创建一个临时用户并将其加入 sudo 用户组
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo adduser --ingroup sudo user_temp
+</span></span></code></pre></div></li>
+<li>登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序</li>
+<li>按下 Ctrl+Alt+F1 进入 tty1，并以 user_temp 的身份登录</li>
+<li>结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo killall --user user
+</span></span></code></pre></div></li>
+<li>重命名 user 用户为 user_old，并将现有的用户文件夹移至 <code>/home/user_old</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo usermod --home /home/user_old --move-home --login user_old user
+</span></span></code></pre></div></li>
+<li>查看 <code>user_old</code> 的用户基本信息
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>id user_old
+</span></span></code></pre></div>输出内容大致如下，把输出的 gid 和 groups 记下来：
+<pre tabindex="0"><code>uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)
+</code></pre></li>
+<li>添加新的用户名为 <code>user</code>，并加密它的home文件夹
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># --ingroup 参数设置为上面的 gid 后面括号里的值</span>
+</span></span><span style="display:flex;"><span>sudo adduser --home /home/user --ingroup user_group --encrypt-home user
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。</span>
+</span></span></code></pre></div>为 <code>user</code> 设置附属用户组
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔</span>
+</span></span><span style="display:flex;"><span>usermod --append --groups sudo,some_group user
+</span></span></code></pre></div></li>
+<li>登录到 user 并挂载加密的文件系统
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo --user user --login
+</span></span><span style="display:flex;"><span>ecryptfs-mount-private
+</span></span></code></pre></div></li>
+<li>复制旧用户的所有文件到新的用户文件夹里，并修正权限
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo cp -R /home/user_old/. ./
+</span></span><span style="display:flex;"><span>sudo chown -R user:user_group ./
+</span></span></code></pre></div></li>
+</ol>
+<p>然后先在这个账户下日常用几天，如果没问题的话 就可以把原来的账户连同它的文件一起删掉：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo userdel --force --remove user_old
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 别忘了删除 temp_user</span>
+</span></span><span style="display:flex;"><span>sudo userdel --force --remove user_temp
+</span></span></code></pre></div><p>使用命令 <code>ecryptfs-unwrap-passphrase</code> 将输出的 passphrase 记下来，密码忘了的话可以用它来解密文件。</p>
+<p>至此，Linux 下用户文件夹的加密就算完成了。</p>
+<h2 id="windows-下加密用户文件夹">Windows 下加密用户文件夹</h2>
+<p>Windows 下更简单些，点点鼠标就能完成。</p>
+<ol>
+<li>打开目录 <code>C:\Users\</code></li>
+<li>对着自己的用户文件夹 <code>右键 -&gt; 属性 -&gt; 常规选项卡 -&gt; 高级</code></li>
+<li>勾选复选框 <code>加密内容以便保护数据</code></li>
+<li>点击 确定 然后再点击 应用，然后坐等加密完成。
+与此同时，系统会通知用户备份密钥，按照提示操作即可。</li>
+</ol>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://help.ubuntu.com/community/EncryptedHome">Encrypted home - help.ubuntu.com</a></li>
+<li><a href="https://ubuntuforums.org/showthread.php?t=1449168">HOW-TO encrypt your home directory - ubuntuforums.org</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/linux/">#Linux</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/encrypt-home/">#Encrypt home</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/privacy/">#Privacy</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/security/">#Security</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

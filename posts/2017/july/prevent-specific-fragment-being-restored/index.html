@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>[Android] 阻止特定 Fragment 被恢复 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="[Android] 阻止特定 Fragment 被恢复" />
+<meta name="description" content="Preface Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。 如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。 下面就来解决这个问题。
+启发 最开始是在 StackOverflow.com 看到了 这个 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 savedInstanceState.get(FRAGMENTS_TAG) 里，于是只要 savedInstanceState.remove(FRAGMENTS_TAG) 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。 后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：
+ 用法 FragmentStateUtil 也很好用：
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {  try {  FragmentStateUtil lFragmentStateUtil = new FragmentStateUtil(this, savedInstanceState);  lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);  } catch (Exception ignore) {  ignore.printStackTrace();  }  super." />
+<meta name="keywords" content="Android,Fragment,FragmentState,FragmentManagerState," />
+
+
+<meta property="og:title" content="[Android] 阻止特定 Fragment 被恢复" />
+<meta property="og:description" content="Preface Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。 如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。 下面就来解决这个问题。
+启发 最开始是在 StackOverflow.com 看到了 这个 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 savedInstanceState.get(FRAGMENTS_TAG) 里，于是只要 savedInstanceState.remove(FRAGMENTS_TAG) 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。 后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：
+ 用法 FragmentStateUtil 也很好用：
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {  try {  FragmentStateUtil lFragmentStateUtil = new FragmentStateUtil(this, savedInstanceState);  lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);  } catch (Exception ignore) {  ignore.printStackTrace();  }  super." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/july/prevent-specific-fragment-being-restored/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-07-09T12:29:28+00:00" />
+<meta property="article:modified_time" content="2017-07-09T12:29:28+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Android] 阻止特定 Fragment 被恢复"/>
+<meta name="twitter:description" content="Preface Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。 如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。 下面就来解决这个问题。
+启发 最开始是在 StackOverflow.com 看到了 这个 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 savedInstanceState.get(FRAGMENTS_TAG) 里，于是只要 savedInstanceState.remove(FRAGMENTS_TAG) 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。 后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：
+ 用法 FragmentStateUtil 也很好用：
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {  try {  FragmentStateUtil lFragmentStateUtil = new FragmentStateUtil(this, savedInstanceState);  lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);  } catch (Exception ignore) {  ignore.printStackTrace();  }  super."/>
+
+
+
+<meta itemprop="name" content="[Android] 阻止特定 Fragment 被恢复">
+<meta itemprop="description" content="Preface Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。 如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。 下面就来解决这个问题。
+启发 最开始是在 StackOverflow.com 看到了 这个 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 savedInstanceState.get(FRAGMENTS_TAG) 里，于是只要 savedInstanceState.remove(FRAGMENTS_TAG) 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。 后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：
+ 用法 FragmentStateUtil 也很好用：
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {  try {  FragmentStateUtil lFragmentStateUtil = new FragmentStateUtil(this, savedInstanceState);  lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);  } catch (Exception ignore) {  ignore.printStackTrace();  }  super."><meta itemprop="datePublished" content="2017-07-09T12:29:28+00:00" />
+<meta itemprop="dateModified" content="2017-07-09T12:29:28+00:00" />
+<meta itemprop="wordCount" content="94">
+<meta itemprop="keywords" content="Android,Fragment,FragmentState,FragmentManagerState," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>[Android] 阻止特定 Fragment 被恢复</h1>
+<p>
+  <i>
+    <time datetime='2017-07-09' pubdate>
+      09 Jul, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。
+如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。
+下面就来解决这个问题。</p>
+<!-- more -->
+<h1 id="启发">启发</h1>
+<p>最开始是在 StackOverflow.com 看到了 <a href="https://stackoverflow.com/questions/15519214/prevent-fragment-recovery-in-android">这个</a> 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 <code>savedInstanceState.get(FRAGMENTS_TAG)</code> 里，于是只要 <code>savedInstanceState.remove(FRAGMENTS_TAG)</code> 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。
+后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：</p>
+<script src="https://gist.github.com/oing9179/f52d5b684b295911b4149a2157b6adb1.js"></script>
+<h1 id="用法">用法</h1>
+<p><code>FragmentStateUtil</code> 也很好用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">onCreate</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@Nullable</span> Bundle savedInstanceState<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        FragmentStateUtil lFragmentStateUtil <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> FragmentStateUtil<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> savedInstanceState<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        lFragmentStateUtil<span style="color:#f92672">.</span><span style="color:#a6e22e">dropFragmentState</span><span style="color:#f92672">(</span>DontRestoreThisFragment<span style="color:#f92672">.</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>Exception ignore<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        ignore<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">onCreate</span><span style="color:#f92672">(</span>savedInstanceState<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Your code.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>上述代码可以使 <code>DontRestoreThisFragment</code> 不会被 <code>FragmentManager</code> 恢复出来。</p>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://stackoverflow.com/questions/15519214/prevent-fragment-recovery-in-android">Prevent Fragment recovery in Android - stackoverflow.com</a></li>
+<li><a href="https://gist.github.com/oing9179/f52d5b684b295911b4149a2157b6adb1">Utility class help you to drop Fragment state before it&rsquo;s being restored. - gist.github.com</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/android/">#Android</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/fragment/">#Fragment</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/fragmentstate/">#FragmentState</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/fragmentmanagerstate/">#FragmentManagerState</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

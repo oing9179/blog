@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OpenShift on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/openshift/</link>
+    <description>Recent content in OpenShift on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Mon, 18 Jul 2016 15:28:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/openshift/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 OpenShift 上装 Typecho</title>
+      <link>https://oing9179.github.io/blog/posts/2016/july/install-typecho-on-openshift/</link>
+      <pubDate>Mon, 18 Jul 2016 15:28:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/july/install-typecho-on-openshift/</guid>
+      <description>Preface 因为东西越来越多，感觉光用脑子记已经没法永久记住了，于是搭建个blog。 既然是第一篇博文，那就讲讲在OpenShift上搭建Typecho的过程吧。
+准备工作  一个OpenShift帐号，免费帐号就够用。  开工 创建 OpenShift Application   登录到OpenShift。因为是新的帐号，所以OpenShift会提示你创建一个新的 Application，直接创建就好。
+  创建Application页面里有许多类型的Application，选择&amp;quot;PHP 5.4&amp;quot;就好。
+  接下来主要要填写的内容包括
+ Public URL: 用这个地址访问这个博客  其余的选项看看就好，然后点击&amp;quot;Create Application&amp;quot;，然后去泡一杯茶。 创建完成后浏览器会导航到刚创建好的Application的页面。
+  因为Typecho要用到数据库，我选择用MySQL数据库。那么，在页面上找到&amp;quot;Enable MySQL 5.5&amp;quot;并点击它，然后直接点击&amp;quot;Add Cartridge&amp;quot;。几秒钟后就添加好MySQL支持了。
+  以上步骤全部完成后，网页上大概应该是这样：
+我又加了个负载平衡功能，我也忘了怎么加的了，不过这些功能都会在当前Application页面上有。
+为 OpenShift 帐号添加 ssh key 此步骤是为了稍后安装Typecho时，连接OpenShift所用。
+ 在页面上点击 Settings，然后应该像下面这样显示出来:  用 ssh-keygen 生成一份RSA公私钥，然后把公钥（也就是以 .pub 结尾的文件）的内容直接粘贴到上图右边的文本框里，然后点保存。   注：Windows用户可以用PuTTY的 puttygen.exe 来生成公私钥。
+ 上传 Typecho 文件   首先到 Typecho on Github 下载一份Typecho备用。</description>
+    </item>
+    
+  </channel>
+</rss>

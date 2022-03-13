@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/blog/</link>
+    <description>Recent content in Blog on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Mon, 07 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Migrate My Blog to Hugo</title>
+      <link>https://oing9179.github.io/blog/posts/2022/march/migrate-my-blog-to-hugo/</link>
+      <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2022/march/migrate-my-blog-to-hugo/</guid>
+      <description>I&amp;rsquo;ve got my blog migrated to Hugo, Hooray!</description>
+    </item>
+    
+    <item>
+      <title>玩玩真的服务器</title>
+      <link>https://oing9179.github.io/blog/posts/2019/june/playing-with-my-new-server/</link>
+      <pubDate>Sun, 09 Jun 2019 11:53:39 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2019/june/playing-with-my-new-server/</guid>
+      <description>最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。
+不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。
+硬件配置还算行:
+ Intel Atom x5-Z8350 (64bit, 4 core, no hyperthreading) 4GB RAM 64 GB eMMC storage USB 2.0 connector * 4 USB 3.0 OTG connector * 1 1 Gbps Ethernet RJ-45 connector HDMI output  完整的配置信息可以看这里: Up Board Specs
+购买架式(Rack-mounted)服务器 后来开发板也不够用了
+ 开发板 USB 接口输出电压很低，带一个机械硬盘都吃力 有时候插满 USB 接口后，甚至会导致电压过低而重启 供电不足还会导致硬盘损伤甚至数据丢失  以前经历过的一次数据丢失已经把我吓怕了，于是这次干脆直接买了个二手 1U 服务器。配置如下:
+ Dell PowerEdge R420 Barebone Intel Xeon E5-2470v2(10c, 20t) * 2 不知道什么牌子的内存 单条16G * 4，带 ECC REG PERC H710 RAID卡 不带硬盘 其它一些配件  共 3035 CNY。然后又单独去京东买了点东西:</description>
+    </item>
+    
+    <item>
+      <title>使用 SoftEther VPN 搭建私有局域网</title>
+      <link>https://oing9179.github.io/blog/posts/2018/july/setup-private-lan-using-softether-vpn/</link>
+      <pubDate>Thu, 26 Jul 2018 19:45:46 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/july/setup-private-lan-using-softether-vpn/</guid>
+      <description>Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
+本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
+准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
+安装管理工具 注： 该工具可以用 Wine 安装和运行。
+安装很简单，在 &amp;ldquo;Select Software Components to Install&amp;rdquo; 界面选择 &amp;ldquo;Admin Tools Only&amp;rdquo; 那一项即可。</description>
+    </item>
+    
+    <item>
+      <title>为 BIOS 启动的电脑换上 UEFI</title>
+      <link>https://oing9179.github.io/blog/posts/2018/july/install-and-boot-os-on-efi-supported-pc/</link>
+      <pubDate>Tue, 24 Jul 2018 20:19:46 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/july/install-and-boot-os-on-efi-supported-pc/</guid>
+      <description>Preface 这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。
+准备工具  SystemRecuseCd （以下简称 sysrcd）
+会用到里面自带的一些工具（sgdisk, GParted, etc.） Windows 10 PE 软件包  syslinux mtools   一个U盘  创建 sysrcd 的 U 盘启动 sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。
+注意： 以下任意一种方式都会导致U盘的全部数据丢失。
+制作可以通过 BIOS 启动的 sysrcd U盘  复制出一份 sysrcd.iso 文件，因为下面的命令会修改 iso 文件 运行命令 isohybrid sysrcd.iso
+（isohybrid 该可执行文件包含在 syslinux 软件包内） 假设 /dev/sdb 是U盘，运行命令 dd if=./sysrcd.iso of=/dev/sdb  制作可以通过 UEFI 启动的 sysrcd U盘  为U盘创建新的分区表，使用 GPT 分区表 为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 /dev/sdb1 挂载 /dev/sdb1 将 sysrcd.</description>
+    </item>
+    
+    <item>
+      <title>部署 Web Application 到 WildFly 13</title>
+      <link>https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/</link>
+      <pubDate>Sat, 09 Jun 2018 10:18:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/</guid>
+      <description>Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
+WildFly 开发环境搭建  到 这里 下载 &amp;ldquo;Java EE&amp;lt;版本&amp;gt; Full &amp;amp; Web Distribution&amp;rdquo; 而不是 &amp;ldquo;Servlet-Only Distribution&amp;rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &amp;ldquo;Run/Debug Configurations&amp;rdquo;
+ &amp;ldquo;Add New Configuration (Alt+Insert)&amp;rdquo; -&amp;gt; &amp;ldquo;JBoss Server&amp;rdquo; -&amp;gt; &amp;ldquo;Local&amp;rdquo; 点击图中的 &amp;ldquo;Configure&amp;rdquo;
+ &amp;ldquo;Add application server (Alt+Insert)&amp;rdquo; 填入刚解压的 WildFly 的路径，然后 &amp;ldquo;OK&amp;rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&amp;lt;context_path&amp;gt; 的路径里，就像这样:
+去掉它的办法也很简单。
+ 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.</description>
+    </item>
+    
+    <item>
+      <title>自定义任务触发器 - Spring Framework</title>
+      <link>https://oing9179.github.io/blog/posts/2018/february/custom-trigger-spring-framework/</link>
+      <pubDate>Sat, 03 Feb 2018 19:08:02 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/february/custom-trigger-spring-framework/</guid>
+      <description>Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
+Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
+class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
+ Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;beans xmlns=&amp;#34;http://www.springframework.org/schema/beans&amp;#34;  xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xmlns:task=&amp;#34;http://www.springframework.org/schema/task&amp;#34;  xsi:schemaLocation=&amp;#34;http://www.springframework.org/schema/beans http://www.</description>
+    </item>
+    
+    <item>
+      <title>Kotlin 入门笔记</title>
+      <link>https://oing9179.github.io/blog/posts/2017/october/note-get-started-with-kotlin/</link>
+      <pubDate>Mon, 09 Oct 2017 12:13:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/october/note-get-started-with-kotlin/</guid>
+      <description>Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
+基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
+ &amp;ldquo;Unit&amp;rdquo; just stands for &amp;ldquo;something that has only one value&amp;rdquo;, it&amp;rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &amp;lsquo;14 at 6:41
+ 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：</description>
+    </item>
+    
+    <item>
+      <title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）</title>
+      <link>https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/</link>
+      <pubDate>Sat, 19 Aug 2017 19:40:20 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/</guid>
+      <description>Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k+ 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &amp;ldquo;Try on Sandstorm&amp;rdquo;。 下面将介绍具体的搭建过程。
+安装 &amp;amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp;amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose.</description>
+    </item>
+    
+    <item>
+      <title>[Android] Task &amp; Document / Loader</title>
+      <link>https://oing9179.github.io/blog/posts/2017/august/android-task-document-loader/</link>
+      <pubDate>Fri, 11 Aug 2017 21:33:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/august/android-task-document-loader/</guid>
+      <description>Preface 这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。
+ Task 和 Document 的基本概念 Loader 的基本概念和用法  Task &amp;amp; Document Task 下面的代码将启动照相机:
+Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); startActivityForResult(lIntent); 效果如图:
+想把照相机和自己的 App 分开的话，就这样:
+Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivityForResult(lIntent); 效果如图:
+这张图里看上去有两个 App，在 Android 官方文档 里给每个像上图里的 App 定义了一个术语叫做 &amp;ldquo;Task&amp;rdquo;，也就是上图里有2个 Task。容纳许多个 Task 的整个屏幕（也就是上图里的整个屏幕）就叫做 &amp;ldquo;Recents screen&amp;rdquo;（其他非正式名称包括但不限于: Overview screen, Recent apps）.
+Document 使用下面的代码可以让自己的 App 的某个 Activity 以多个 Task 的形式展现在 Recents screen 里:
+Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent);  // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager.</description>
+    </item>
+    
+    <item>
+      <title>[Android] CoordinatorLayout 基本使用方法</title>
+      <link>https://oing9179.github.io/blog/posts/2017/july/getting-started-with-coordinatorlayout/</link>
+      <pubDate>Sat, 15 Jul 2017 10:28:49 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/july/getting-started-with-coordinatorlayout/</guid>
+      <description>Preface 近些天在做个 Android app demo，有个需求是 默认情况下放大 App 的图标，向上滚动后把它缩小 给下面的内容留出空间。 下面展示的这种效果就是用 CoordinatorLayout 的 Behavior 来做.
+ 基本概念 CoordinatorLayout，官方文档给出的意思是 &amp;ldquo;CoordinatorLayout is a super-powered FrameLayout. &amp;ldquo;，也就是说，直接使用它的话和用 FrameLayout 没有区别。 CoordinatorLayout 与 FrameLayout 的区别就在于：CoordinatorLayout 提供了一个内部类 Behavior，用它可以在运行时动态的调整各个 View 的布局。 通过覆盖 Behavior 的两个方法:
+ public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency)  来对具体的 View 进行布局.
+布局文件 比如布局文件是这样的:
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;android.support.design.widget.CoordinatorLayout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;  xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;  xmlns:tools=&amp;#34;http://schemas.android.com/tools&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;match_parent&amp;#34;  android:background=&amp;#34;@android:color/background_light&amp;#34;&amp;gt;   &amp;lt;!</description>
+    </item>
+    
+    <item>
+      <title>[Android] 阻止特定 Fragment 被恢复</title>
+      <link>https://oing9179.github.io/blog/posts/2017/july/prevent-specific-fragment-being-restored/</link>
+      <pubDate>Sun, 09 Jul 2017 12:29:28 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/july/prevent-specific-fragment-being-restored/</guid>
+      <description>Preface Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。 如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。 下面就来解决这个问题。
+启发 最开始是在 StackOverflow.com 看到了 这个 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 savedInstanceState.get(FRAGMENTS_TAG) 里，于是只要 savedInstanceState.remove(FRAGMENTS_TAG) 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。 后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：
+ 用法 FragmentStateUtil 也很好用：
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {  try {  FragmentStateUtil lFragmentStateUtil = new FragmentStateUtil(this, savedInstanceState);  lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);  } catch (Exception ignore) {  ignore.printStackTrace();  }  super.</description>
+    </item>
+    
+    <item>
+      <title>日记 - Android 实习测试题</title>
+      <link>https://oing9179.github.io/blog/posts/2017/june/diary-android-tnternship-test/</link>
+      <pubDate>Wed, 14 Jun 2017 21:57:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/june/diary-android-tnternship-test/</guid>
+      <description>Preface 有个小伙伴给我介绍了一家互联网公司，说让我投份简历看看能不能争取到一份校招实习资格。后来和这个公司的 HR 联系了一下，说让我先做做题。题目一共两道：
+ 第1题可能涉及到公司的业务，这里不做透露。 第2题是写一个 Android 自定义控件，是个尺子控件，要求使用系统提供的绘图API（android.graphics.Canvas）来做。  下面我就说下这次做自定义尺子控件都学到了什么。
+开发流程记录 Day 1:
+  上午: 看 Android 自定义组件 的官方文档，Google 找了两三篇中文教程，又到 GitHub 上看了一些 Demo 的源码，大致知道了 View 类的几个主要方法。
+  下午: 搭建项目开发环境（Android Studio, AVD, etc.），覆盖了 android.view.View 类的3个方法
+ onTouchEvent(MotionEvent event): 负责接受任何触摸事件 onMeasure(int widthMeasureSpec, int heightMeasureSpec): 负责算出控件在被载入后应该占用多大地方 onDraw(Canvas canvas): 负责绘制控件  然后又实现了3个度量单位（Centimeters, Inches, Feet）的枚举类以及换算它们类。
+  Day 2:
+ 看了下 DPI(Dots(或者说 Pixels) per Inches)、dp(Device-Independent Pixels)、sp(Size-Independent Pixels) 的定义以及换算方法，并编写到度量单位换算类里. 比较令我意外的是，把 Centimeter 转成 dp 需要乘以一个数，这个数字居然是个常量。我还反复的在纸上推了几遍（在此感谢 KhanAcademy 教我了一种新的对待单位的方式），后来在尺子实现出来之后没有任何毛病。后来我又想了想 其实很正常，因为 dp 是以 DPI=160 为基准来计算的，最后的算式里它被消除掉了，于是整个算式就和 DPI 没什么关系了。 本来还想支持 sp 的换算来着，虽然本质上和 dp 一样，但因为有些视力障碍的用户会在系统设置里调整文字缩放，因此想实现这个单位还需要读取系统设置，为了主要进度 暂时放弃了这个功能。 进一步完善了 Ruler 类，因为构造函数里可选的初始化成员变量太多（&amp;gt;=4个，参考 《Effective Java》 这本书），于是使用了 Builder 设计模式。 初步的在 onDraw(Canvas canvas) 里做了一些运算，以及画出了错误的尺子刻度。  Day 3:</description>
+    </item>
+    
+    <item>
+      <title>The ICMP Tunnel</title>
+      <link>https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/</link>
+      <pubDate>Sat, 03 Jun 2017 11:36:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/</guid>
+      <description>&lt;h1 id=&#34;preface&#34;&gt;Preface&lt;/h1&gt;
+&lt;p&gt;经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;包从哪里来的?&lt;/li&gt;
+&lt;li&gt;包去哪儿了?&lt;/li&gt;
+&lt;li&gt;Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、&lt;code&gt;iptables&lt;/code&gt;、Python 代码.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>日记 - 招聘会</title>
+      <link>https://oing9179.github.io/blog/posts/2017/june/diary-job-metting/</link>
+      <pubDate>Sat, 03 Jun 2017 10:22:41 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/june/diary-job-metting/</guid>
+      <description>Preface 又是好些天没写 blog 了。本篇 blog 包含如下内容:
+ Grand Theft Auto - Vice City 的哲♂学版 蓝桥 x 拉勾 举办的招聘会 招聘会之后到 McDonald&amp;rsquo;s 就餐  Grand Theft Auto - Vice City 的哲♂学版 作为乐理学习与实践，其实我很早就想做了。不过碍于当时还在初步的了解 IPv4/ICMP 以及 Linux Tunnel，所以迟迟没动工。 目前已经做完音频部分了，视频部分这几天会出来，到时候会在这里把视频链接放出来。
+【哲学】侠盗猎Van手 - 罪恶都市 [原曲不使用]_音MAD_鬼畜_bilibili_哔哩哔哩
+ 蓝桥 x 拉勾 举办的招聘会 领票入场 最开始是 BLumia 告诉我有招聘会，然后招聘会前4天（也就是 24 May）收到了来自拉勾的（广告）邮件 通知我 28 May 那天有各种大咖参加的招聘会，于是就和 BLumia 商量着一起去。 坐地铁下车后到发布会场地门口发现竟然要门票，还好拉勾给我发了个（广告）邮件，要不然估计票都领不到。检票进去之后发现还有安检，感觉还没地铁查得严。 然后就无脑的跟着人群往里走，入场之前旁边还有各个公司的招聘展台，不过当时根本没注意到，就像这个视频一样：
+Zootopia Scene : Pawpsicle
+ 发布会 由于入场前没注意到旁边的招聘展台，而是跟着人群进入了发布会现场，于是就这样看了 2h40m 的广告会。 我还跟 BLumia 吐槽说 &amp;ldquo;平时浏览网页都用 AdBlock 屏蔽广告，现在全都还回来了&amp;rdquo;。 不过，京东的那个技术部的什么经理级别的人(?</description>
+    </item>
+    
+    <item>
+      <title>Linux Tunnel Device and Route</title>
+      <link>https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/</link>
+      <pubDate>Fri, 12 May 2017 12:04:33 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/</guid>
+      <description>Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。</description>
+    </item>
+    
+    <item>
+      <title>python-pytun scapy</title>
+      <link>https://oing9179.github.io/blog/posts/2017/may/pytun/</link>
+      <pubDate>Thu, 04 May 2017 21:33:47 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/may/pytun/</guid>
+      <description>Preface 好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：
+ 用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复  python-pytun 有些 ISP 会对大流量的 UDP 包进行 QoS，导致的现象就是 上行UDP包100%丢包率 下行没问题，而且还能ping得通服务器。借助这一点，可以琢磨着弄个 ICMP Tunnel，显然 GitHub 上已经有轮子实现这个了，但是我怎么弄都没法让它转发 IP 包。于是干脆自己试着用 python 写一个。（当然，还没写出来，但新学的知识已经够写个笔记了） 选择 python 原因有2：
+ 调试方便一些，写一点调试一下，不用像 Java 那样还得等编译 主要原因还是有 python-pytun 这个现成的库，可以直接在 Linux 下创建 tun 设备（豚设备） 而不用自己搞什么 FileDescriptor ioctl 之类的东西  现在这个世界就是不缺轮子。
+TUN / TAP 设备 直接由 Linux 内核提供。
+ tun 设备：就是 tunnel 设备，可以收发 Network layer （Layer 3，比如 IP, ICMP）的包. tap 设备：就是 tap 设备（反正我没找到 tap 是什么的简写），可以收发 Data link layer（Layer 2，比如 ARP, IEEE 802.</description>
+    </item>
+    
+    <item>
+      <title>SysRq 键 - Linux 系统崩掉前最后的救命稻草</title>
+      <link>https://oing9179.github.io/blog/posts/2017/april/the-magic-sysrq-key/</link>
+      <pubDate>Thu, 20 Apr 2017 12:24:48 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/april/the-magic-sysrq-key/</guid>
+      <description>Preface 今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
+ In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”. 在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 &amp;ldquo;Magic SysRq key&amp;rdquo;。 - System request - wikipedia.org
+ 当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。
+sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 /etc/sysctl.</description>
+    </item>
+    
+    <item>
+      <title>用 Docker &amp; Nginx 搭建自己的账本（Firefly）</title>
+      <link>https://oing9179.github.io/blog/posts/2017/april/setup-firefly-the-financial-manager-using-docker-nginx/</link>
+      <pubDate>Tue, 18 Apr 2017 07:47:03 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/april/setup-firefly-the-financial-manager-using-docker-nginx/</guid>
+      <description>Preface &amp;ldquo;我辛辛苦苦挣的钱都去哪儿了&amp;rdquo;，我可不希望以后什么什么时候开始说这种话，于是 搭建个记账软件来记录自己的收支吧。 该软件优点如下：
+ 资金流向：比如钱都花在哪些类目上了，钱都流向哪些商家了。 资金预算：比如打算每个月花多少钱在饮食上。 分类 &amp;amp; 标签：比如钱都花在那些类目上了。 交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易 存钱罐（Piggy Banks）：比如想买个手机但是目前没有那么多预算，可以先弄个存钱罐，然后一点一点的往里面存。相当于一个长远的资金预算。 账单：每月水电费之类的。 规则：比如填写支出描述时自动填写预设的支出金额。 报表（Reports）：按月、季、年生成报表，账户余额、资金流向、短期/长期预算、账单 等等。 多货币：软妹币, 美刀, 英镑, 比特币，想用什么就用什么（不支持货币换算，在创建收支记录时候可以手动填写换算前后的金额）。 数据导入导出：导入导出 csv 格式的文件，进一步对资金流向做分析什么的。  目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。 另外，该软件作者表示 &amp;ldquo;不支持自动支付重复性交易&amp;rdquo;，原因是：
+ I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will feel what you spend.</description>
+    </item>
+    
+    <item>
+      <title>Java 并发 &amp; 多线程 - 基础知识</title>
+      <link>https://oing9179.github.io/blog/posts/2017/april/java-concurrency-multi-threading-introduction/</link>
+      <pubDate>Thu, 13 Apr 2017 09:21:06 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/april/java-concurrency-multi-threading-introduction/</guid>
+      <description>Preface 终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。 本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
+ 我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。 - 某位不愿意透露姓名的人（不是我）
+ 内存模型 理解 Java 内存模型是学习 Java 多线程的基础中的基础。
+ 强烈建议阅读原文：Java Memory Model - tutorials.jenkov.com
+ Java 内存模型 先从基本的开始：
+ 内存被分为两个部分：堆（Stack）内存 和 栈（Heap）内存 Stack 就相当于许多书整齐的摞起来; Heap 就相当于许多书乱七八糟的散在那里. 每个线程都有自己的 Stack 内存，所有线程共用一个 Heap 内存。  现在加入方法和变量：  所有基本数据类型（就是所有小写字母开头的数据类型，包括 boolean, byte, short, char, int, long, float, double），由哪个线程创建的就只能由哪个线程访问。 所有对象都存放在 Heap 里，Integer Byte 之类的也算。  现在标出它们之间的关系：
+ 如果变量的数据类型是基本数据类型，那它就只存放于当前线程 Stack 内。 如果变量指向一个对象，这个变量存放于当前线程 Stack 内，但变量指向的对象存放于 Heap 里。 如果某个对象里包含方法，方法里包含一些变量，这些变量会存放于线程 Stack 内，即使这个对象存放在 Heap 里。 对象存放在 Heap 里，对象里的成员变量也存放在 Heap 里，不管这个成员变量是个基本数据类型还是一个对象的引用。 静态类只有一个实例，这个实例和其他对象一样存放在 Heap 里，静态类里的成员变量也跟着存放在 Heap 里。 综合上面几条得出：线程可以访问 Heap 内的任意对象，只要该线程有那个对象的引用，也就是线程内的某个变量指向 Heap 内的某个对象。  硬件内存模型 以前的那些还在用单核 CPU 的计算机，系统必须对线程进行调度，也就意味着 同一时刻只能有一个线程占用 CPU，也就不是真正的并行运算（就像 Python 那样的 &amp;ldquo;假&amp;rdquo; 多线程）。现在的计算机基本上都在用多核 CPU（有些时候还能看到主板上有多个 CPU），也就意味着 可以有多个线程同时运行。 CPU 会自带一点儿内存，它们称之为 寄存器（Registers）。CPU 还可以有一层或多层缓存内存（Cache Memory），一般来说 它们的容量都比寄存器大，但速度肯定没有 CPU 直接访问寄存器快。还有一个就是主内存（Main Memory），也就是存放在插在主板上的内存条里的数据。因为距离的原因导致 CPU 访问寄存器的速度 &amp;gt; CPU 访问缓存内存的速度 &amp;gt; CPU 访问主内存的速度。 当 CPU 需要主内存里的数据时候，就读取一部分数据然后存到缓存内存里，然后再从缓存内存里读取读取一部分数据到寄存器里，然后再进行运算。当 CPU 想把寄存器里的运算结果写回主内存里时 就把它先写到缓存内存里，然后由缓存内存决定何时把数据写回内存里。 一般情况下，当 CPU 需要的数据不存在于缓存内存里 并且 缓存内存里没有地方存放要从主内存读入新的数据 时，缓存内存就会把缓存的 CPU 运算结果写回主内存，然后再从主内存读入新的数据供 CPU 使用。</description>
+    </item>
+    
+    <item>
+      <title>我不知道的JS</title>
+      <link>https://oing9179.github.io/blog/posts/2017/april/i-dont-know-js/</link>
+      <pubDate>Mon, 10 Apr 2017 15:05:39 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/april/i-dont-know-js/</guid>
+      <description>《你不知道的JS》 (You don&amp;rsquo;t know JS) 读书笔记
+ Preface 一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。 JS 有一些 Java 没有的特性，比如：
+ 拿 function 当对象用（看过书后发现 function 真的是个对象） 除了 null 还有 undefined 还有 undecleared var 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样） this is not this. &amp;ldquo;半残&amp;quot;的面向对象概念 etc.  我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。 下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。
+作用域和闭包（Scope &amp;amp; Closures） 1. 变量作用域因 var 而变得奇葩 先看代码：
+function fn() {  {  var num = 1;  }  console.</description>
+    </item>
+    
+    <item>
+      <title>用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）</title>
+      <link>https://oing9179.github.io/blog/posts/2017/march/setup-nextcloud-using-docker-and-nginx/</link>
+      <pubDate>Wed, 15 Mar 2017 10:09:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/march/setup-nextcloud-using-docker-and-nginx/</guid>
+      <description>Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&amp;quot;无缘无故&amp;quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
+ Owncloud
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &amp;ldquo;Let&amp;rsquo;s Encrypt&amp;quot;。
+注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
+安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &amp;#39;Passw0rd&amp;#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud.</description>
+    </item>
+    
+    <item>
+      <title>用 Nginx 转发 V2Ray 的 WebSocket 连接</title>
+      <link>https://oing9179.github.io/blog/posts/2017/march/v2ray-as-websocket-proxy-behind-nginx/</link>
+      <pubDate>Sat, 11 Mar 2017 21:00:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/march/v2ray-as-websocket-proxy-behind-nginx/</guid>
+      <description>Preface 有些地方网络环境很糟糕，比如：
+  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+ 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+   除 80 和 443 之类的端口外的数据包传输速率都很低
+  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+ TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &amp;ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&amp;quot;，那我就用 WebSocket 吧。</description>
+    </item>
+    
+    <item>
+      <title>Present - 英语语法</title>
+      <link>https://oing9179.github.io/blog/posts/2017/february/present-english-grammar/</link>
+      <pubDate>Wed, 22 Feb 2017 21:09:12 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/february/present-english-grammar/</guid>
+      <description>Preface 在正文开始前先废话几句。 以前翻译 流言终结者(MythBusters) 的时候，当时的英语水平基本上就是 IELTS 1分的样子。翻译了6集后，不管是词汇量还是语感各方面大幅提升。直到近些日子，总感觉好像碰到了什么瓶颈，一直无法提升自身的英语水平。 于是我查了一些资料，发现 我之前翻译视频的这种学习方法适合给幼儿园小孩儿用，成年人应该用更逻辑化的学习方法。 于是我就又查了些资料，在知乎上的 这个高票回答 里推荐了 &amp;ldquo;English Grammar in Use&amp;rdquo; 这本书。这一系列的书一共有3本，本文将从第一本 &amp;ldquo;Essential English Grammar in Use&amp;rdquo; 开始。 借助现有的语感和经验，从零开始系统的学习英语。
+Present continuous：当前正在发生的事 格式：am/is/are + verb.-ing = 当前正在发生的事 例句：
+ Please be quiet, I am working. 安静点儿，我在工作呢。 &amp;lsquo;Where are the children?&amp;rsquo; &amp;lsquo;They are playing in the park&amp;rsquo; &amp;lsquo;孩子们在那儿呢?&amp;rsquo; &amp;lsquo;他们在公园里玩呢&amp;rsquo;  verb.-ing 的几种变化形式：
+ 直接加 ing： work -&amp;gt; working load -&amp;gt; loading 单词结尾字母再写一遍然后加 ing： run -&amp;gt; running sit -&amp;gt; sitting swim -&amp;gt; swimming 元音单词结尾的字母被去掉 或者改成 i 或 y，然后加 ing： come -&amp;gt; coming write -&amp;gt; writing lie -&amp;gt; lying  Present continuous questions：对当前正在发生的事进行提问 格式：am/is/are + subject + verb.</description>
+    </item>
+    
+    <item>
+      <title>Linux / Windows 加密用户文件夹</title>
+      <link>https://oing9179.github.io/blog/posts/2017/february/encrypt-home-directory-on-linux-and-windows/</link>
+      <pubDate>Wed, 22 Feb 2017 17:02:15 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/february/encrypt-home-directory-on-linux-and-windows/</guid>
+      <description>Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&amp;lt;用户名&amp;gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
+ 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+Linux 下加密用户文件夹 先决条件：
+ 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+ 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl+Alt+F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &amp;ldquo;&amp;ndash;signal 9&amp;rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &amp;#34;,&amp;#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/.</description>
+    </item>
+    
+    <item>
+      <title>学音乐比编程更需要耐心</title>
+      <link>https://oing9179.github.io/blog/posts/2017/february/it-takes-years-to-become-a-music-producer/</link>
+      <pubDate>Fri, 10 Feb 2017 19:45:32 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/february/it-takes-years-to-become-a-music-producer/</guid>
+      <description>步入音乐坑 一直以来，相比我周围接触过的人，我一直以为他们唱歌音调不准是因为没学过音乐。后来我去做了一些音乐天赋测试才发现，是我基因里有这个功能而不是别人没学过音乐。 于是本着 &amp;ldquo;有这个天赋不去开发多可惜呀&amp;rdquo; 的想法就去找各种学习资料，比如：
+ 乐理教材，最开始是听20分钟就困的 &amp;ldquo;宋大叔讲乐理&amp;rdquo;，然后还有 &amp;ldquo;The Complete Idiots Guide to Music Theory (BLumia 推荐的)&amp;quot;、&amp;ldquo;Hook Theory (依然是 BLumia 推荐的)&amp;quot;，还有用来复习和巩固的 &amp;ldquo;阳光讲乐理 - doyoudo.com(BiliBili: av4500081)&amp;rdquo; DAW(Digital Audio Workstation)，我选用的是 Ableton Live，也收了不少 Lynda.com 的教学视频，也在 YouTube 上看了不少视频教程 还买了个 Novation Launchkey 61，拿它来试和弦比以前用电脑键盘方便多了  我本以为这些应该够我消化一阵子了。
+第一首 Remix 前不久发现两首挺火的曲子，一个是 TheFatRat - Unity，另一个是 TheFatRat - Monody (feat. Laura Brehm)。这两个曲子有些地方使用了一样的 Chord Progression： i - VI - VII - IV，于是我试试看看能不能把它俩合到一起。 结果很明显，能合到一起。但是我 Remix 出来的曲子原曲比，总感觉差了点儿什么。 后来我想起来：人类学习的新技能使用的主要方法就是模仿。于是我就去搜了搜专业的 Music Producer 做的工程文件，随便点开了一个，点了下播放。等听完了 回过神来再去听听自己的 Remix，感觉自己做的就如同没有味道的甘蔗一样。</description>
+    </item>
+    
+    <item>
+      <title>在 github.io 上用 Hexo 搭建博客</title>
+      <link>https://oing9179.github.io/blog/posts/2017/february/setup-hexo-on-github-io/</link>
+      <pubDate>Fri, 03 Feb 2017 10:35:52 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/february/setup-hexo-on-github-io/</guid>
+      <description>Preface 之前的博客是在 OpenShift 上搭建的 Typecho。但 Typecho 已经有4年没更新了，社区也很不活跃，备份博客数据也很麻烦。所以我干脆直接把博客搬到 GitHub Pages 上，因此也带来了一些便利：
+ 备份博客只需要把 Markdown 文件连同对应的文件夹打包即可 自带的域名也更有逼格了：https://oing9179.github.io Hexo 社区活跃，出了问题基本都有现成的解决方法 github.io 屏蔽猫抓搜索引擎的爬虫，借此来提高访客的门槛  下面开始介绍博客的迁移过程。
+安装 / 配置 Hexo 我看好多人都直接用 &amp;lt;username&amp;gt;.github.io 作为博客地址，我把这个地址预留了下来 留给以后加个首页什么的，然后把博客放在 /blog/ 目录下，根目录下放个 html 把浏览器重定向到 /blog/ 下就行了。
+安装 Hexo 参考下面的命令
+sudo apt-get install nodejs nodejs-legacy npm install -g hexo-cli 有以下几点注意事项：
+ npm install 的时候提示输入密码的话就输入。 因为众所周知的原因，npm 的下载速度很慢，可以为其设置 HTTP 代理： npm config set proxy http://127.0.0.1:8080 npm config set https-proxy http://127.0.0.1:8080 或者使用 taobao 的 npm 镜像，请移步 Taobao npm Mirror.</description>
+    </item>
+    
+    <item>
+      <title>OnePlus 3T 从解锁 BootLoader 到 Xposed</title>
+      <link>https://oing9179.github.io/blog/posts/2017/january/oneplus3t-from-unlocking-bootloader-to-xposed-installed/</link>
+      <pubDate>Wed, 04 Jan 2017 19:53:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/january/oneplus3t-from-unlocking-bootloader-to-xposed-installed/</guid>
+      <description>Preface 原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+ 解锁 BootLoader 安装 TWRP(Team Win Recovery Project) Recovery 卡刷 phh&amp;rsquo;s Superuser 卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶) 卡刷 Xposed  注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。
+免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。
+准备工作 先不要急着开机，做好准备工作再说。
+  下载并安装好 Android SDK，在 Android SDK Manager 内安装 platform-tools(platform-tools 里面提供了后续步骤所需的 fastboot 命令行工具)，可选安装 tools(里面的 adb 用来安装 apk / 与手机传送文件)。
+  TWRP Recovery https://dl.twrp.me/oneplus3t/ Direct link twrp-3.0.3-0-oneplus3t.img
+  root 卡刷包 / root 权限管理软件</description>
+    </item>
+    
+    <item>
+      <title>v2ray - 比 Shadowsocks 更强大更复杂的替代品</title>
+      <link>https://oing9179.github.io/blog/posts/2016/november/v2ray-more-complex-and-better-than-shadowsocks/</link>
+      <pubDate>Sat, 26 Nov 2016 17:25:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/november/v2ray-more-complex-and-better-than-shadowsocks/</guid>
+      <description>Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
+ VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
+然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
+ 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+客户端配置示例：
+{  &amp;#34;log&amp;#34;: {  &amp;#34;access&amp;#34;: &amp;#34;/var/log/v2ray/access.</description>
+    </item>
+    
+    <item>
+      <title>使用 bind9 配合 dnscrypt-proxy 搭建自己的无污染的DNS服务器</title>
+      <link>https://oing9179.github.io/blog/posts/2016/september/clean-dns-server-setup-using-bind9-and-dnscrypt-proxy/</link>
+      <pubDate>Fri, 02 Sep 2016 17:23:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/september/clean-dns-server-setup-using-bind9-and-dnscrypt-proxy/</guid>
+      <description>Preface 因为众所周知的原因，DNS缓存投毒(aka: DNS Spoofing) 的出现是因为DNS查询通信协议的设计缺陷导致的，因为DNS查询协议的设计者当时并没有预料到现在的网络环境这么糟糕。利用这个缺陷可以实现一些特技，比如：
+ 用浏览器打开Google然后跳转到了Baidu. ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告. 这里没能列举出的一些特技.  为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 dnscrypt(GitHub项目主页)，相比传统的DNS查询有如下优点：
+ 与DNS服务器通信过程中使用SSL加密. 可以强制使用TCP，避免因UDP丢包而浪费时间. 有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站. 有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果.  不过使用dnscrypt的缺点也是有的：相比ISP提供的DNS，dnscrypt的查询会慢上最少300ms。导致这个问题的原因包括但不限于：
+ UDP丢包. 强制使用TCP的话，TCP握手也要很久. SSL握手. 城门口堵车了.  不过这个问题也是可以解决的，那就是在本地搭建一个DNS服务器来缓存dnscrypt的查询结果。 接下来，我就简单的写一下 dnscrypt-proxy 和 bind(用来缓存DNS查询结果) 的安装和配置.
+ 注1：下面的内容适用于Ubuntu及其衍生Distro，其他Linux Distro可能需要做些修改。 注2：我之所以没用 dnsmasq，是因为无论怎么配置它 它都不缓存向本地请求的记录，但会缓存非本地地址的记录 比如用8.8.8.8它就会缓存。
+ dnscrypt-proxy  DNSCrypt 主页
+dnscrypt-proxy GitHub 主页
+dnscrypt-proxy launchpad.net PPA
+ 安装 dnscrypt-proxy 执行下面的命令来安装dnscrypt-proxy：
+apt-get install dnscrypt-proxy 配置 dnscrypt-proxy 配置dnscrypt-proxy，配置文件在 /etc/default/dnscrypt-proxy：
+# What local IP the daemon will listen to, with an optional port.</description>
+    </item>
+    
+    <item>
+      <title>Tails - 注重隐私的Linux发行版 试用</title>
+      <link>https://oing9179.github.io/blog/posts/2016/august/tails-linux-tryout/</link>
+      <pubDate>Sun, 21 Aug 2016 21:10:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/august/tails-linux-tryout/</guid>
+      <description>Preface 前几天我浏览网页时候突然想到一件事：有没有什么办法让整个系统都通过洋葱代理，这样的话 在这个系统里不管做什么都是匿名的，而不再限于洋葱浏览器。
+Google &amp;ldquo;anonymous linux system&amp;rdquo; 第一条就给出了 Tails 这款Linux发行版，基于Debian sid(Still in develop)。这款Linux发行版的特点是：
+ 匿名的上网：强制所有网络连接从洋葱出去。 使用这个系统的电脑上不会留下任何踪迹，除非你非要留下。  不过官方文档标注了一下：虽然关机/重启时候会把内存擦一遍，但因为技术原因 没能把显存也擦一遍。不过开发团队正着手于这件事。
+  自带最先进的加密工具，用来加密文件、邮件和即时通信。  简单介绍了一下，下面开始下载并试用它。
+下载 Tails 打开 Tails 官网，点击页面右边的 &amp;ldquo;Install Tails &amp;lt;版本号&amp;gt;&amp;quot;，页面跳转后 点击&amp;quot;Download only&amp;rdquo;，然后再点击 &amp;ldquo;Download Torrent file&amp;rdquo; 即可。
+Q &amp;amp; A:
+  为什么不点击那个 &amp;ldquo;LET&amp;rsquo;S START THE JOURNEY!&amp;rdquo; 大按钮? 我觉得那里面的教程更麻烦。（估计是给完全新手用的吧） 有必要进行 &amp;ldquo;Download and verify using OpenPGP&amp;rdquo; 吗? 如果是下载Torrent的话：没必要。因为Torrent客户端在下载完成后会自动校验文件的checksum。 可以使用 x雷 / xx旋风下载它吗? Transmission 或 Deluge Torrent 或者 qBittorrent 任选其一即可，x雷 xx旋风 之类的看看就行了。   下载完成后，就可以准备试用了。我在这里分别介绍 在VirtualBox里运行 和 安装到U盘。</description>
+    </item>
+    
+    <item>
+      <title>Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解</title>
+      <link>https://oing9179.github.io/blog/posts/2016/august/markdown-navigator-for-intellij-idea-crack/</link>
+      <pubDate>Mon, 08 Aug 2016 13:29:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/august/markdown-navigator-for-intellij-idea-crack/</guid>
+      <description>Preface 一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。
+开工 先弄个试用版的许可证激活一下看看 插件原价为 $19.99/yr，直接到 这里 填好相关资料就可以拿到15天的全功能试用许可证了。 然后对 LicenseAgent 类的 getLicenseCode(LicenseRequest licenseRequest)Z 和 isValidActivation()Z 下断点，然后调试该插件。 调试时，打开 被调试的IDEA的菜单栏 -&amp;gt; File -&amp;gt; Settings -&amp;gt; Languages &amp;amp; Frameworks -&amp;gt; Markdown，输入许可证，然后观察LicenseAgent类里的代码执行过程，得到下面的大致激活流程。
+大致的激活流程 插件先拿着试用版激活码调用 LicenseAgent.getLicenseCode(LicenseRequest)Z，这会从服务器拿到激活响应以json体现：
+{  &amp;#34;status&amp;#34;:&amp;#34;LicenseAgent.STATUS_*&amp;#34;,  &amp;#34;message&amp;#34;:&amp;#34;比如激活失败就会用这个来告诉用户.&amp;#34;,  &amp;#34;activation_code&amp;#34;:&amp;#34;激活响应信息&amp;#34;,  &amp;#34;license_code&amp;#34;:&amp;#34;猜测：服务器要求插件更新许可证用的字段，不一定每次都有.&amp;#34; } 下表描述上面的json里key对应的java字段：
+   key java field     status LicenseAgent.STATUS   message LicenseAgent.MESSAGE   activation_code LicenseAgent.</description>
+    </item>
+    
+    <item>
+      <title>Mybatis Plus for IntelliJ IDEA 破解</title>
+      <link>https://oing9179.github.io/blog/posts/2016/july/mybatis-plus-for-intellij-idea-crack/</link>
+      <pubDate>Wed, 20 Jul 2016 19:25:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/july/mybatis-plus-for-intellij-idea-crack/</guid>
+      <description>Preface 前天发现了个不错的插件，叫 Mybatis Plus，是一个 IntelliJ IDEA 插件，用于协助编写使用MyBatis的程序。 插件官网上还给出了使用插件的 效果视频，感觉这插件能大大提升开发效率，于是安装它打算试试。 不料，安装后发现插件不允许试用，只能先购买后使用。于是我查了一些资料，试着自己处理掉DRM。
+准备工作 按照 引用1 和 引用2 的方法，使用 jbe 直接修改类字节码。不过jbe貌似有bug，每次保存方法以后都会丢失一些信息（比如 保存Method body的字节码后，Method里 堆(Stack)的最大高度之类的信息就丢失了），导致IDEA载入这个插件的时候抛出载入类文件异常。 于是我改用 jd-gui 结合IntelliJ IDEA自带的Decompiler，反编译出原有的java代码，然后手动修改代码使其通过编译检查。 注意：每次修改代码后都进行编译，然后将编译后的类文件替换掉原来的jar包里的类文件，最后重启IDEA看效果和调试输出。
+开工 作为切入点的两个类：JavaService 和 JavaUtil 先从 引用1 和 引用2 中所提到的两个类下手：
+com.seventh7.mybatis.service.JavaService com.seventh7.mybatis.util.JavaUtil 用IDEA新建一个Java项目，并在 Project Structure 里选择 IntelliJ Platform Plugin SDK。没有这个选项就创建一个即可，如下图：
+整个java项目的文件结构如下：
+   目录 作用     /libs/ 插件的原版jar包和它引用的一些包   /src/main/java/ 按照原版jar包里的包结构创建,用于替换原版jar包里的类.   /src/main/resources/ 目前只存放 MANIFEST.MF， 用于记录原版jar包对应的版本号.    图中还有一些上面没有提到过的类，这些类以后会用到。只用这一张图也省得我再做其他的图了。</description>
+    </item>
+    
+    <item>
+      <title>在 OpenShift 上装 Typecho</title>
+      <link>https://oing9179.github.io/blog/posts/2016/july/install-typecho-on-openshift/</link>
+      <pubDate>Mon, 18 Jul 2016 15:28:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/july/install-typecho-on-openshift/</guid>
+      <description>Preface 因为东西越来越多，感觉光用脑子记已经没法永久记住了，于是搭建个blog。 既然是第一篇博文，那就讲讲在OpenShift上搭建Typecho的过程吧。
+准备工作  一个OpenShift帐号，免费帐号就够用。  开工 创建 OpenShift Application   登录到OpenShift。因为是新的帐号，所以OpenShift会提示你创建一个新的 Application，直接创建就好。
+  创建Application页面里有许多类型的Application，选择&amp;quot;PHP 5.4&amp;quot;就好。
+  接下来主要要填写的内容包括
+ Public URL: 用这个地址访问这个博客  其余的选项看看就好，然后点击&amp;quot;Create Application&amp;quot;，然后去泡一杯茶。 创建完成后浏览器会导航到刚创建好的Application的页面。
+  因为Typecho要用到数据库，我选择用MySQL数据库。那么，在页面上找到&amp;quot;Enable MySQL 5.5&amp;quot;并点击它，然后直接点击&amp;quot;Add Cartridge&amp;quot;。几秒钟后就添加好MySQL支持了。
+  以上步骤全部完成后，网页上大概应该是这样：
+我又加了个负载平衡功能，我也忘了怎么加的了，不过这些功能都会在当前Application页面上有。
+为 OpenShift 帐号添加 ssh key 此步骤是为了稍后安装Typecho时，连接OpenShift所用。
+ 在页面上点击 Settings，然后应该像下面这样显示出来:  用 ssh-keygen 生成一份RSA公私钥，然后把公钥（也就是以 .pub 结尾的文件）的内容直接粘贴到上图右边的文本框里，然后点保存。   注：Windows用户可以用PuTTY的 puttygen.exe 来生成公私钥。
+ 上传 Typecho 文件   首先到 Typecho on Github 下载一份Typecho备用。</description>
+    </item>
+    
+  </channel>
+</rss>

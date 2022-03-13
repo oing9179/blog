@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>我不知道的JS | Hotaru&#39;s Notebook</title>
+<meta name="title" content="我不知道的JS" />
+<meta name="description" content="《你不知道的JS》 (You don&rsquo;t know JS) 读书笔记
+ Preface 一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。 JS 有一些 Java 没有的特性，比如：
+ 拿 function 当对象用（看过书后发现 function 真的是个对象） 除了 null 还有 undefined 还有 undecleared var 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样） this is not this. &ldquo;半残&quot;的面向对象概念 etc.  我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。 下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。
+作用域和闭包（Scope &amp; Closures） 1. 变量作用域因 var 而变得奇葩 先看代码：
+function fn() {  {  var num = 1;  }  console." />
+<meta name="keywords" content="JavaScript,You don&#39;t know JS," />
+
+
+<meta property="og:title" content="我不知道的JS" />
+<meta property="og:description" content="《你不知道的JS》 (You don&rsquo;t know JS) 读书笔记
+ Preface 一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。 JS 有一些 Java 没有的特性，比如：
+ 拿 function 当对象用（看过书后发现 function 真的是个对象） 除了 null 还有 undefined 还有 undecleared var 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样） this is not this. &ldquo;半残&quot;的面向对象概念 etc.  我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。 下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。
+作用域和闭包（Scope &amp; Closures） 1. 变量作用域因 var 而变得奇葩 先看代码：
+function fn() {  {  var num = 1;  }  console." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/april/i-dont-know-js/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-04-10T15:05:39+00:00" />
+<meta property="article:modified_time" content="2017-04-10T15:05:39+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="我不知道的JS"/>
+<meta name="twitter:description" content="《你不知道的JS》 (You don&rsquo;t know JS) 读书笔记
+ Preface 一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。 JS 有一些 Java 没有的特性，比如：
+ 拿 function 当对象用（看过书后发现 function 真的是个对象） 除了 null 还有 undefined 还有 undecleared var 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样） this is not this. &ldquo;半残&quot;的面向对象概念 etc.  我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。 下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。
+作用域和闭包（Scope &amp; Closures） 1. 变量作用域因 var 而变得奇葩 先看代码：
+function fn() {  {  var num = 1;  }  console."/>
+
+
+
+<meta itemprop="name" content="我不知道的JS">
+<meta itemprop="description" content="《你不知道的JS》 (You don&rsquo;t know JS) 读书笔记
+ Preface 一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。 JS 有一些 Java 没有的特性，比如：
+ 拿 function 当对象用（看过书后发现 function 真的是个对象） 除了 null 还有 undefined 还有 undecleared var 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样） this is not this. &ldquo;半残&quot;的面向对象概念 etc.  我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。 下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。
+作用域和闭包（Scope &amp; Closures） 1. 变量作用域因 var 而变得奇葩 先看代码：
+function fn() {  {  var num = 1;  }  console."><meta itemprop="datePublished" content="2017-04-10T15:05:39+00:00" />
+<meta itemprop="dateModified" content="2017-04-10T15:05:39+00:00" />
+<meta itemprop="wordCount" content="730">
+<meta itemprop="keywords" content="JavaScript,You don&#39;t know JS," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>我不知道的JS</h1>
+<p>
+  <i>
+    <time datetime='2017-04-10' pubdate>
+      10 Apr, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <blockquote>
+<p><em>《你不知道的JS》 (You don&rsquo;t know JS) 读书笔记</em></p>
+</blockquote>
+<h1 id="preface">Preface</h1>
+<p>一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。
+JS 有一些 Java 没有的特性，比如：</p>
+<ul>
+<li>拿 <code>function</code> 当对象用（看过书后发现 <code>function</code> 真的是个对象）</li>
+<li>除了 <code>null</code> 还有 <code>undefined</code> 还有 <code>undecleared</code></li>
+<li><code>var</code> 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样）</li>
+<li><code>this</code> is not this.</li>
+<li>&ldquo;半残&quot;的面向对象概念</li>
+<li>etc.</li>
+</ul>
+<p>我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。
+下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。</p>
+<!-- more -->
+<h1 id="作用域和闭包scope--closures">作用域和闭包（Scope &amp; Closures）</h1>
+<h2 id="1-变量作用域因-var-而变得奇葩">1. 变量作用域因 <code>var</code> 而变得奇葩</h2>
+<p>先看代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fn</span>() {
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">num</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">num</span>); <span style="color:#75715e">// Output: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fn2</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">num</span>); <span style="color:#75715e">// Uncaught ReferenceError: num is not defined
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>在 Java 里，<code>num</code> 离开大括号后就应该是未定义的了，然而 JS 却唱反调。解决办法也很简单，使用 ECMAScript 6 的新关键字 <code>let</code> 即可，用法和 <code>var</code> 完全一致 但不会有 <code>var</code> 那种奇葩的作用域。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fn</span>() {
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">num</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">num</span>); <span style="color:#75715e">// Uncaught ReferenceError: num is not defined
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fn2</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">num</span>); <span style="color:#75715e">// Uncaught ReferenceError: num is not defined
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>另外 <code>fn2()</code> 无论如何都是抛出 <code>ReferenceError</code>，说明 <code>var</code> 的作用域仅限于 <code>function</code> 内。
+总结：</p>
+<ol>
+<li>能用 <code>let</code> 就不要用 <code>var</code></li>
+<li><code>let</code> 的作用域在它所在的大括号内，<code>var</code> 的作用域在它所在的 <code>function</code> 内</li>
+</ol>
+<h3 id="11-用淫技伪造一个块作用域block-scope">1.1 用淫技&quot;伪造&quot;一个块作用域（Block Scope）</h3>
+<p>正如书中所述，JS的块作用域很模糊。既然函数可以产生一个作用域，那么 借助它就可以不使用 <code>let</code> 关键字来产生一个 &ldquo;块作用域&rdquo;：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">param1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">unaccessible</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">param1</span>);
+</span></span><span style="display:flex;"><span>})(<span style="color:#e6db74">&#34;Hello world&#34;</span>); <span style="color:#75715e">// 会输出 &#34;Hello world&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">unaccessible</span>); <span style="color:#75715e">// ReferenceError
+</span></span></span></code></pre></div><p>上面的代码的格式大概是这样的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>(<span style="color:#75715e">/*该括号里声明函数*/</span>)(<span style="color:#75715e">/*该括号使得左边括号里的代码立即执行*/</span>);
+</span></span></code></pre></div><h2 id="2-提升hoisting">2. 提升（Hoisting）</h2>
+<p><strong>TL;DR:</strong> 使用任何变量前请先把它定义出来，这点对于 Java 程序员来讲很容易吧。</p>
+<p>在看完书中 Hoisting 部分后，我的理解是这样的：任意位置定义出来的东西（包括但不限于变量、<code>function</code>）都会把 <strong>定义(Definition)</strong> 挪到函数最开始的位置。就像下面这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fnTest</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Hello, &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">someone</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Walter White&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">someone</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>经过 Hoisting 后就会变成这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fnTest</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">someone</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Hello, &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">someone</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Walter White&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">someone</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其实&quot;提升&quot;是一种误解。我觉得把 StackOverflow 上的 <a href="https://stackoverflow.com/questions/15005098/why-does-javascript-hoist-variables">这个问题的答案</a> 翻译一下来得更直接：</p>
+<blockquote>
+<p>As Stoyan Stefanov explains in &ldquo;JavaScript Patterns&rdquo; book, the hoisting is result of JavaScript interpreter implementation.
+Stoyan Stefanov 在 《JavaScript Patterns》 一书中解释道，这种 Hoisting 现象其实是由 JS 的解释器的实现导致的。</p>
+<p>The JS code interpretation performed in two passes. During the first pass, the interpreter processes variable and function declarations.
+解释器解释 JS 代码的时候会把 JS 代码过两遍。第一遍处理所有的变量和函数定义。</p>
+<p>The second pass is actually code execution step. The interpreter processes function expressions and undeclared variables.
+第二遍在才会执行具体的 JS 代码，处理函数表达式以及未定义的变量。</p>
+<p>Thus, we can use the &ldquo;hoisting&rdquo; concept to describe such behavior.
+因此，我们可以用 &ldquo;提升&rdquo; 这个概念来形容这种行为。</p>
+<p>Hope this helps.
+- <a href="https://stackoverflow.com/users/1557262/lxgreen">lxgreen</a> answered Feb 22 &lsquo;13 at 0:22</p>
+<p>I personally really do not like the word &ldquo;hoisting&rdquo;. It gives the false representation that variable and function declarations are magically hoisted to the top of the current scope, when in reality, the JS interpreter, as you mentioned, scans the source code for the bindings and <strong>then</strong> executes the code. – <a href="https://stackoverflow.com/users/175057/contactmatt">contactmatt</a> Feb 24 &lsquo;13 at 22:32
+我个人非常不喜欢 &ldquo;提升&rdquo; 这个词。它会给人一种错误的观念，让人以为变量和函数的定义都被神奇的提升到了当前作用域最开始的位置。但实际情况是，正如你所提到的，JS 解释器会先扫描代码中的所有绑定（这里绑定指的是把函数或变量绑定到某个变量名上）<strong>然后</strong>再执行具体的代码。</p>
+</blockquote>
+<h2 id="3-闭包">3. 闭包</h2>
+<p>强烈建议阅读原书，不过我在这里依然会做简单的介绍。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fnTest</span>(<span style="color:#a6e22e">param0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;.button&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">param0</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>用鼠标点击 <code>.button</code> 后 <code>console.log()</code> 可以访问 <code>param0</code>，这就是闭包。</p>
+<h1 id="this-和对象原型object-prototype"><code>this</code> 和对象原型（Object Prototype）</h1>
+<h2 id="1-半残废的-oop">1. 半残废的 OOP</h2>
+<p>以我目前的理解：</p>
+<ol>
+<li>JS 的 <code>protytope</code> 就是 Java 的类</li>
+<li>JS 的 <code>prototype</code> 链就是 Java 的类继承</li>
+</ol>
+<p>不过书中反复强调 JS 里没有类的概念。<img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f615.png" style="width:24px; height:24px; display:inline !important; border:none; padding:0;"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// 定义一个类的构造函数。是的，先定义构造函数，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Clazz</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Clazz</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#e6db74">&#34;Clazz()&#34;</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 然后再继续编写类的行为。很可惜的是，像下面这样定义类的行为的话，多态也就无从谈起了。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Clazz</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">greeting</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">greeting</span>(<span style="color:#a6e22e">someone</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Hello, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">someone</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 然后 ECMAScript 的研发人员们又搞了这个：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Clazz</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">getArguments</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">getArguments</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arguments</span>;<span style="color:#75715e">// 请把 arguments 对象当作数组用，然后通过数组下标获取调用当前函数时所传入的参数，下标指向不存在的东西会返回 undefined.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 实例化一个 Clazz &#34;类&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">clazz</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Clazz</span>();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clazz</span>.<span style="color:#a6e22e">greeting</span>(<span style="color:#e6db74">&#34;Walter White&#34;</span>);<span style="color:#75715e">// 输出 &#34;Hello, Walter White&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">p</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">clazz</span>.<span style="color:#a6e22e">getArguments</span>(<span style="color:#e6db74">&#34;Hello&#34;</span>, <span style="color:#e6db74">&#34;Walter White&#34;</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">p</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* 输出：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Hello
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Walter White
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    */</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>改用 ES6 语法来定义类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// 定义类 Clazz
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Cooker</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 构造函数不能重载
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">constructor</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">someone</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arguments</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Cooker.constructor&#34;</span>, <span style="color:#a6e22e">arguments</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 普通的函数也不能重载
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">greeting</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Hello, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">someone</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WalterWhite</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Cooker</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">constructor</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(<span style="color:#e6db74">&#34;Walter White&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;WalterWhite.constructor&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">cooker</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Cooker</span>(<span style="color:#e6db74">&#34;Walter White&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">walterWhite</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WalterWhite</span>();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cooker</span>.<span style="color:#a6e22e">greeting</span>();<span style="color:#75715e">// 输出 &#34;Hello, Walter White&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">cooker</span>.<span style="color:#a6e22e">greeting</span>(<span style="color:#e6db74">&#34;Walter White&#34;</span>); <span style="color:#75715e">// 输出得和上一行代码一样
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">walterWhite</span>.<span style="color:#a6e22e">greeting</span>();
+</span></span></code></pre></div><p>其实到头来还是因为 JS 的半残废的面向对象系统，要多态没有多态，要静态变量没有静态变量，要访问控制没有访问控制。要我说吧，Script 就做好你 Script 的本职工作就好了，没有 Python 的实力还非要学别人搞 OOP。</p>
+<h2 id="2-抱歉没有静态类和静态变量">2. 抱歉，没有静态类和静态变量</h2>
+<p>是的，没有静态类也没有静态变量，就如同书中 &ldquo;this和对象原型 -&gt; 附录 A.2&rdquo; 里说的一样。
+想写静态变量的话，拿全局变量代替吧，在类里写静态变量事倍功半。</p>
+<h2 id="3-this-is-not-this">3. <code>this</code> is not this.</h2>
+<p>JS 里的 <code>this</code> 和 Java 里的 <code>this</code> 可谓是天壤之别，强烈建议阅读原书（原书里句句命中要害，几乎没有废话），下面借用第2章的总结：</p>
+<ol>
+<li>由 new 调用绑定到新创建的对象。</li>
+<li>由 call 或者 apply(或者 bind)调用?绑定到指定的对象。</li>
+<li>由上下文对象调用?绑定到那个上下文对象。</li>
+<li>默认:在严格模式下绑定到 undefined,否则绑定到全局对象。</li>
+</ol>
+<p><em>未完待续&hellip;</em></p>
+<h1 id="更新历史">更新历史</h1>
+<p>10 Apr 2017：首次发布
+13 Apr 2017：</p>
+<ul>
+<li>更正：提升（Hoisting）现象的原理</li>
+<li>小修小改</li>
+</ul>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://stackoverflow.com/questions/15005098/why-does-javascript-hoist-variables">Why does JavaScript hoist variables? - stackoverflow.com</a>
+<blockquote>
+<p>As Stoyan Stefanov explains in &ldquo;JavaScript Patterns&rdquo; book, the hoisting is result of JavaScript interpreter implementation.
+The JS code interpretation performed in two passes. During the first pass, the interpreter processes variable and function declarations.
+The second pass is actually code execution step. The interpreter processes function expressions and undeclared variables.
+Thus, we can use the &ldquo;hoisting&rdquo; concept to describe such behavior.
+Hope this helps.
+- <a href="https://stackoverflow.com/users/1557262/lxgreen">lxgreen</a> answered Feb 22 &lsquo;13 at 0:22</p>
+<p>I personally really do not like the word &ldquo;hoisting&rdquo;. It gives the false representation that variable and function declarations are magically hoisted to the top of the current scope, when in reality, the JS interpreter, as you mentioned, scans the source code for the bindings and <strong>then</strong> executes the code. – <a href="https://stackoverflow.com/users/175057/contactmatt">contactmatt</a> Feb 24 &lsquo;13 at 22:32</p>
+</blockquote>
+</li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/javascript/">#JavaScript</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/you-dont-know-js/">#You don&#39;t know JS</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

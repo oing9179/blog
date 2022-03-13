@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/java/</link>
+    <description>Recent content in Java on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sat, 09 Jun 2018 10:18:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>部署 Web Application 到 WildFly 13</title>
+      <link>https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/</link>
+      <pubDate>Sat, 09 Jun 2018 10:18:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/</guid>
+      <description>Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
+WildFly 开发环境搭建  到 这里 下载 &amp;ldquo;Java EE&amp;lt;版本&amp;gt; Full &amp;amp; Web Distribution&amp;rdquo; 而不是 &amp;ldquo;Servlet-Only Distribution&amp;rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &amp;ldquo;Run/Debug Configurations&amp;rdquo;
+ &amp;ldquo;Add New Configuration (Alt+Insert)&amp;rdquo; -&amp;gt; &amp;ldquo;JBoss Server&amp;rdquo; -&amp;gt; &amp;ldquo;Local&amp;rdquo; 点击图中的 &amp;ldquo;Configure&amp;rdquo;
+ &amp;ldquo;Add application server (Alt+Insert)&amp;rdquo; 填入刚解压的 WildFly 的路径，然后 &amp;ldquo;OK&amp;rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&amp;lt;context_path&amp;gt; 的路径里，就像这样:
+去掉它的办法也很简单。
+ 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.</description>
+    </item>
+    
+    <item>
+      <title>自定义任务触发器 - Spring Framework</title>
+      <link>https://oing9179.github.io/blog/posts/2018/february/custom-trigger-spring-framework/</link>
+      <pubDate>Sat, 03 Feb 2018 19:08:02 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/february/custom-trigger-spring-framework/</guid>
+      <description>Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
+Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
+class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
+ Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;beans xmlns=&amp;#34;http://www.springframework.org/schema/beans&amp;#34;  xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xmlns:task=&amp;#34;http://www.springframework.org/schema/task&amp;#34;  xsi:schemaLocation=&amp;#34;http://www.springframework.org/schema/beans http://www.</description>
+    </item>
+    
+    <item>
+      <title>Java 并发 &amp; 多线程 - 基础知识</title>
+      <link>https://oing9179.github.io/blog/posts/2017/april/java-concurrency-multi-threading-introduction/</link>
+      <pubDate>Thu, 13 Apr 2017 09:21:06 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/april/java-concurrency-multi-threading-introduction/</guid>
+      <description>Preface 终于，今天终于有底气来谈论这个经常被各种面试官提及的话题了。 本文将涵盖目前入门 Java 并发 &amp;amp; 并行编程的基本理论知识。
+ 我（面试的时候）几乎场场都面多线程，我都说我不太懂。（感觉面试官在）传达给我一层意思：（学）Java（却）不懂多线程等于我没学 Java。 - 某位不愿意透露姓名的人（不是我）
+ 内存模型 理解 Java 内存模型是学习 Java 多线程的基础中的基础。
+ 强烈建议阅读原文：Java Memory Model - tutorials.jenkov.com
+ Java 内存模型 先从基本的开始：
+ 内存被分为两个部分：堆（Stack）内存 和 栈（Heap）内存 Stack 就相当于许多书整齐的摞起来; Heap 就相当于许多书乱七八糟的散在那里. 每个线程都有自己的 Stack 内存，所有线程共用一个 Heap 内存。  现在加入方法和变量：  所有基本数据类型（就是所有小写字母开头的数据类型，包括 boolean, byte, short, char, int, long, float, double），由哪个线程创建的就只能由哪个线程访问。 所有对象都存放在 Heap 里，Integer Byte 之类的也算。  现在标出它们之间的关系：
+ 如果变量的数据类型是基本数据类型，那它就只存放于当前线程 Stack 内。 如果变量指向一个对象，这个变量存放于当前线程 Stack 内，但变量指向的对象存放于 Heap 里。 如果某个对象里包含方法，方法里包含一些变量，这些变量会存放于线程 Stack 内，即使这个对象存放在 Heap 里。 对象存放在 Heap 里，对象里的成员变量也存放在 Heap 里，不管这个成员变量是个基本数据类型还是一个对象的引用。 静态类只有一个实例，这个实例和其他对象一样存放在 Heap 里，静态类里的成员变量也跟着存放在 Heap 里。 综合上面几条得出：线程可以访问 Heap 内的任意对象，只要该线程有那个对象的引用，也就是线程内的某个变量指向 Heap 内的某个对象。  硬件内存模型 以前的那些还在用单核 CPU 的计算机，系统必须对线程进行调度，也就意味着 同一时刻只能有一个线程占用 CPU，也就不是真正的并行运算（就像 Python 那样的 &amp;ldquo;假&amp;rdquo; 多线程）。现在的计算机基本上都在用多核 CPU（有些时候还能看到主板上有多个 CPU），也就意味着 可以有多个线程同时运行。 CPU 会自带一点儿内存，它们称之为 寄存器（Registers）。CPU 还可以有一层或多层缓存内存（Cache Memory），一般来说 它们的容量都比寄存器大，但速度肯定没有 CPU 直接访问寄存器快。还有一个就是主内存（Main Memory），也就是存放在插在主板上的内存条里的数据。因为距离的原因导致 CPU 访问寄存器的速度 &amp;gt; CPU 访问缓存内存的速度 &amp;gt; CPU 访问主内存的速度。 当 CPU 需要主内存里的数据时候，就读取一部分数据然后存到缓存内存里，然后再从缓存内存里读取读取一部分数据到寄存器里，然后再进行运算。当 CPU 想把寄存器里的运算结果写回主内存里时 就把它先写到缓存内存里，然后由缓存内存决定何时把数据写回内存里。 一般情况下，当 CPU 需要的数据不存在于缓存内存里 并且 缓存内存里没有地方存放要从主内存读入新的数据 时，缓存内存就会把缓存的 CPU 运算结果写回主内存，然后再从主内存读入新的数据供 CPU 使用。</description>
+    </item>
+    
+  </channel>
+</rss>

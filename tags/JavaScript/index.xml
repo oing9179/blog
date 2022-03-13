@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/javascript/</link>
+    <description>Recent content in JavaScript on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Mon, 10 Apr 2017 15:05:39 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我不知道的JS</title>
+      <link>https://oing9179.github.io/blog/posts/2017/april/i-dont-know-js/</link>
+      <pubDate>Mon, 10 Apr 2017 15:05:39 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/april/i-dont-know-js/</guid>
+      <description>《你不知道的JS》 (You don&amp;rsquo;t know JS) 读书笔记
+ Preface 一直以为 JavaScript 就是 Script 版的 Java，但在看了这本书后才知道，它丫的就是个 Script，跟 Java 一点儿关系都没有。 JS 有一些 Java 没有的特性，比如：
+ 拿 function 当对象用（看过书后发现 function 真的是个对象） 除了 null 还有 undefined 还有 undecleared var 定义的变量的作用域不符合常理（至少我觉得跟 Java 里定义出来的变量的作用域不一样） this is not this. &amp;ldquo;半残&amp;quot;的面向对象概念 etc.  我本来还想指望看完这系列书后能对 JS 的刻板印象有所改观，然而事与愿违。 下面我将以一个水平不及初级Lava程序员的程序员的角度，为本书做一份笔记。
+作用域和闭包（Scope &amp;amp; Closures） 1. 变量作用域因 var 而变得奇葩 先看代码：
+function fn() {  {  var num = 1;  }  console.</description>
+    </item>
+    
+  </channel>
+</rss>

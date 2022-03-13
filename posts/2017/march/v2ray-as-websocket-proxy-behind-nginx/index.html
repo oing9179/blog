@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>用 Nginx 转发 V2Ray 的 WebSocket 连接 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="用 Nginx 转发 V2Ray 的 WebSocket 连接" />
+<meta name="description" content="Preface 有些地方网络环境很糟糕，比如：
+  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+ 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+   除 80 和 443 之类的端口外的数据包传输速率都很低
+  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+ TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&quot;，那我就用 WebSocket 吧。" />
+<meta name="keywords" content="Linux,v2ray,Nginx,WebSocket,shadowsocks," />
+
+
+<meta property="og:title" content="用 Nginx 转发 V2Ray 的 WebSocket 连接" />
+<meta property="og:description" content="Preface 有些地方网络环境很糟糕，比如：
+  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+ 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+   除 80 和 443 之类的端口外的数据包传输速率都很低
+  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+ TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&quot;，那我就用 WebSocket 吧。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/march/v2ray-as-websocket-proxy-behind-nginx/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-03-11T21:00:00+00:00" />
+<meta property="article:modified_time" content="2017-03-11T21:00:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用 Nginx 转发 V2Ray 的 WebSocket 连接"/>
+<meta name="twitter:description" content="Preface 有些地方网络环境很糟糕，比如：
+  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+ 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+   除 80 和 443 之类的端口外的数据包传输速率都很低
+  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+ TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&quot;，那我就用 WebSocket 吧。"/>
+
+
+
+<meta itemprop="name" content="用 Nginx 转发 V2Ray 的 WebSocket 连接">
+<meta itemprop="description" content="Preface 有些地方网络环境很糟糕，比如：
+  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+ 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+   除 80 和 443 之类的端口外的数据包传输速率都很低
+  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+ TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&quot;，那我就用 WebSocket 吧。"><meta itemprop="datePublished" content="2017-03-11T21:00:00+00:00" />
+<meta itemprop="dateModified" content="2017-03-11T21:00:00+00:00" />
+<meta itemprop="wordCount" content="466">
+<meta itemprop="keywords" content="Linux,v2ray,Nginx,WebSocket,shadowsocks," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>用 Nginx 转发 V2Ray 的 WebSocket 连接</h1>
+<p>
+  <i>
+    <time datetime='2017-03-11' pubdate>
+      11 Mar, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>有些地方网络环境很糟糕，比如：</p>
+<ul>
+<li>
+<p>防火墙 Drop 掉所有 UDP 包但是 DNS 除外</p>
+<blockquote>
+<p>其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。</p>
+</blockquote>
+</li>
+<li>
+<p>除 80 和 443 之类的端口外的数据包传输速率都很低</p>
+</li>
+</ul>
+<p>既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：</p>
+<ul>
+<li>TCP 并开启 HTTP 伪装</li>
+<li>WebSocket</li>
+</ul>
+<p>因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。<a href="https://github.com/v2ray/v2ray-core/issues/386">这个 Issue</a> 内提到了 &ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&quot;，那我就用 WebSocket 吧。<br>
+哦对还有，有的更奇葩网络环境连 WebSocket 都不支持，具体可以到 <a href="http://websocketstest.com/">websocketstest.com</a> 测试一下。</p>
+<!-- more -->
+<h1 id="弄个子域名">弄个子域名</h1>
+<p><strong>Nginx 支持使用域名来分流，也可以使用 URL 路径来分流，本节将使用域名来进行分流。</strong></p>
+<p>方法很简单：直接在域名提供商提供的DNS管理页面里 添加一个 <code>CNAME</code> 到自己的域名即可，本文将以 <code>ws.example.com</code> 为例。</p>
+<h1 id="配置-v2ray">配置 v2ray</h1>
+<p>客户端配置文件示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;log&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;loglevel&#34;</span>: <span style="color:#e6db74">&#34;info&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在 0.0.0.0:1080 上监听 SOCKS5 的入站连接
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;socks&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;listen&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">1080</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;auth&#34;</span>: <span style="color:#e6db74">&#34;noauth&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;udp&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;timeout&#34;</span>: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inboundDetour&#34;</span>: [],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;vmess&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;vnext&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;address&#34;</span>: <span style="color:#e6db74">&#34;ws.example.com&#34;</span>, <span style="color:#75715e">// 服务器的域名
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">80</span>, <span style="color:#75715e">// 访问服务器上监听在 80 端口的 Nginx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#f92672">&#34;users&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;00000000-0000-0000-0000-000000000000&#34;</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;alterId&#34;</span>: <span style="color:#ae81ff">64</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;security&#34;</span>: <span style="color:#e6db74">&#34;aes-128-cfb&#34;</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;streamSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;network&#34;</span>: <span style="color:#e6db74">&#34;ws&#34;</span>, <span style="color:#75715e">// 使用 WebSocket 通信协议
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">&#34;wsSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;connectionReuse&#34;</span>: <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#75715e">// 路径。如果想让 Nginx 使用 URL 来分流的话，就来配置这个
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outboundDetour&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;freedom&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;settings&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;direct&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;dns&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;servers&#34;</span>: [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;8.8.8.8&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;8.8.4.4&#34;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;routing&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;strategy&#34;</span>: <span style="color:#e6db74">&#34;rules&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;domainStrategy&#34;</span>: <span style="color:#e6db74">&#34;IPIfNonMatch&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;field&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;ip&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;0.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;10.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;100.64.0.0/10&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;127.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;169.254.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;172.16.0.0/12&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.0.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.2.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.168.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.18.0.0/15&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.51.100.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;203.0.113.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;::1/128&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fc00::/7&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fe80::/10&#34;</span>
+</span></span><span style="display:flex;"><span>          ],
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;outboundTag&#34;</span>: <span style="color:#e6db74">&#34;direct&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>服务器配置文件示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;log&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;loglevel&#34;</span>: <span style="color:#e6db74">&#34;info&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;vmess&#34;</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&#34;listen&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>, <span style="color:#75715e">// 这里要改成 loopback 地址，因为下面将配置 Nginx 把连接转发到 loopback
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">12345</span>, <span style="color:#75715e">// 监听端口号
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;allocate&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;strategy&#34;</span>: <span style="color:#e6db74">&#34;always&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 下面的 settings 和 streamSettings 都要和客户端配置相同
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;clients&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;00000000-0000-0000-0000-000000000000&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;alterId&#34;</span>: <span style="color:#ae81ff">64</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;security&#34;</span>: <span style="color:#e6db74">&#34;aes-128-cfb&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;streamSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;network&#34;</span>: <span style="color:#e6db74">&#34;ws&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;wsSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;connectionReuse&#34;</span>: <span style="color:#66d9ef">false</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;path&#34;</span>: <span style="color:#e6db74">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inboundDetour&#34;</span>: [],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;freedom&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;timeout&#34;</span>: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outboundDetour&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;blackhole&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;settings&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;blocked&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;routing&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;strategy&#34;</span>: <span style="color:#e6db74">&#34;rules&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;field&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;ip&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;0.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;10.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;100.64.0.0/10&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;127.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;169.254.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;172.16.0.0/12&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.0.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.2.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.168.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.18.0.0/15&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.51.100.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;203.0.113.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;::1/128&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fc00::/7&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fe80::/10&#34;</span>
+</span></span><span style="display:flex;"><span>          ],
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;outboundTag&#34;</span>: <span style="color:#e6db74">&#34;blocked&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="配置-nginx">配置 Nginx</h1>
+<ol>
+<li>
+<p>在 <code>/etc/nginx/sites-available/</code> 下创建文件 <code>ws.example.com</code>，文件内容如下：</p>
+<pre tabindex="0"><code># V2Ray as WebSocket on &#34;ws.excamle.com&#34;
+server {
+    server_name ws.example.com;
+    listen 80;
+    location / {
+        proxy_redirect off;
+        # 下面的 &lt;端口号&gt; 要和 v2ray 服务器端配置的 入站监听端口号 一致。
+        proxy_pass http://127.0.0.1:&lt;端口号&gt;;
+        proxy_http_version 1.1;
+        # Upgrade 和 Connection 都是必须的，这将告诉 Nginx 以 WebSocket 的形式对待入站连接
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection &#34;upgrade&#34;;
+        # 下面这行可有可无
+        proxy_set_header Host $http_host;
+    }
+}
+</code></pre></li>
+<li>
+<p>将文件 <code>ws.example.com</code> 软链接到 <code>/etc/nginx/sites-enabled/</code> 下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ln -s /etc/nginx/sites-available/ws.example.com /etc/nginx/sites-enabled/ws.example.com
+</span></span></code></pre></div></li>
+<li>
+<p>测试配置文件语法是否正确 并 重新载入配置文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nginx -t
+</span></span><span style="display:flex;"><span>systemctl reload nginx
+</span></span><span style="display:flex;"><span>systemctl restart v2ray
+</span></span></code></pre></div></li>
+</ol>
+<h1 id="启动客户端并测试">启动客户端并测试</h1>
+<p>像下面这样执行命令即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>./v2ray -config ./config.json
+</span></span></code></pre></div><p>然后配置网页浏览器等软件使用 V2Ray 提供的 SOCKS5 代理即可。</p>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://github.com/v2ray/v2ray-core/issues/386">问题：关于HTTP伪装（非issue） #386</a></li>
+<li><a href="http://websocketstest.com/">REAL-TIME WEB TEST – DOES HTML5 WEBSOCKETS WORK FOR YOU?</a></li>
+<li><a href="https://www.v2ray.com/chapter_02/05_transport.html">底层传输配置 - v2ray.com</a></li>
+</ol>
+<h1 id="更新历史">更新历史</h1>
+<p>11 Mar 2017：首次发布
+11 Apr 2017：</p>
+<ul>
+<li>改用 VMess 协议，因为 VMess 连接成功率比 Shadowsocks 高很多（<a href="https://github.com/v2ray/v2ray-core/issues/416">GitHub Issue #416</a>）</li>
+<li>小修小改</li>
+</ul>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/linux/">#Linux</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/v2ray/">#v2ray</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/nginx/">#Nginx</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/websocket/">#WebSocket</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/shadowsocks/">#shadowsocks</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

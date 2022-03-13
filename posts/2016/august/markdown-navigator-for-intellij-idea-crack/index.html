@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解" />
+<meta name="description" content="Preface 一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。
+开工 先弄个试用版的许可证激活一下看看 插件原价为 $19.99/yr，直接到 这里 填好相关资料就可以拿到15天的全功能试用许可证了。 然后对 LicenseAgent 类的 getLicenseCode(LicenseRequest licenseRequest)Z 和 isValidActivation()Z 下断点，然后调试该插件。 调试时，打开 被调试的IDEA的菜单栏 -&gt; File -&gt; Settings -&gt; Languages &amp; Frameworks -&gt; Markdown，输入许可证，然后观察LicenseAgent类里的代码执行过程，得到下面的大致激活流程。
+大致的激活流程 插件先拿着试用版激活码调用 LicenseAgent.getLicenseCode(LicenseRequest)Z，这会从服务器拿到激活响应以json体现：
+{  &#34;status&#34;:&#34;LicenseAgent.STATUS_*&#34;,  &#34;message&#34;:&#34;比如激活失败就会用这个来告诉用户.&#34;,  &#34;activation_code&#34;:&#34;激活响应信息&#34;,  &#34;license_code&#34;:&#34;猜测：服务器要求插件更新许可证用的字段，不一定每次都有.&#34; } 下表描述上面的json里key对应的java字段：
+   key java field     status LicenseAgent.STATUS   message LicenseAgent.MESSAGE   activation_code LicenseAgent." />
+<meta name="keywords" content="Intellij IDEA,CRACK,Markdown,Multi Markdown,Markdown Navigator," />
+
+
+<meta property="og:title" content="Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解" />
+<meta property="og:description" content="Preface 一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。
+开工 先弄个试用版的许可证激活一下看看 插件原价为 $19.99/yr，直接到 这里 填好相关资料就可以拿到15天的全功能试用许可证了。 然后对 LicenseAgent 类的 getLicenseCode(LicenseRequest licenseRequest)Z 和 isValidActivation()Z 下断点，然后调试该插件。 调试时，打开 被调试的IDEA的菜单栏 -&gt; File -&gt; Settings -&gt; Languages &amp; Frameworks -&gt; Markdown，输入许可证，然后观察LicenseAgent类里的代码执行过程，得到下面的大致激活流程。
+大致的激活流程 插件先拿着试用版激活码调用 LicenseAgent.getLicenseCode(LicenseRequest)Z，这会从服务器拿到激活响应以json体现：
+{  &#34;status&#34;:&#34;LicenseAgent.STATUS_*&#34;,  &#34;message&#34;:&#34;比如激活失败就会用这个来告诉用户.&#34;,  &#34;activation_code&#34;:&#34;激活响应信息&#34;,  &#34;license_code&#34;:&#34;猜测：服务器要求插件更新许可证用的字段，不一定每次都有.&#34; } 下表描述上面的json里key对应的java字段：
+   key java field     status LicenseAgent.STATUS   message LicenseAgent.MESSAGE   activation_code LicenseAgent." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2016/august/markdown-navigator-for-intellij-idea-crack/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-08-08T13:29:00+00:00" />
+<meta property="article:modified_time" content="2016-08-08T13:29:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解"/>
+<meta name="twitter:description" content="Preface 一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。
+开工 先弄个试用版的许可证激活一下看看 插件原价为 $19.99/yr，直接到 这里 填好相关资料就可以拿到15天的全功能试用许可证了。 然后对 LicenseAgent 类的 getLicenseCode(LicenseRequest licenseRequest)Z 和 isValidActivation()Z 下断点，然后调试该插件。 调试时，打开 被调试的IDEA的菜单栏 -&gt; File -&gt; Settings -&gt; Languages &amp; Frameworks -&gt; Markdown，输入许可证，然后观察LicenseAgent类里的代码执行过程，得到下面的大致激活流程。
+大致的激活流程 插件先拿着试用版激活码调用 LicenseAgent.getLicenseCode(LicenseRequest)Z，这会从服务器拿到激活响应以json体现：
+{  &#34;status&#34;:&#34;LicenseAgent.STATUS_*&#34;,  &#34;message&#34;:&#34;比如激活失败就会用这个来告诉用户.&#34;,  &#34;activation_code&#34;:&#34;激活响应信息&#34;,  &#34;license_code&#34;:&#34;猜测：服务器要求插件更新许可证用的字段，不一定每次都有.&#34; } 下表描述上面的json里key对应的java字段：
+   key java field     status LicenseAgent.STATUS   message LicenseAgent.MESSAGE   activation_code LicenseAgent."/>
+
+
+
+<meta itemprop="name" content="Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解">
+<meta itemprop="description" content="Preface 一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 MarkdownPad 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 Markdown Navigator(原名为 Multi Markdown)，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。
+开工 先弄个试用版的许可证激活一下看看 插件原价为 $19.99/yr，直接到 这里 填好相关资料就可以拿到15天的全功能试用许可证了。 然后对 LicenseAgent 类的 getLicenseCode(LicenseRequest licenseRequest)Z 和 isValidActivation()Z 下断点，然后调试该插件。 调试时，打开 被调试的IDEA的菜单栏 -&gt; File -&gt; Settings -&gt; Languages &amp; Frameworks -&gt; Markdown，输入许可证，然后观察LicenseAgent类里的代码执行过程，得到下面的大致激活流程。
+大致的激活流程 插件先拿着试用版激活码调用 LicenseAgent.getLicenseCode(LicenseRequest)Z，这会从服务器拿到激活响应以json体现：
+{  &#34;status&#34;:&#34;LicenseAgent.STATUS_*&#34;,  &#34;message&#34;:&#34;比如激活失败就会用这个来告诉用户.&#34;,  &#34;activation_code&#34;:&#34;激活响应信息&#34;,  &#34;license_code&#34;:&#34;猜测：服务器要求插件更新许可证用的字段，不一定每次都有.&#34; } 下表描述上面的json里key对应的java字段：
+   key java field     status LicenseAgent.STATUS   message LicenseAgent.MESSAGE   activation_code LicenseAgent."><meta itemprop="datePublished" content="2016-08-08T13:29:00+00:00" />
+<meta itemprop="dateModified" content="2016-08-08T13:29:00+00:00" />
+<meta itemprop="wordCount" content="334">
+<meta itemprop="keywords" content="Intellij IDEA,CRACK,Markdown,Multi Markdown,Markdown Navigator," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>Markdown Navigator(Multi Markdown) for IntelliJ IDEA 破解</h1>
+<p>
+  <i>
+    <time datetime='2016-08-08' pubdate>
+      08 Aug, 2016
+    </time>
+  </i>
+</p>
+
+<content>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg"/>
+<h1 id="preface">Preface</h1>
+<p>一直以来我都在寻找一款功能齐全 Markdown 编辑器，目前功能最全的是一款叫做 <code>MarkdownPad</code> 的编辑器，可惜的是它只能运行在Windows上。后来在 IDEA 的插件市场找到了这款Markdown编辑器，叫做 <a href="https://plugins.jetbrains.com/plugin/7896?pr=idea">Markdown Navigator(原名为 Multi Markdown)</a>，插件基本功能免费，一些特别的功能（比如 开启Markdown预览）就需要购买许可了，于是干脆把它也破掉吧。</p>
+<!-- more -->
+<h1 id="开工">开工</h1>
+<h2 id="先弄个试用版的许可证激活一下看看">先弄个试用版的许可证激活一下看看</h2>
+<p>插件原价为 $19.99/yr，直接到 <a href="https://vladsch.com/product/markdown-navigator/try">这里</a> 填好相关资料就可以拿到15天的全功能试用许可证了。
+然后对 LicenseAgent 类的 <code>getLicenseCode(LicenseRequest licenseRequest)Z</code> 和 <code>isValidActivation()Z</code> 下断点，然后调试该插件。
+调试时，打开 <code>被调试的IDEA的菜单栏 -&gt; File -&gt; Settings -&gt; Languages &amp; Frameworks -&gt; Markdown</code>，输入许可证，然后观察LicenseAgent类里的代码执行过程，得到下面的大致激活流程。</p>
+<h2 id="大致的激活流程">大致的激活流程</h2>
+<p>插件先拿着试用版激活码调用 <code>LicenseAgent.getLicenseCode(LicenseRequest)Z</code>，这会从服务器拿到激活响应以json体现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>:<span style="color:#e6db74">&#34;LicenseAgent.STATUS_*&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>:<span style="color:#e6db74">&#34;比如激活失败就会用这个来告诉用户.&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;activation_code&#34;</span>:<span style="color:#e6db74">&#34;激活响应信息&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;license_code&#34;</span>:<span style="color:#e6db74">&#34;猜测：服务器要求插件更新许可证用的字段，不一定每次都有.&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>下表描述上面的json里key对应的java字段：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">key</th>
+<th style="text-align:left">java field</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>status</code></td>
+<td style="text-align:left">LicenseAgent.STATUS</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>message</code></td>
+<td style="text-align:left">LicenseAgent.MESSAGE</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>activation_code</code></td>
+<td style="text-align:left">LicenseAgent.ACTIVATION_CODE</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>license_code</code></td>
+<td style="text-align:left">LicenseAgent.LICENSE_CODE</td>
+</tr>
+</tbody>
+</table>
+<p>下表描述上面的json里 <code>status</code> 的值对应的java字段：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">status</th>
+<th style="text-align:left">java field</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>ok</code></td>
+<td style="text-align:left">LicenseAgent.STATUS_OK</td>
+<td style="text-align:left">激活成功</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>error</code></td>
+<td style="text-align:left">LicenseAgent.STATUS_ERROR</td>
+<td style="text-align:left">激活失败</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>disable</code></td>
+<td style="text-align:left">LicenseAgent.STATUS_DISABLE</td>
+<td style="text-align:left">服务器要求删除本地许可信息</td>
+</tr>
+</tbody>
+</table>
+<p>然后把 <code>activation_code</code> 和 <code>license_code</code>(如果存在的话)一并存入到LicenseAgent的 <code>activation_code</code> 和 <code>license_code</code> 字段里.</p>
+<p>之后再调用 <code>LicenseAgent.isValidActivation()Z</code>，逻辑大概这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// activation_code：String, 服务器响应的加密后的json字符串.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// activation：JsonObject, 解密后的 activation_code.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isValidActivation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>activation_code <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#75715e">// 某些原因导致没能拿到加密的激活信息.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>activation <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> <span style="color:#75715e">// json字符串还未解密成json对象, activation 才会null.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            activation <span style="color:#f92672">=</span> 转为JSON对象<span style="color:#f92672">(</span>解密<span style="color:#f92672">(</span>activation_code<span style="color:#f92672">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>activation <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span> activation<span style="color:#f92672">.</span><span style="color:#a6e22e">agent_signature</span><span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>LicenseAgent<span style="color:#f92672">.</span><span style="color:#a6e22e">agent_signagure</span><span style="color:#f92672">))</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            取出json里的信息<span style="color:#f92672">;</span><span style="color:#75715e">// 比如激活时间、过期时间、激活了哪些高级特性。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span><span style="color:#75715e">// 返回激活成功.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span><span style="color:#75715e">// 返回激活失败.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>下面的代码为 <code>activation</code> json对象里的相关字段信息：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;product_name&#34;</span>: <span style="color:#e6db74">&#34;idea-multimarkdown&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;product_version&#34;</span>: <span style="color:#e6db74">&#34;2.0.0&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;agent_signature&#34;</span>: <span style="color:#e6db74">&#34;475f99b03f6ec213729d7f5d577c80aa&#34;</span>,<span style="color:#75715e">// LicenseAgent.agent_signature
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">&#34;host_name&#34;</span>: <span style="color:#e6db74">&#34;电脑或者主机的名称&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;host_product&#34;</span>: <span style="color:#e6db74">&#34;IDEA的build号&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;license_expires&#34;</span>: <span style="color:#e6db74">&#34;2016-08-22&#34;</span>, <span style="color:#75715e">// 许可证过期日期
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">&#34;license_type&#34;</span>: <span style="color:#e6db74">&#34;trial&#34;</span>,<span style="color:#960050;background-color:#1e0010">/*</span> <span style="color:#960050;background-color:#1e0010">许可类型,</span> <span style="color:#960050;background-color:#1e0010">LicensedFeature.Feature</span> <span style="color:#960050;background-color:#1e0010">*/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;license_features&#34;</span>: <span style="color:#ae81ff">1</span>,<span style="color:#960050;background-color:#1e0010">/*</span> <span style="color:#960050;background-color:#1e0010">LicensedFeature.Feature</span> <span style="color:#960050;background-color:#1e0010">(暂定)</span> <span style="color:#960050;background-color:#1e0010">*/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;feature_list&#34;</span>: {<span style="color:#960050;background-color:#1e0010">/*</span> <span style="color:#960050;background-color:#1e0010">开启了哪些高级特性,</span> <span style="color:#960050;background-color:#1e0010">MultiMarkdownPlugin.FEATURE_*;</span> <span style="color:#960050;background-color:#1e0010">*/</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;enhanced&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;development&#34;</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;activated_on&#34;</span>: <span style="color:#e6db74">&#34;2016-08-07&#34;</span>, <span style="color:#75715e">// 激活日期
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#f92672">&#34;activation_expires&#34;</span>: <span style="color:#e6db74">&#34;2016-08-22&#34;</span> <span style="color:#75715e">// 过期日期
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><h2 id="licenseagent-类"><code>LicenseAgent</code> 类</h2>
+<p>直接定位到 <code>LicenseAgent</code> 类然后进行如下修改：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LicenseAgent</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">LicenseAgent</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span><span style="color:#75715e">// 启用各种付费后的特性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// MultiMarkdownPlugin.FEATURE_*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        featureList <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+</span></span><span style="display:flex;"><span>        featureList<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;enhanced&#34;</span><span style="color:#f92672">,</span> 1<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>        featureList<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;development&#34;</span><span style="color:#f92672">,</span> 2<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">LicenseAgent</span><span style="color:#f92672">(</span>LicenseAgent other<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">();</span><span style="color:#75715e">// 这个构造函数里也要调用一下.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        updateFrom<span style="color:#f92672">(</span>other<span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setLicenseCode</span><span style="color:#f92672">(</span>String license_code<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 置空
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setLicenseActivationCodes</span><span style="color:#f92672">(</span>String license_code<span style="color:#f92672">,</span> String activation_code<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 置空
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setActivationCode</span><span style="color:#f92672">(</span>String activation_code<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 置空
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getLicenseExpires</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;2999-12-31&#34;</span><span style="color:#f92672">;</span><span style="color:#75715e">// 改成2999年才过期
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 该方法会用之前申请到的试用版许可证向服务器请求激活信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">getLicenseCode</span><span style="color:#f92672">(</span>LicenseRequest licenseRequest<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isValidLicense</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isValidActivation</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getLicenseType</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;license&#34;</span><span style="color:#f92672">;</span> <span style="color:#75715e">// LicensedFeature.Feature.LICENSE;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getLicenseFeatures</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 这个返回值暂定为这个，因为编译后 插件认为激活成功。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> LicensedFeature<span style="color:#f92672">.</span><span style="color:#a6e22e">Feature</span><span style="color:#f92672">.</span><span style="color:#a6e22e">LICENSE</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getLicenseFlags</span><span style="color:#f92672">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getLicenseExpiration</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;2999-12-31&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getActivatedOn</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;1900-01-01&#34;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getLicenseExpiringIn</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isActivationExpired</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 其余的上面没提到的方法暂时都不用管.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>到目前为止，破解工作已经完成了。我发现 <code>LicenseRequest</code> 类会收集一点系统信息，于是干脆把它也搞定吧。</p>
+<h2 id="licenserequest-类"><code>LicenseRequest</code> 类</h2>
+<p>方法很简单：在构造函数里把所有对 <code>host_</code> 开头的字段全都改成别的就行了。</p>
+<h1 id="总结">总结</h1>
+<p>编译代码并替换原版插件jar里对应的类，然后替换掉IDEA的原版jar，然后重启IDEA，破解完成。</p>
+<p><strong>References:</strong></p>
+<ol>
+<li><a href="http://www.jianshu.com/p/b70e250bed37">http://www.jianshu.com/p/b70e250bed37</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/intellij-idea/">#Intellij IDEA</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/crack/">#CRACK</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/markdown/">#Markdown</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/multi-markdown/">#Multi Markdown</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/markdown-navigator/">#Markdown Navigator</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

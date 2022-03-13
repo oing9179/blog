@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud） | Hotaru&#39;s Notebook</title>
+<meta name="title" content="用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）" />
+<meta name="description" content="Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&quot;无缘无故&quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
+ Owncloud
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &ldquo;Let&rsquo;s Encrypt&quot;。
+注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
+安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &#39;Passw0rd&#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud." />
+<meta name="keywords" content="Linux,Nextcloud,Docker,Nginx,cloud,reverse proxy," />
+
+
+<meta property="og:title" content="用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）" />
+<meta property="og:description" content="Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&quot;无缘无故&quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
+ Owncloud
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &ldquo;Let&rsquo;s Encrypt&quot;。
+注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
+安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &#39;Passw0rd&#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/march/setup-nextcloud-using-docker-and-nginx/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-03-15T10:09:00+00:00" />
+<meta property="article:modified_time" content="2017-03-15T10:09:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）"/>
+<meta name="twitter:description" content="Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&quot;无缘无故&quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
+ Owncloud
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &ldquo;Let&rsquo;s Encrypt&quot;。
+注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
+安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &#39;Passw0rd&#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud."/>
+
+
+
+<meta itemprop="name" content="用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）">
+<meta itemprop="description" content="Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&quot;无缘无故&quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
+ Owncloud
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &ldquo;Let&rsquo;s Encrypt&quot;。
+注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
+安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &#39;Passw0rd&#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud."><meta itemprop="datePublished" content="2017-03-15T10:09:00+00:00" />
+<meta itemprop="dateModified" content="2017-03-15T10:09:00+00:00" />
+<meta itemprop="wordCount" content="651">
+<meta itemprop="keywords" content="Linux,Nextcloud,Docker,Nginx,cloud,reverse proxy," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）</h1>
+<p>
+  <i>
+    <time datetime='2017-03-15' pubdate>
+      15 Mar, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&quot;无缘无故&quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：</p>
+<ul>
+<li><a href="https://owncloud.org/">Owncloud</a><br>
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。</li>
+<li><a href="https://cozy.io/en/">Cozy</a><br>
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。</li>
+<li><a href="https://nextcloud.com/">Nextcloud</a><br>
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。</li>
+</ul>
+<p>综上，我选择 Nextcloud。<br>
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。<br>
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &ldquo;<a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a>&quot;。</p>
+<p><strong>注意：</strong> 本文使用 Ubuntu 作为服务器系统，部分特性（比如 <code>ufw</code>）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 <code>iptables</code> 代替 <code>ufw</code>）。</p>
+<!-- more -->
+<h1 id="安装-nginx">安装 Nginx</h1>
+<ol>
+<li>执行命令来安装 Nginx <code>apt-get install nginx</code>，配置 Nginx 需要在安装 Nextcloud 后进行。</li>
+<li>执行命令打开防火墙的 80 端口 <code>ufw allow 80/tcp</code></li>
+</ol>
+<h1 id="安装--配置-mariadb">安装 / 配置 MariaDB</h1>
+<ol>
+<li>执行命令来安装 MariaDB <code>apt-get install mariadb-server mariadb-client</code></li>
+<li>执行命令来初步配置 MariaDB <code>mysql_secure_installation</code>，然后按照提示进行操作</li>
+<li>root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-mysql" data-lang="mysql"><span style="display:flex;"><span><span style="color:#75715e">-- 创建 nextcloud 数据库
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">DATABASE</span> nextcloud <span style="color:#66d9ef">CHARACTER</span> <span style="color:#66d9ef">SET</span> <span style="color:#f92672">=</span> utf8 <span style="color:#66d9ef">COLLATE</span> <span style="color:#f92672">=</span> utf8_general_ci;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 创建 nextcloud 用户
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">USER</span> nextcloud <span style="color:#66d9ef">IDENTIFIED</span> <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#39;Passw0rd&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">GRANT</span> <span style="color:#66d9ef">ALL</span> <span style="color:#66d9ef">ON</span> nextcloud.<span style="color:#f92672">*</span> <span style="color:#66d9ef">TO</span> nextcloud;
+</span></span></code></pre></div></li>
+</ol>
+<h1 id="安装-nextcloud">安装 Nextcloud</h1>
+<p>我选择用 Docker 安装/部署 Nextcloud 因为用起来傻瓜化，并且还能与现有的网站隔离开来，而且 <code>Dockerfile</code> 里都把依赖什么的都配置好了，直接拿来用就行了，省得我再自己解决环境/依赖之类的问题。参考如下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 1. 从 GitHub 仓库拉取 Dockerfile</span>
+</span></span><span style="display:flex;"><span>git clone https://github.com/nextcloud/docker.git nextcloud_docker
+</span></span><span style="display:flex;"><span>cd ./nextcloud_docker/11.0/apache/
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. 构建 Docker image.</span>
+</span></span><span style="display:flex;"><span>docker build --tag nextcloud/server:11.0.2-apache .
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. 从 docker image &#34;nextcloud/server:11.0.2-apache&#34; 创建一个 docker container, docker create 的参数说明请参考后面的表格.</span>
+</span></span><span style="display:flex;"><span>docker create -v /&lt;路径&gt;/apps/:/var/www/html/apps -v /&lt;路径&gt;/config/:/var/www/html/config -v /&lt;路径&gt;/data/:/var/www/html/data -p 127.0.0.1:8081:80/tcp --name nextcloud nextcloud/server:11.0.2-apache
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. 启动容器并测试</span>
+</span></span><span style="display:flex;"><span>docker start nextcloud
+</span></span><span style="display:flex;"><span>curl http://127.0.0.1:8081 <span style="color:#75715e"># 如果能看到有 HTML 输出的话，应该就是启动成功了.</span>
+</span></span></code></pre></div><p><code>docker create</code> 参数说明：<br>
+基本格式：<code>docker create [OPTIONS] &lt;IMAGE&gt; [COMMAND] [ARG...]</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">值的格式</th>
+<th style="text-align:left">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>-v</code>, <code>--volume</code></td>
+<td style="text-align:left"><code>主机路径:容器内路径</code></td>
+<td style="text-align:left">将 <code>容器内目录</code> 映射到 <code>主机目录</code>, 这样既可以把数据存在主机上而不是容器里了</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-p</code>, <code>--publish</code></td>
+<td style="text-align:left"><code>主机IP:主机端口:容器内端口[/通信协议]</code></td>
+<td style="text-align:left">将容器里公开的端口映射到主机端口上，然后就能被 Nginx 转发了</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>--name</code></td>
+<td style="text-align:left"><code>容器名称</code></td>
+<td style="text-align:left">给新的容器起个名</td>
+</tr>
+<tr>
+<td style="text-align:left">&lt;IMAGE&gt;</td>
+<td style="text-align:left">Image 名称</td>
+<td style="text-align:left">指定使用哪个 image 来创建容器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注1：</strong> 如需更新 Nextcloud 的话，修改 <code>Dockerfile</code> 内的 <code>ENV NEXTCLOUD_VERSION</code> 右面的值即可。</p>
+<h1 id="配置-ssl-证书--nginx--子域名">配置 SSL 证书 &amp; Nginx &amp; 子域名</h1>
+<h2 id="创建子域名">创建子域名</h2>
+<p>直接在域名提供商的域名管理页面创建 <code>CNAME</code> 到自己的域名即可，下文将以 <code>yun.example.com</code> 为例。</p>
+<h2 id="配置-ssl-证书">配置 SSL 证书</h2>
+<ol>
+<li>安装 letsencrypt <code>apt-get install letsencrypt</code></li>
+<li>创建静态网站的目录 <code>mkdir --parents /var/www/yun.example.com</code>，稍后 Let&rsquo;s Encrypt 会用到它</li>
+<li>创建文件 <code>/etc/nginx/sites-available/yun.example.com</code> 并编辑
+<pre tabindex="0"><code># &#34;yun.example.com&#34;
+server {
+    # 监听 IPv4/6 80 端口
+    listen 80;
+    listen [::]:80;
+    # 域名
+    server_name yun.example.com;
+    # 静态网站根目录
+    root /var/www/yun.example.com;
+    # 提供静态文件服务
+    location / {
+        proxy_set_header X-Forwarded-Proto $scheme;
+        try_files $uri $uri/ =404;
+    }
+}
+</code></pre></li>
+<li>创建软链接，因为 Nginx 载入所有 <code>/etc/nginx/sites-enabled/</code> 下的配置文件
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ln -s /etc/nginx/sites-available/yun.example.com /etc/nginx/sites-enabled/yun.example.com
+</span></span></code></pre></div></li>
+<li>重启 Nginx <code>systemctl restart nginx</code></li>
+<li>执行命令来生成 SSL 证书
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>letsencrypt certonly --webroot -w /var/www/yun.example.com --domain <span style="color:#e6db74">&#34;yun.example.com&#34;</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>至此，SSL 证书已经生成好了，接下来将配置 Nginx。</p>
+<h2 id="配置-nginx">配置 Nginx</h2>
+<ol>
+<li>编辑配置文件 <code>/etc/nginx/sites-available/yun.example.com</code>
+<pre tabindex="0"><code># &#34;yun.example.com&#34;
+server {
+    # 指定服务器名称，这里改成你自己的域名
+    server_name yun.example.com;
+
+    # 监听 IPv4/6 上的 443 端口
+    # 不配置 80 重定向到 443 是为了让用户在浏览器地址栏里手动输入 &#34;https://&#34;，最大限度避免被劫持.
+    listen 443;
+    listen [::]:443;
+
+    # 配置 SSL 证书，把下面的证书路径改成自己的证书.
+    ssl on;
+    ssl_certificate /etc/letsencrypt/live/yun.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/yun.example.com/privkey.pem;
+
+    access_log /var/log/nginx/${server_name}_access.log;
+
+    location / {
+        proxy_redirect off;
+        # 将请求转发到本机的 8081 端口
+        proxy_pass http://127.0.0.1:8081;
+        proxy_set_header Host $http_host;
+        # According to &#34;https://docs.nextcloud.com/server/11/admin_manual/configuration_server/harden_server.html#enable-http-strict-transport-security&#34;
+        add_header Strict-Transport-Security &#34;max-age=15552000; includeSubDomains; preload&#34; always;
+        # 指定 HTTP Request Body 的最大大小
+        client_max_body_size 128M;
+    }
+    # 禁止访问 /.htaccess 文件
+    location = /.htaccess {
+        return 404;
+    }
+}
+</code></pre></li>
+<li>验证配置文件语法 并 重启 Nginx：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nginx -t
+</span></span><span style="display:flex;"><span>systemctl restart nginx
+</span></span></code></pre></div></li>
+<li>用网页浏览器打开地址 <code>https://yun.example.com</code> 查看效果</li>
+</ol>
+<h1 id="配置-nextcloud">配置 Nextcloud</h1>
+<p>首先定位目录到上面 <code>docker create</code> 里 <code>-v</code> 后面的 <code>路径</code> 下的 <code>config</code> 文件夹，编辑 <code>config.php</code> 文件。</p>
+<h2 id="配置-trusted_domains">配置 <code>trusted_domains</code></h2>
+<p>找到 <code>trusted_domains</code>，在下面按照格式添加自己的域名，比如像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#e6db74">&#39;trusted_domains&#39;</span> <span style="color:#f92672">=&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">array</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;yun.example.com&#39;</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><h2 id="配置-overwritehost">配置 <code>overwritehost</code></h2>
+<p><a href="https://docs.nextcloud.com/server/11/admin_manual/configuration_server/config_sample_php_parameters.html#proxy-configurations">官方文档</a> 提到，有时候 Nextcloud 自己重定向时候会重定向到错误的地址，加上下面这行就好了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#e6db74">&#39;overwritehost&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;yun.example.com&#39;</span>,
+</span></span></code></pre></div><h2 id="配置缓存">配置缓存</h2>
+<p>按照 <a href="https://docs.nextcloud.com/server/11/admin_manual/configuration_server/caching_configuration.html">官方文档</a> 的说明，个人使用的话只需要添加下面这行就行了：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#e6db74">&#39;memcache.local&#39;</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#39;\OC\Memcache\APCu&#39;</span>,
+</span></span></code></pre></div><p>最后需要重启 Nextcloud/Docker容器 使配置生效。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker restart nextcloud
+</span></span></code></pre></div><h2 id="主机的防火墙配置">主机的防火墙配置</h2>
+<p>因为容器内的 Docker 需要访问主机的 MariaDB，因此需要知道 Docker 容器的网关和 IP 地址。</p>
+<ol>
+<li>进入并运行容器内的 <code>bash</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker exec -i nextcloud /bin/bash -il
+</span></span></code></pre></div></li>
+<li>获取容器 IP 和网关（Gateway）
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ip route show default
+</span></span></code></pre></div>输出大概是这样：
+<pre tabindex="0"><code>default via 172.17.0.1 dev eth0 # via 后面的是网关 IP
+172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.2 # src 后面的是容器的 IP 地址
+</code></pre>执行命令 <code>exit</code> 回到主机的 bash.</li>
+<li>添加防火墙白名单，允许来自容器（<code>172.17.0.2</code>）的所有 IP 包
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ufw allow from 172.17.0.2
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="初始设置">初始设置</h2>
+<ol>
+<li>用浏览器打开 <code>https://yun.example.com</code></li>
+<li>填写管理员的用户名和密码，以后将使用这个帐号来管理 Nextcloud</li>
+<li>数据库设定里，数据库选择 <code>MySQL / MariaDB</code>，其余的参考下面的配置
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">用户名</td>
+<td style="text-align:left"><code>nextcloud</code></td>
+</tr>
+<tr>
+<td style="text-align:left">密码</td>
+<td style="text-align:left">nextcloud 用户的密码</td>
+</tr>
+<tr>
+<td style="text-align:left">地址</td>
+<td style="text-align:left">比如 <code>172.17.0.1</code>, 也可以加上端口号 像这样 <code>172.17.0.2:3306</code></td>
+</tr>
+<tr>
+<td style="text-align:left">数据库名</td>
+<td style="text-align:left"><code>nextcloud</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h1 id="部署完成">部署完成</h1>
+<p>至此，Nextcloud 的安装与配置就全部结束了。移动端 app 可以到这里下载：</p>
+<ul>
+<li><a href="https://play.google.com/store/apps/details?id=com.nextcloud.client">Nextcloud - play.google.com</a></li>
+<li><a href="https://itunes.apple.com/us/app/nextcloud/id1125420102">Nextcloud - itunes.apple.com</a> 售价: $0.99</li>
+</ul>
+<h1 id="更新-nextcloud">更新 Nextcloud</h1>
+<ol>
+<li><code>git pull</code></li>
+<li><code>docker-compose build</code></li>
+<li><code>docker start --attach nextcloud-app</code> then <code>&lt;CTRL+C&gt;</code> and wait it exits.</li>
+<li><code>docker exec -it --user www-data nextcloud-app /bin/bash -il</code></li>
+<li><code>php occ maintenance:mode --off</code></li>
+<li><code>php occ upgrade</code> then <code>exit</code></li>
+<li>Check it out in web broser.</li>
+</ol>
+<h1 id="更新历史">更新历史</h1>
+<p>15 Mar 2017: 首次发布
+16 Mar 2017:</p>
+<ul>
+<li>补上 Docker 容器内访问主机提供的 MariaDB</li>
+<li>详细描述 Android app 和 iOS app 的价格区别.</li>
+<li>详细描述 Nextcloud 初始配置里数据库的设定</li>
+</ul>
+<p>18 Apr 2017:</p>
+<ul>
+<li>修正：在 &ldquo;配置 SSL 证书&rdquo; 一节里 生成证书前需要先重启 Nginx</li>
+<li>修正：文中使用 <code>systemctl reload nginx</code> 的地方都改为 <code>systemctl restart nginx</code>，否则会有一些奇怪的小毛病，比如循环重定向（<code>net::ERR_TOO_MANY_REDIRECTS</code>）之类的问题。</li>
+</ul>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/linux/">#Linux</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/nextcloud/">#Nextcloud</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/docker/">#Docker</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/nginx/">#Nginx</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/cloud/">#cloud</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/reverse-proxy/">#reverse proxy</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

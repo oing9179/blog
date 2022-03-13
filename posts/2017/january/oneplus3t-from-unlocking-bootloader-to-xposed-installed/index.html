@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>OnePlus 3T 从解锁 BootLoader 到 Xposed | Hotaru&#39;s Notebook</title>
+<meta name="title" content="OnePlus 3T 从解锁 BootLoader 到 Xposed" />
+<meta name="description" content="Preface 原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+ 解锁 BootLoader 安装 TWRP(Team Win Recovery Project) Recovery 卡刷 phh&rsquo;s Superuser 卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶) 卡刷 Xposed  注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。
+免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。
+准备工作 先不要急着开机，做好准备工作再说。
+  下载并安装好 Android SDK，在 Android SDK Manager 内安装 platform-tools(platform-tools 里面提供了后续步骤所需的 fastboot 命令行工具)，可选安装 tools(里面的 adb 用来安装 apk / 与手机传送文件)。
+  TWRP Recovery https://dl.twrp.me/oneplus3t/ Direct link twrp-3.0.3-0-oneplus3t.img
+  root 卡刷包 / root 权限管理软件" />
+<meta name="keywords" content="OnePlus,Android,BootLoader,Xposed,TWRP Recovery,OpenGApps," />
+
+
+<meta property="og:title" content="OnePlus 3T 从解锁 BootLoader 到 Xposed" />
+<meta property="og:description" content="Preface 原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+ 解锁 BootLoader 安装 TWRP(Team Win Recovery Project) Recovery 卡刷 phh&rsquo;s Superuser 卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶) 卡刷 Xposed  注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。
+免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。
+准备工作 先不要急着开机，做好准备工作再说。
+  下载并安装好 Android SDK，在 Android SDK Manager 内安装 platform-tools(platform-tools 里面提供了后续步骤所需的 fastboot 命令行工具)，可选安装 tools(里面的 adb 用来安装 apk / 与手机传送文件)。
+  TWRP Recovery https://dl.twrp.me/oneplus3t/ Direct link twrp-3.0.3-0-oneplus3t.img
+  root 卡刷包 / root 权限管理软件" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/january/oneplus3t-from-unlocking-bootloader-to-xposed-installed/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-01-04T19:53:00+00:00" />
+<meta property="article:modified_time" content="2017-01-04T19:53:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OnePlus 3T 从解锁 BootLoader 到 Xposed"/>
+<meta name="twitter:description" content="Preface 原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+ 解锁 BootLoader 安装 TWRP(Team Win Recovery Project) Recovery 卡刷 phh&rsquo;s Superuser 卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶) 卡刷 Xposed  注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。
+免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。
+准备工作 先不要急着开机，做好准备工作再说。
+  下载并安装好 Android SDK，在 Android SDK Manager 内安装 platform-tools(platform-tools 里面提供了后续步骤所需的 fastboot 命令行工具)，可选安装 tools(里面的 adb 用来安装 apk / 与手机传送文件)。
+  TWRP Recovery https://dl.twrp.me/oneplus3t/ Direct link twrp-3.0.3-0-oneplus3t.img
+  root 卡刷包 / root 权限管理软件"/>
+
+
+
+<meta itemprop="name" content="OnePlus 3T 从解锁 BootLoader 到 Xposed">
+<meta itemprop="description" content="Preface 原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：
+ 解锁 BootLoader 安装 TWRP(Team Win Recovery Project) Recovery 卡刷 phh&rsquo;s Superuser 卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶) 卡刷 Xposed  注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。
+免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。
+准备工作 先不要急着开机，做好准备工作再说。
+  下载并安装好 Android SDK，在 Android SDK Manager 内安装 platform-tools(platform-tools 里面提供了后续步骤所需的 fastboot 命令行工具)，可选安装 tools(里面的 adb 用来安装 apk / 与手机传送文件)。
+  TWRP Recovery https://dl.twrp.me/oneplus3t/ Direct link twrp-3.0.3-0-oneplus3t.img
+  root 卡刷包 / root 权限管理软件"><meta itemprop="datePublished" content="2017-01-04T19:53:00+00:00" />
+<meta itemprop="dateModified" content="2017-01-04T19:53:00+00:00" />
+<meta itemprop="wordCount" content="718">
+<meta itemprop="keywords" content="OnePlus,Android,BootLoader,Xposed,TWRP Recovery,OpenGApps," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>OnePlus 3T 从解锁 BootLoader 到 Xposed</h1>
+<p>
+  <i>
+    <time datetime='2017-01-04' pubdate>
+      04 Jan, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h2 id="preface">Preface</h2>
+<p>原来的手机（HTC 802t）可能是到寿命了吧，开始时不时的出现 前台服务（Foreground Service）被系统Kill掉、手离开触屏后触点依然存在 的问题，再加上硬件老化，手机运行速度已经越来越慢了。于是，我就买了个新手机：OnePlus 3T。这款手机在欧美评价不错，XDA上也已经有不少 root / xposed 的帖子了。这篇blog就用来记录一些操作过程包括：</p>
+<ul>
+<li>解锁 BootLoader</li>
+<li>安装 TWRP(Team Win Recovery Project) Recovery</li>
+<li>卡刷 phh&rsquo;s Superuser</li>
+<li>卡刷/安装 Google 全家桶(OpenGApps Micro, 微小桶)</li>
+<li>卡刷 Xposed</li>
+</ul>
+<!-- more -->
+<p><strong>注： 新手机开机后会要求选择系统语言，由于我选择的是英文，所以下面的操作步骤中 手机里显示英文的地方仍然以英文记录下来。</strong><br>
+<strong>免责声明：作者不对本文内容的准确性做任何保证，读者因以任何方式使用本文内容导致的一切后果均由读者自行承担。</strong></p>
+<h2 id="准备工作">准备工作</h2>
+<p>先不要急着开机，做好准备工作再说。</p>
+<ol>
+<li>
+<p>下载并安装好 Android SDK，在 Android SDK Manager 内安装 <code>platform-tools</code>(platform-tools 里面提供了后续步骤所需的 <code>fastboot</code> 命令行工具)，可选安装 <code>tools</code>(里面的 <code>adb</code> 用来安装 apk / 与手机传送文件)。</p>
+</li>
+<li>
+<p>TWRP Recovery
+<a href="https://dl.twrp.me/oneplus3t/">https://dl.twrp.me/oneplus3t/</a>
+<a href="https://dl.twrp.me/oneplus3t/twrp-3.0.3-0-oneplus3t.img">Direct link <code>twrp-3.0.3-0-oneplus3t.img</code></a></p>
+</li>
+<li>
+<p>root 卡刷包 / root 权限管理软件</p>
+<ul>
+<li>phh&rsquo;s Superuser
+开源，刷这个包时候会修改手机内的 <code>boot.img</code>，<strong>目前不兼容 Lucky Patcher 之类的东西</strong>。<br>
+<a href="https://superuser.phh.me/superuser.zip">下载 卡刷包</a><br>
+<a href="https://play.google.com/store/apps/details?id=me.phh.superuser">下载 Superuser 管理软件</a></li>
+<li>Chainfire&rsquo;s SuperSU
+闭源，目前最傻瓜化的 Superuser 解决方案。</li>
+</ul>
+</li>
+<li>
+<p>OpenGApps 卡刷包
+打开 <a href="http://opengapps.org/">OpenGApps.org</a>，按照下面的参数进行选择后再下载：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Platform</td>
+<td style="text-align:left">ARM64</td>
+</tr>
+<tr>
+<td style="text-align:left">Android</td>
+<td style="text-align:left">6.0</td>
+</tr>
+<tr>
+<td style="text-align:left">Variant</td>
+<td style="text-align:left">micro</td>
+</tr>
+</tbody>
+</table>
+<p><code>micro</code> 将包含以下App：</p>
+<ul>
+<li>Google Calendar (将替换掉原厂ROM自带的程序)</li>
+<li>Google Now Launcher</li>
+<li>Google Package Installer</li>
+<li>Google Play services (OnePlus 3T 的 HydrogenOS 自带 Play Services，也会被替换掉)</li>
+<li>Google Search</li>
+<li>Google Text-to-Speech</li>
+<li>Gmail</li>
+<li>Hotword</li>
+</ul>
+</li>
+<li>
+<p>为 Xposed 的安装准备如下文件：</p>
+<ul>
+<li><a href="http://dl-xda.xposed.info/framework/sdk23/arm64/">Xposed installer 卡刷包</a></li>
+<li><a href="http://dl-xda.xposed.info/framework/uninstaller/">Xposed uninstaller 卡刷包</a>
+<strong>注：下载最新的 带有 <code>arm64</code> 字样的zip文件。</strong></li>
+<li><a href="https://forum.xda-developers.com/showthread.php?t=3034811">[OFFICIAL] Xposed for Lollipop/Marshmallow on XDA-Developers</a>
+<strong>注：在帖子中找到 <code>XposedInstaller_3.1.1.apk</code> 并下载。</strong></li>
+</ul>
+</li>
+<li>
+<p><a href="https://play.google.com/store/apps/details?id=cn.wq.myandroidtools">My Android Tools</a>
+因为 HydrogenOS 不允许禁用 手动安装/部分系统自带 的App，所以需要借助它来完成。<strong>注：该App需要root权限</strong>。</p>
+</li>
+</ol>
+<h2 id="开机">开机</h2>
+<p>开机后会要求用户进行一些设定，能跳过的就跳过，包括 连接WiFi、指纹解锁。然后禁用手机内置的百度输入法，按照如下步骤操作：</p>
+<ol>
+<li>打开 <code>Settings -&gt; Language &amp; input</code></li>
+<li>点击 <code>Current Keyboard</code> 后选择 <code>English (US) Android Keyboard (AOSP)</code></li>
+<li>在 <code>Input Method</code> 里找到 <code>百度输入法</code> 然后点击它，将会弹出百度输入法的预设定界面</li>
+<li>触摸 <code>Home</code> 键，这会使百度输入法会在通知栏发出一个通知</li>
+<li>展开通知栏，长按百度输入法的通知，然后点击右侧的 <code>i</code> 图标，这将打开对百度输入法的通知进行设定的界面</li>
+<li>点击百度输入法图标右侧的 <code>i</code> 图标，这会打开百度输入法的 <code>App info</code> 界面</li>
+<li>点击 <code>Disable</code> 即可</li>
+</ol>
+<h2 id="解锁-bootloader">解锁 BootLoader</h2>
+<p><strong><span style="color:red;">警告：</span>解锁BootLoader将会清除手机上的所有用户数据！</strong></p>
+<ol>
+<li>打开 <code>Settings -&gt; About phone</code>，滚动到最下面 找到 <code>Build number</code></li>
+<li>多次点击 <code>Build number</code> 直至出现 Toast 内容为 <code>No need, you are already a developer.</code> 后停止点击。</li>
+<li>回到 <code>Settings</code>，滚动到最下面，点击 <code>Developer options</code></li>
+<li>找到 <code>OEM Unlocking</code> 后点击它，然后会提示用户是否要这么做，确认即可</li>
+<li>手机关机，然后 同时按住 <code>VolumeUp + Power</code> 键，这将会进入 <code>fastboot</code> 模式，然后松开 <code>VolumeUp</code> 和 <code>Power</code> 键</li>
+<li>使用 OnePlus 3T 自带的数据线连接将手机和电脑连接上</li>
+<li>进入目录 <code>Android SDK 文件夹/platform-tools/</code>，找到 <code>fastboot</code> 文件(Windows 则为 <code>fastboot.exe</code>)，执行如下命令，这将会解锁手机并<strong>清除手机上的所有用户数据</strong>：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fastboot oem unlock
+</span></span></code></pre></div>然后在手机上按照手机上的提示进行解锁。</li>
+</ol>
+<p>至此手机已经解锁完毕，手机将会重启至 Android 系统。</p>
+<h2 id="安装-twrp--phhs-superuser--google-全家桶opengapps">安装 TWRP / phh&rsquo;s Superuser / Google 全家桶(OpenGApps)</h2>
+<h3 id="准备工作-1">准备工作</h3>
+<p>将下面列表里的卡刷包传送至手机，既可以以MTP的形式传输到手机，也可以用 <code>adb</code> 命令行工具来传输。
+首先，与读者进行文件名的协商，协商好的文件名将在后续步骤中被使用。如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">东西</th>
+<th style="text-align:left">卡刷包文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">TWRP Recovery (这个不需要传到手机里)</td>
+<td style="text-align:left">twrp.img</td>
+</tr>
+<tr>
+<td style="text-align:left">phh&rsquo;s Superuser</td>
+<td style="text-align:left">superuser.zip</td>
+</tr>
+<tr>
+<td style="text-align:left">Open GApps</td>
+<td style="text-align:left">opengapps.zip</td>
+</tr>
+</tbody>
+</table>
+<h3 id="安装-twrp">安装 TWRP</h3>
+<ol>
+<li>将前面准备的 <code>twrp.img</code> 文件放到和 <code>fastboot</code> 同级目录下，然后执行下面的命令将 <code>twrp.img</code> 刷入手机 并 引导手机启动至 TWRP Recovery(Linux 需要root权限来执行)：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fastboot flash recovery twrp.img
+</span></span><span style="display:flex;"><span>fastboot boot twrp.img
+</span></span></code></pre></div></li>
+<li>待 TWRP 启动后，会询问 <code>Keep System Read only?</code>，直接滑动下面的 <code>Swipe to Allow Modifications</code> 即可。
+<strong>注：xda论坛上的教程贴里提到了 &lsquo;Allow Modifications 将会触发 <a href="https://source.android.com/security/verifiedboot/">dm-verity</a>，会导致手机无法启动到Android系统&rsquo;。我右滑 <code>Swipe to Allow Modifications</code> 后直接重启手机到Android系统，并没有出现上述问题。</strong></li>
+</ol>
+<h3 id="卡刷-phhs-superuser--google-全家桶opengapps">卡刷 phh&rsquo;s Superuser / Google 全家桶(OpenGApps)</h3>
+<ol>
+<li>现在看到的界面应该是 TWRP 的主界面</li>
+<li>点击 <code>Install</code> ，在文件列表寻找前面准备工作里传输到手机里的 <code>superuser.zip</code>，并点击 <code>superuser.zip</code></li>
+<li>现在 TWRP 会询问用户是否刷入这个zip包，先不急</li>
+<li>点击 <code>Add more Zips</code>，然后找到并点击前面准备工作里传输到手机里的 <code>opengapps.zip</code></li>
+<li>向右滑动 <code>Swipe to confirm Flash</code>，这将会把 <code>superuser.zip</code> 和 <code>opengapps.zip</code> 刷入手机</li>
+<li>操作完成后 点击屏幕上的 <code>Home</code> 键回到主界面</li>
+<li>点击 <code>Wipe</code>，然后点击 <code>Advanced Wipe</code></li>
+<li>只勾选 <code>Dalvik / ART Cache</code> 和 <code>Cache</code></li>
+<li>向右滑动 <code>Swipe to Wipe</code>，这将清空 ART Cache 和 Cache，确保 Google 全家桶能正常工作
+<strong>下面的操作将 &ldquo;禁用&rdquo; SetupWizard.apk，以免重启后出现不显示桌面的问题。</strong></li>
+<li>操作完成后 点击屏幕上的 <code>Home</code> 键回到主界面</li>
+<li>点击 <code>Mount</code>，勾选 <code>System</code>，然后点击屏幕上的 <code>Home</code> 回到主界面</li>
+<li>依次点击 <code>Advanced -&gt; File Manager</code>，然后定位到 <code>/system/priv-app/SetupWizard/</code></li>
+<li>点击列表里的 <code>SetupWizard.apk</code>，然后点击 <code>Rename File</code>，设定新的文件名为 <code>SetupWizard.apk.bak</code>，点击屏幕键盘上的对号按钮，向右滑动 <code>Swipe to Confirm</code>，至此 文件名修改完成。</li>
+<li>上面的操作完成后，点击屏幕上的 <code>Home</code> 键回到主界面</li>
+<li>依次点击 <code>Reboot -&gt; System</code>，稍后 手机将重启并进入Android系统</li>
+</ol>
+<h3 id="安装-phhs-superuser-管理软件">安装 phh&rsquo;s Superuser 管理软件</h3>
+<p>把 phh&rsquo;s Superuser 管理软件的apk传输到手机，然后使用系统自带的文件管理器安装即可。
+如果提示无法安装 需要启用 <code>Unknown sources</code>，请到 <code>Settings -&gt; Security &amp; fingerprint</code>，点击 <code>Unknown sources</code>，然后按照提示操作即可。</p>
+<h3 id="配置-google-全家桶opengapps">配置 Google 全家桶(OpenGApps)</h3>
+<p>由于系统自带的 Google Play Services 默认情况下是禁用状态，需要使用 <code>My Android Tools</code> 来启用它。</p>
+<ol>
+<li>将 <code>My Android Tools</code> 的 apk 传输到手机里，并使用自带的文件管理找到并安装它。</li>
+<li>打开 My Android Tools，点击 <code>Apps</code>（如果没有，则从屏幕左边向右滑即可），选择 <code>Disabled</code> 选项卡</li>
+<li>点击 <code>Google Play services</code>，在弹出的窗口中点击 <code>Enable</code>，这时会弹出root权限申请界面，点击 <code>Allow</code> 即可。</li>
+<li>向上面第3步那样，对其余的以 <code>Google</code> 字样开头的列表项执行相同的操作</li>
+<li>回到桌面，启动 <code>Play Store</code>，然后按照提示登录自己的Google帐号</li>
+</ol>
+<h2 id="安装-xposed">安装 Xposed</h2>
+<p>本段内容将会用到 xposed 的一些文件，现与读者为文件名做如下约定：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">原文件名</th>
+<th style="text-align:left">本段落中使用的文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">xposed-v<code>&lt;数字&gt;</code>-sdk23-arm64.zip</td>
+<td style="text-align:left">xposed-install.zip</td>
+</tr>
+<tr>
+<td style="text-align:left">xposed-uninstaller-<code>&lt;数字&gt;</code>-arm64.zip</td>
+<td style="text-align:left">xposed-uninstall.zip</td>
+</tr>
+<tr>
+<td style="text-align:left">XposedInstaller_<code>&lt;版本号&gt;</code>.apk</td>
+<td style="text-align:left">xposed.apk</td>
+</tr>
+</tbody>
+</table>
+<p>请读者确保下载的文件均为最新版，下载到的文件与上面的原文件名里的 <code>这种字体</code><strong>之外部分的文件名</strong> 相同即可。</p>
+<ol>
+<li>将 <code>xposed.apk</code> 传输到手机里并安装它，不需要启动它</li>
+<li>将 <code>xposed-install.zip</code> 和 <code>xposed-uninstall.zip</code> 传输到手机备用。</li>
+<li>按住 <code>VolumeUp + Power</code> 键重启手机到 fastboot 模式</li>
+<li>像之前 <em>卡刷 phh&rsquo;s Superuser / Google 全家桶(OpenGApps)</em> 一样，把 <code>xposed-install.zip</code> 刷入手机</li>
+<li>重启手机到Android系统</li>
+<li>打开App <code>Xposed Installer</code>，不出问题的话，界面上应该显示 <code>Xposed Framework version xx is active.</code></li>
+</ol>
+<p><strong>若没能进入到Android系统，或者说 Android启动动画一直循环，请进入 Recovery 并刷入 <code>xposed-uninstall.zip</code> 来卸载 xposed。</strong></p>
+<p><span id="disable_dm-verity"></span></p>
+<h2 id="禁用-dm-verity">禁用 dm-verity</h2>
+<p>有以下两种情况需要禁用 dm-verity：</p>
+<ol>
+<li>修改系统分区的文件并重启后 卡在1+图标的界面，手机也不发热，有可能就是触发了 <a href="https://source.android.com/security/verifiedboot/">dm-verity</a>。</li>
+<li>Root Explorer 无法修改 <code>/system</code> 分区的文件。</li>
+</ol>
+<p>解决方法也很简单：到 <a href="https://build.nethunter.com/android-tools/no-verity-opt-encrypt/">no-verity-opt-encrypt</a> 下载最新版的zip包，然后重启手机到 recovery，然后把这个包刷进去，然后重启手机即可。</p>
+<h2 id="修改系统dpi值">修改系统DPI值</h2>
+<p>修改DPI值目的是为了不改变屏幕大小的情况下，在屏幕内放下更多的内容。也就意味着：屏幕上显示的内容所占屏幕的比例会更小，说白话就是字和图片之类的会变小些。<br>
+有两种方法实现这个功能：</p>
+<ol>
+<li>执行命令：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>su
+</span></span><span style="display:flex;"><span>wm density &lt;dpi&gt;
+</span></span></code></pre></div>虽然重启手机后就能生效，但会导致一些App在显示一些图片时候出现大小不对 / 错位之类的问题。</li>
+<li>修改文件 <code>/system/build.prop</code>。同样也有缺点：需要清空 ART Cache / Cache / Data 再进进入系统 才能避免<em>1</em>里面提到的问题。</li>
+</ol>
+<p>综上，为了尽可能完美的修改DPI值，我选择第二种方法。具体做法如下：</p>
+<ol>
+<li>用 <strong>Root Explorer</strong> 打开并编辑 <code>/system/build.prop</code>，在文件末尾加上下面这行文字：
+<pre tabindex="0"><code>qemu.sf.lcd_density=&lt;dpi&gt;
+</code></pre>比如我写的是 <code>qemu.sf.lcd_density=440</code>，至于这个值多大，看个人喜好而定。<br>
+可以用上面提到的执行命令的方式修改DPI，然后重启手机看下效果。如果觉得看着不错 就把数值写到 <code>build.prop</code> 里。</li>
+<li>重启手机到 recovery，wipe <code>Dalvik / ART Cache</code> <code>Data</code> 和 <code>Cache</code>，然后重启手机即可。</li>
+</ol>
+<p><strong>注：如果无法在 Root Explorer 里修改的话 需要刷个包，请移步 <a href="#disable_dm-verity">这里</a>。</strong></p>
+<h2 id="tips--tricks">Tips &amp; Tricks</h2>
+<ol>
+<li>长按电源键 8 秒将强制关机。</li>
+<li>xda论坛上也有说 长按电源键约 40 秒来强制关机。</li>
+<li>BootLoader 解锁后，开机时候可以在5秒钟内按音量键来进入 fastboot / recovery 之类的。</li>
+<li>双击电源键将打开照相机，按任意音量键拍照。</li>
+<li>屏幕截图：同时按下 Power+VolumeDown 一小会儿。</li>
+</ol>
+<h2 id="更新历史">更新历史</h2>
+<p>04 Jan 2017: 首次发布<br>
+14 Jan 2017:</p>
+<ol>
+<li>添加：禁用dm-verity的方法。</li>
+<li>添加：修改系统dpi值的办法。</li>
+<li>去除：准备工作里提到了adb却没有使用它，于是去掉有关adb的废话。</li>
+<li>添加：Tips &amp; Tricks: 第5条 屏幕截图</li>
+</ol>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://forum.xda-developers.com/oneplus-3t/how-to/p-oneplus-3t-resource-t3510236">[W.I.P][INDEX]OnePlus 3T Resource - xda-developers</a></li>
+<li><a href="https://twrp.me/devices/oneplus3t.html">TWRP Recovery for OnePlus 3T</a></li>
+<li><a href="https://forum.xda-developers.com/android/software-hacking/wip-selinux-capable-superuser-t3216394">phh&rsquo;s SuperUser / OpenSource SELinux-capable SuperUser - xda-developers</a></li>
+<li><a href="http://opengapps.org/">Open GApps - opengapps.org</a></li>
+<li><a href="https://github.com/opengapps/opengapps">Open GApps on GitHub</a></li>
+<li><a href="https://github.com/opengapps/opengapps/wiki/Package-Comparison">Open Gapps Package Comparision</a></li>
+<li><a href="https://github.com/opengapps/opengapps/wiki/Micro-Package">Open GApps Micro Package Description</a></li>
+<li><a href="https://github.com/opengapps/opengapps/wiki/FAQ#user-content-10-i-receive-unfortunately-setup-wizard-has-stopped-working-after-installing-opengapps-on-android-60-or-higher-why">Solution for &ldquo;Unfortunately, setup wizard has stopped working&rdquo; - Open GApps FAQ - Open GApps Wiki</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=cn.wq.myandroidtools">My Android Tools on Google Play</a></li>
+<li><a href="https://apkpure.com/my-android-tools/cn.wq.myandroidtools">My Android Tools on apkpure.com</a></li>
+<li><a href="https://source.android.com/security/verifiedboot/">Verified Boot(dm-verity) - source.android.com</a></li>
+<li><a href="https://build.nethunter.com/android-tools/no-verity-opt-encrypt/">no-verity-opt-encrypt zip download</a></li>
+<li><a href="https://forum.xda-developers.com/oneplus-3t/development/recovery-twrp-oneplus-3t-t3507308">[Recovery] Official TWRP for the OnePlus 3T - xda-developers</a></li>
+<li><a href="https://forum.xda-developers.com/oneplus-3t/how-to/guide-how-to-install-xposed-oxygenos-3-t3510367">[GUIDE] How to install Xposed on OxygenOS 3.5.3 w/TL;DR - xda-developers</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/oneplus/">#OnePlus</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/android/">#Android</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/bootloader/">#BootLoader</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/xposed/">#Xposed</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/twrp-recovery/">#TWRP Recovery</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/opengapps/">#OpenGApps</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

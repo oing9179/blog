@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>v2ray - 比 Shadowsocks 更强大更复杂的替代品 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品" />
+<meta name="description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
+ VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
+然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
+ 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+客户端配置示例：
+{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access." />
+<meta name="keywords" content="v2ray,shadowsocks,kcp," />
+
+
+<meta property="og:title" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品" />
+<meta property="og:description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
+ VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
+然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
+ 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+客户端配置示例：
+{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2016/november/v2ray-more-complex-and-better-than-shadowsocks/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2016-11-26T17:25:00+00:00" />
+<meta property="article:modified_time" content="2016-11-26T17:25:00+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品"/>
+<meta name="twitter:description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
+ VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
+然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
+ 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+客户端配置示例：
+{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access."/>
+
+
+
+<meta itemprop="name" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品">
+<meta itemprop="description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
+ VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
+然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
+ 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+客户端配置示例：
+{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access."><meta itemprop="datePublished" content="2016-11-26T17:25:00+00:00" />
+<meta itemprop="dateModified" content="2016-11-26T17:25:00+00:00" />
+<meta itemprop="wordCount" content="571">
+<meta itemprop="keywords" content="v2ray,shadowsocks,kcp," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>v2ray - 比 Shadowsocks 更强大更复杂的替代品</h1>
+<p>
+  <i>
+    <time datetime='2016-11-26' pubdate>
+      26 Nov, 2016
+    </time>
+  </i>
+</p>
+
+<content>
+  <p><img src="https://avatars0.githubusercontent.com/u/14110142?v=3&amp;s=400" alt="V2ray icon"></p>
+<h1 id="preface">Preface</h1>
+<p>为了穿越防火墙，瓷国程序员可谓是想尽办法。</p>
+<ol>
+<li>VPN：带有非常明显的特征：IP上层的通信协议全是密文。</li>
+<li>Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。</li>
+</ol>
+<p>后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。</p>
+<p>但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。</p>
+<p>然后有个人写了个纯算法的通信协议叫 <a href="https://github.com/skywind3000/kcp">KCP</a>，然后又有个人用这个协议写了个软件叫 <a href="https://github.com/v2ray/v2ray-core/">v2ray</a>。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：</p>
+<ol>
+<li>使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。</li>
+<li>更小的协议头部以躲避特征检查。</li>
+<li>在协议数据流前面增加伪装，比如伪装成BT下载。</li>
+</ol>
+<!-- more -->
+<h1 id="安装部署v2ray">安装部署v2ray</h1>
+<p>首先把v2ray从 <a href="https://github.com/v2ray/v2ray-core/releases">v2ray-core Releases on GitHub</a> 下载回来并解压，解压后主要关注下面这4个文件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">文件名</th>
+<th style="text-align:left">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">v2ray</td>
+<td style="text-align:left">软件本体</td>
+</tr>
+<tr>
+<td style="text-align:left">vpoint_socks_vmess.json</td>
+<td style="text-align:left">客户端配置示例</td>
+</tr>
+<tr>
+<td style="text-align:left">vpoint_vmess_freedom.json</td>
+<td style="text-align:left">服务器配置示例</td>
+</tr>
+<tr>
+<td style="text-align:left">systemd/v2ray.service</td>
+<td style="text-align:left">v2ray systemd 服务</td>
+</tr>
+</tbody>
+</table>
+<p>下面分别贴出我修改后的配置文件内容，稍作修改即可部署：
+<strong>注意：json本身不支持注释，请在应用下面的配置前去掉注释。</strong></p>
+<p>客户端配置示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;log&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;access&#34;</span>: <span style="color:#e6db74">&#34;/var/log/v2ray/access.log&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;/var/log/v2ray/error.log&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;loglevel&#34;</span>: <span style="color:#e6db74">&#34;info&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;socks&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;listen&#34;</span>: <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>, <span style="color:#75715e">// SOCKS5监听地址，改成 &#34;0.0.0.0&#34; 则监听所有网卡.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">1080</span>, <span style="color:#75715e">// SOCKS5监听端口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;auth&#34;</span>: <span style="color:#e6db74">&#34;noauth&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;udp&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;timeout&#34;</span>: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;vmess&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;vnext&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;address&#34;</span>: <span style="color:#e6db74">&#34;8.8.8.8&#34;</span>, <span style="color:#75715e">// 远程服务器IP
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">39225</span>, <span style="color:#75715e">// 远程服务器端口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#f92672">&#34;users&#34;</span>: [
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;00000000-0000-0000-0000-000000000000&#34;</span>, <span style="color:#75715e">// 使用 &#34;uuidgen -r&#34; 生成一个UUID 放在这里即可.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>              <span style="color:#f92672">&#34;alterId&#34;</span>: <span style="color:#ae81ff">64</span>,
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">&#34;security&#34;</span>: <span style="color:#e6db74">&#34;aes-128-gcm&#34;</span> <span style="color:#75715e">// security: 默认值 &#34;aes-128-cfb&#34;，PC 上可以改用 &#34;aes-128-gcm&#34;.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            }
+</span></span><span style="display:flex;"><span>          ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;streamSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;network&#34;</span>: <span style="color:#e6db74">&#34;kcp&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inboundDetour&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 启用 HTTP入站 代理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;http&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;listen&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>, <span style="color:#75715e">// 监听IP
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">8023</span>, <span style="color:#75715e">// 监听端口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">&#34;allocate&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;strategy&#34;</span>: <span style="color:#e6db74">&#34;always&#34;</span> <span style="color:#75715e">// 只监听指定的端口, 也就是上面写的 8023。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;timeout&#34;</span>: <span style="color:#ae81ff">30</span> <span style="color:#75715e">// 从客户端读取数据的超时设置（秒），0 表示不限时。默认值为 0。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;streamSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;network&#34;</span>: <span style="color:#e6db74">&#34;tcp&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;security&#34;</span>: <span style="color:#e6db74">&#34;none&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;tcpSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;connectionReuse&#34;</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outboundDetour&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;freedom&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;settings&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;direct&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;dns&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;servers&#34;</span>: [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;8.8.8.8&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#34;8.8.4.4&#34;</span>
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;routing&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;strategy&#34;</span>: <span style="color:#e6db74">&#34;rules&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;domainStrategy&#34;</span>: <span style="color:#e6db74">&#34;IPIfNonMatch&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;field&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;ip&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;0.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;10.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;100.64.0.0/10&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;127.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;169.254.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;172.16.0.0/12&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.0.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.2.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.168.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.18.0.0/15&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.51.100.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;203.0.113.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;::1/128&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fc00::/7&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fe80::/10&#34;</span>
+</span></span><span style="display:flex;"><span>          ],
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;outboundTag&#34;</span>: <span style="color:#e6db74">&#34;direct&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;transport&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;kcpSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;uplinkCapacity&#34;</span>: <span style="color:#ae81ff">10</span>, <span style="color:#75715e">// uplinkCapacity 和 downlinkCapacity 请根据v2ray的文档自行调节.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">&#34;downlinkCapacity&#34;</span>: <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;header&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;utp&#34;</span> <span style="color:#75715e">// 将kcp协议伪装成BT协议.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>服务器配置示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;log&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 日志文件地址和日志等级
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;access&#34;</span>: <span style="color:#e6db74">&#34;/var/log/v2ray/access.log&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;/var/log/v2ray/error.log&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;loglevel&#34;</span>: <span style="color:#e6db74">&#34;warning&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;inbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;listen&#34;</span>: <span style="color:#e6db74">&#34;8.8.8.8&#34;</span>, <span style="color:#75715e">// 服务器入站监听地址
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;port&#34;</span>: <span style="color:#ae81ff">1234</span>, <span style="color:#75715e">// 服务器入站监听端口
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;vmess&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;clients&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#e6db74">&#34;00000000-0000-0000-0000-000000000000&#34;</span>, <span style="color:#75715e">// 这里的UUID需与上面客户端配置的UUID一致.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>          <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;alterId&#34;</span>: <span style="color:#ae81ff">64</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;streamSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;network&#34;</span>: <span style="color:#e6db74">&#34;kcp&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outbound&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;freedom&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;timeout&#34;</span>: <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;outboundDetour&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;protocol&#34;</span>: <span style="color:#e6db74">&#34;blackhole&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;settings&#34;</span>: {},
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;tag&#34;</span>: <span style="color:#e6db74">&#34;blocked&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;routing&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;strategy&#34;</span>: <span style="color:#e6db74">&#34;rules&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;settings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;field&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;ip&#34;</span>: [
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;0.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;10.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;100.64.0.0/10&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;127.0.0.0/8&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;169.254.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;172.16.0.0/12&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.0.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.0.2.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;192.168.0.0/16&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.18.0.0/15&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;198.51.100.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;203.0.113.0/24&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;::1/128&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fc00::/7&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;fe80::/10&#34;</span>
+</span></span><span style="display:flex;"><span>          ],
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;outboundTag&#34;</span>: <span style="color:#e6db74">&#34;blocked&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;transport&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;kcpSettings&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;uplinkCapacity&#34;</span>: <span style="color:#ae81ff">20</span>, <span style="color:#75715e">// 这里同样请参照v2ray文档来配置.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#f92672">&#34;downlinkCapacity&#34;</span>: <span style="color:#ae81ff">20</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;header&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;utp&#34;</span> <span style="color:#75715e">// 同客户端配置.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="测试并运行">测试并运行</h1>
+<p>使用命令 <code>v2ray -config=&lt;配置文件名&gt; -test</code> 来测试配置文件是否有语法错误，使用 <code>v2ray -config=&lt;配置文件名&gt;</code> 来运行v2ray客户端/服务端。</p>
+<p><strong>注：</strong> 在配置文件中有关日志的设置，因为使用了 <code>/var/log/</code> 这样的路径，在非root用户下运行v2ray很可能会出错并结束进程。建议配置systemd来运行v2ray。如果非要手动运行的话，请修改日志文件路径到 运行这个程序的用户可以访问的路径下。</p>
+<h1 id="使用systemd将v2ray置为系统服务">使用systemd将v2ray置为系统服务</h1>
+<p>使用systemd来运行v2ray而不是手动运行，出于以下目的：</p>
+<ol>
+<li>不用手动敲命令行参数了</li>
+<li>可以开机自动启动</li>
+<li>重启v2ray也更简单了</li>
+</ol>
+<h2 id="添加配置-v2ray-用户-日志文件夹-配置文件">添加/配置 <code>v2ray</code> 用户 日志文件夹 配置文件</h2>
+<p>root权限下执行下面命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 创建用户/用户组</span>
+</span></span><span style="display:flex;"><span>useradd -M --user-group --shell /usr/sbin/nologin v2ray <span style="color:#75715e"># 添加一个用户叫 v2ray，-M: 不创建对应的home目录.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建日志文件夹</span>
+</span></span><span style="display:flex;"><span>mkdir --parents /var/log/v2ray/
+</span></span><span style="display:flex;"><span>cd /var/log/v2ray/
+</span></span><span style="display:flex;"><span>touch ./access.log ./error.log
+</span></span><span style="display:flex;"><span>chown -R v2ray:v2ray ./
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">750</span> ./ <span style="color:#75715e"># rwxr-x---</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">640</span> ./* <span style="color:#75715e"># rw-r-----</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 创建配置文件</span>
+</span></span><span style="display:flex;"><span>mkdir --parent /etc/v2ray/
+</span></span><span style="display:flex;"><span>cd /etc/v2ray/
+</span></span><span style="display:flex;"><span>touch config.json
+</span></span><span style="display:flex;"><span>chown -R v2ray:v2ray ./
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">750</span> ./ <span style="color:#75715e"># rwxr-x---</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">640</span> ./config.json <span style="color:#75715e"># rw-r-----</span>
+</span></span></code></pre></div><p>然后将前面的配置文件示例写入 <code>config.json</code> 并按照自己的需求进行修改。</p>
+<h2 id="安装-v2ray-可执行文件">安装 v2ray 可执行文件</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 创建v2ray的可执行文件目录</span>
+</span></span><span style="display:flex;"><span>mkdir --parents /usr/bin/v2ray/
+</span></span><span style="display:flex;"><span>cd /usr/bin/v2ray/
+</span></span><span style="display:flex;"><span>cp /somewhere/v2ray ./ <span style="color:#75715e"># 从其他地方把v2ray可执行文件复制到此目录下</span>
+</span></span><span style="display:flex;"><span>chown -R v2ray:v2ray ./
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">750</span> ./ <span style="color:#75715e"># rwxr-x---</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">540</span> ./v2ray <span style="color:#75715e"># r-xr-----</span>
+</span></span></code></pre></div><h2 id="配置-v2ray-的-systemd-服务">配置 v2ray 的 systemd 服务</h2>
+<p>创建文件 <code>/etc/systemd/system/v2ray.service</code> 并 <code>chown v2ray:v2ray</code> <code>chmod 640</code>，文件内容如下：</p>
+<pre tabindex="0"><code>[Unit]
+Description=V2Ray Service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/v2ray.pid
+ExecStart=/usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
+Restart=on-failure
+User=v2ray
+Group=v2ray
+
+[Install]
+WantedBy=multi-user.target
+</code></pre><h2 id="启动v2rayservice服务">启动v2ray.service服务</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>systemctl daemon-reload <span style="color:#75715e"># 载入新添加的 v2ray.service</span>
+</span></span><span style="display:flex;"><span>systemctl start v2ray <span style="color:#75715e"># 启动v2ray服务</span>
+</span></span></code></pre></div><h1 id="更新历史">更新历史</h1>
+<p>26 Nov 2016：首次发布
+17 Jan 2017：</p>
+<ul>
+<li>更新：客户端配置文件：支持HTTP代理</li>
+<li>添加：Linux下使用systemd来运行v2ray</li>
+</ul>
+<p>11 Apr 2017：</p>
+<ul>
+<li>小修小改</li>
+</ul>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://v2ray.github.io">v2ray 官方文档</a></li>
+<li><a href="https://github.com/v2ray/v2ray-core/">v2ray on GitHub</a></li>
+<li><a href="https://github.com/skywind3000/kcp">KCP - A Fast and Reliable ARQ Protocol on GitHub</a></li>
+<li><a href="https://www.v2ray.com/chapter_02/05_transport.html">配置 uplinkCapacity 和 downlinkCapacity - 传输配置 · V2Ray 官方网站</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/v2ray/">#v2ray</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/shadowsocks/">#shadowsocks</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/kcp/">#kcp</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

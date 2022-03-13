@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>Linux Tunnel Device and Route | Hotaru&#39;s Notebook</title>
+<meta name="title" content="Linux Tunnel Device and Route" />
+<meta name="description" content="Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。" />
+<meta name="keywords" content="Linux,Tunnel Device,tun,gateway,route," />
+
+
+<meta property="og:title" content="Linux Tunnel Device and Route" />
+<meta property="og:description" content="Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-05-12T12:04:33+00:00" />
+<meta property="article:modified_time" content="2017-05-12T12:04:33+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux Tunnel Device and Route"/>
+<meta name="twitter:description" content="Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。"/>
+
+
+
+<meta itemprop="name" content="Linux Tunnel Device and Route">
+<meta itemprop="description" content="Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。"><meta itemprop="datePublished" content="2017-05-12T12:04:33+00:00" />
+<meta itemprop="dateModified" content="2017-05-12T12:04:33+00:00" />
+<meta itemprop="wordCount" content="716">
+<meta itemprop="keywords" content="Linux,Tunnel Device,tun,gateway,route," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>Linux Tunnel Device and Route</h1>
+<p>
+  <i>
+    <time datetime='2017-05-12' pubdate>
+      12 May, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。
+先说路由，然后再带着路由的知识谈 tun 设备。</p>
+<!-- more -->
+<h1 id="路由route">路由（Route）</h1>
+<p>运行命令 <code>route -n</code> 将得到如下输出：</p>
+<pre tabindex="0"><code>Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.1.1     0.0.0.0         UG    600    0        0 wlan0
+8.8.8.8         192.168.1.1     255.255.255.255 UGH   0      0        0 wlan0
+10.0.8.0        0.0.0.0         255.255.255.0   U     0      0        0 tun0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 wlan0
+192.168.1.0     0.0.0.0         255.255.255.0   U     600    0        0 wlan0
+</code></pre><p>只看 <code>Destination</code> <code>Gateway</code> <code>Genmask</code> <code>Iface</code> 这4列就够了，下面将对这4列的含义一一进行解释。</p>
+<ul>
+<li>Destination:
+数据包想要去的目的地，需要和 Netmask 配合使用。</li>
+<li>Genmask（Netmask）:
+与 Destination 配合使用，稍后会举例子。
+<strong>注意：</strong> 后面我将使用 <strong>Netmask</strong> 一词来代替 <strong>Genmask</strong>（According to <a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask">Reference #1</a>）。</li>
+<li>Gateway:
+数据包想要到达目的地的话，需要从这个地址出去，也就是数据包的出入口。需要和 Iface 配合来确定一个唯一的出口。</li>
+<li>Iface:
+全称 Interface，其实指的是具体的设备，比如这里的 <code>wlan0</code> 就是无线网卡。</li>
+</ul>
+<h2 id="ipv4-地址格式科普">IPv4 地址格式科普</h2>
+<p>IPv4 地址总长 32 bit，每 8 bit 为一组。如果每个 bit 都是 <code>1</code> 的话：</p>
+<pre tabindex="0"><code>11111111.11111111.11111111.11111111
+  255   .  255   .  255   .  255
+</code></pre><p>再拿 OpenDNS 的 resolver1.opendns.com 的 IP 地址为例:</p>
+<pre tabindex="0"><code>   208  .   67   .   222  .  222
+转换成 二进制 表示的 IP 地址就是:
+10110100.01000011.11011110.11011110
+</code></pre><h2 id="destination-amp-netmask">Destination &amp; Netmask</h2>
+<blockquote>
+<p><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836">How does IPv4 Subnetting work? - serverfault.com</a></p>
+</blockquote>
+<p>Netmask，中文译名为 子网掩码。把单词拆成 net 和 mask 就能更好的理解了。前面提到 Destination 需要和 Netmask 配合使用，配合的方式也很有意思。下面将以上面输出的第3条（也就是 <code>10.0.8.0</code>）为例：</p>
+<ol>
+<li>首先将 Destination 也就是 <code>10.0.8.0</code> 转换成二进制的格式：
+<pre tabindex="0"><code>   10   .   0    .   8    .   0
+00001010.00000000.00001000.00000000
+</code></pre></li>
+<li>再将 Netmask 转换成二进制的格式：
+<pre tabindex="0"><code>  255   .  255   .  255   .   0
+11111111.11111111.11111111.00000000
+</code></pre></li>
+<li>然后把它们放在一起
+<pre tabindex="0"><code>   10   .   0    .   8    .   0
+00001010.00000000.00001000.00000000
+
+11111111.11111111.11111111.00000000
+  255   .  255   .  255   .   0
+</code></pre>Netmask 的是用来给网络分片儿的，用它把 IP 地址 &ldquo;mask&rdquo; 一下（就是 <code>bit and</code> 操作），然后就只剩下后面的 8bit <code>00000000</code> 了。除去 <code>0</code> 和 <code>255</code> 这两个广播地址，现在剩下了 <code>[1 - 254]</code> 这些地址可用。</li>
+</ol>
+<p>下面来解释一下这么做的用途。</p>
+<h2 id="解释几个路由的例子">解释几个路由的例子</h2>
+<p>下面来解释上面的5条里前3条路由信息的具体意思，后2条通过下面的解释自己就能猜出来了：</p>
+<ul>
+<li><code>dst: 10.0.8.0, gateway: 0.0.0.0, mask: 255.255.255.0, iface: tun0</code>
+去往 <code>10.0.8.0</code> 的数据包请通过 <code>tun0</code> 设备发往网关 <code>0.0.0.0</code>。
+Gateway 为 <code>0.0.0.0</code> 的话，意思就是 不需要通过任何 Gateway （或者说 任何路由器）该数据包就能直接到达 <code>10.0.8.0</code>。
+Netmask 在这里意味着：去往 <code>10.0.8.1 ~ 10.0.8.254</code> 的包都行。</li>
+<li><code>dst: 8.8.8.8, gateway: 192.168.1.1, mask: 255.255.255.255, iface: wlan0</code>
+去往 <code>8.8.8.8</code> 的数据包请通过 <code>wlan0</code> 设备发往网关 <code>192.168.1.1</code>。
+Netmask 在这里将指定一个确切的地址 <code>8.8.8.8</code>，也就是 只有去往 <code>8.8.8.8</code> 的包才行。</li>
+<li><code>dst: 0.0.0.0, gateway: 192.168.1.1, mask: 0.0.0.0, iface: wlan0</code>
+去往任意地点的数据包请通过 <code>wlan0</code> 设备发往网关 <code>192.168.1.1</code>。
+其实这条路由记录代表着 某个数据包没有任何可（相比之下）精确匹配的路由的时候 才使用这个路由，也就是所谓的 &ldquo;默认路由&rdquo;。</li>
+</ul>
+<p>其实到这里我觉得还是解释得不够清楚，请阅读 <a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836">serverfault.com 的这个答案</a> 后 再来看这小节，应该就能完全明白了。</p>
+<h2 id="netmask-的简化写法">Netmask 的简化写法</h2>
+<p>比如还是这个：</p>
+<pre tabindex="0"><code>   10   .   0    .   8    .   0
+00001010.00000000.00001000.00000000
+
+11111111.11111111.11111111.00000000
+  255   .  255   .  255   .   0
+</code></pre><p>上面的 IP 地址和 Netmask 可以简化成这样：<code>10.0.8.0/24</code>，<code>24</code> 就是 <code>255.255.255.0</code> 转换成二进制后 <code>11111111.11111111.11111111.00000000</code> 的 <code>1</code> 的数量。</p>
+<h1 id="tun-设备"><code>tun</code> 设备</h1>
+<blockquote>
+<p>这个不叫 &ldquo;豚设备&rdquo;，tun 是 Tunnel 的简称，所以叫 通道设备。</p>
+</blockquote>
+<h2 id="peer-to-peer--point-to-point">Peer-to-Peer / Point-to-Point</h2>
+<p>Peer to Peer：端对端，从一头到另一头
+Point to Point：点对点，从一点到另一点</p>
+<blockquote>
+<p>A peer to peer connection, would be like my computer to your computer, with lots of hosts in between, a point to point connection would be like between 2 directly connected routers with no other hosts in between.
+端对端连接就如同我的电脑到你的电脑，（这条路上）会经过很多主机（译者注：大多情况下是路由器之类的）。点对点连接就如同两个路由器直接连接起来，中间没有任何其他的主机。</p>
+</blockquote>
+<h2 id="什么是-tun-设备">什么是 <code>tun 设备</code></h2>
+<p>现实生活中有许多通道的实现，比如 隧道 管道 下水道。Linux 的 tun 就是一种通道的实现，相比现实生活中的通道的实现，Linux 的 tun 设备的样子则比较简单：</p>
+<ol>
+<li>一个入口，一个出口</li>
+<li>从入口可以到达出口，从出口也能到达入口</li>
+</ol>
+<h2 id="一个程序操作-tun-设备那这个程序在-tun-的哪一边呢">一个程序操作 tun 设备，那这个程序在 tun 的哪一边呢?</h2>
+<p>这个问题困扰了有一个多星期（从上一篇 blog 发布之前就是）。其实最开始我是这样想的：别的程序往 tun 的一头写数据，我的程序从另一头读数据。没错，的确是这样。但后来我通过仔细的研究和了解之后，才敢把这个结论写出来。</p>
+<h3 id="destination-address-是什么"><code>Destination Address</code> 是什么</h3>
+<p><code>python-pytun</code> 这库可以仅通过几行代码就可以创建一个 tun 设备，在启动 tun 设备之前需要配置几个参数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span>tun <span style="color:#f92672">=</span> pytun<span style="color:#f92672">.</span>TunTapDevice(<span style="color:#e6db74">&#34;tun0&#34;</span>, pytun<span style="color:#f92672">.</span>IFF_TUN <span style="color:#f92672">|</span> pytun<span style="color:#f92672">.</span>IFF_NO_PI)
+</span></span><span style="display:flex;"><span>tun<span style="color:#f92672">.</span>mtu <span style="color:#f92672">=</span> <span style="color:#ae81ff">1350</span> <span style="color:#75715e"># MTU，就是 最大可以接受多大的 IP 包，单位为 bytes</span>
+</span></span><span style="display:flex;"><span>tun<span style="color:#f92672">.</span>addr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;10.0.8.1&#34;</span> <span style="color:#75715e"># 我的程序从通道里读出来的数据 都将来自于这个地址</span>
+</span></span><span style="display:flex;"><span>tun<span style="color:#f92672">.</span>dstaddr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;10.0.8.2&#34;</span> <span style="color:#75715e"># Point-to-Point 的另一点的地址，稍后做解释</span>
+</span></span><span style="display:flex;"><span>tun<span style="color:#f92672">.</span>netmask <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;255.255.255.0&#34;</span> <span style="color:#75715e"># Netmask，不用多说了</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;tun created.&#34;</span>)
+</span></span><span style="display:flex;"><span>tun<span style="color:#f92672">.</span>up() <span style="color:#75715e"># 启动 tun 设备</span>
+</span></span></code></pre></div><p>创建设备后执行命令 <code>ifconfig</code> 看到了这样的输出：</p>
+<pre tabindex="0"><code>tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+          inet addr:10.0.8.1  P-t-P:10.0.8.2  Mask:255.255.255.0
+          inet6 addr: fe80::2912:af21:a6fb:7f01/64 Scope:Link
+          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1350  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:500 
+          RX bytes:0 (0.0 B)  TX bytes:144 (144.0 B)
+</code></pre><p><code>inet addr</code> 这个代表的是这个 tunnel 的入口的地址，那那个 <code>P-t-P</code> 地址是做什么用的？
+经过查阅许多资料后（其中包括 <a href="https://stackoverflow.com/questions/36375530/what-is-the-destination-address-for-a-tap-tun-device/37327065#37327065">StackOverflow 上的这个问题</a>）才明白，<code>P-t-P</code> 地址是用来将一个 tunnel 连接到另一个 tunnel 用的，也就是 <code>P-t-P</code> 的意思就是 &ldquo;Point to Point&rdquo;。不过现在已经用不上这个了（因为有 Peer-to-Peer 并且 路由器技术也成熟了），但为了兼容性仍然保留这个参数。</p>
+<h3 id="ping-到哪儿了"><code>ping</code> 到哪儿了</h3>
+<p>执行命令 <code>ping 10.0.8.7</code>，按照路由表里的记录 <code>dst: 10.0.8.0, gateway: 0.0.0.0, netmask: 255.255.255.0, dev: tun0</code>，这个 ICMP echo-request（也就是 ping 请求包）应该发到 <code>10.0.8.7</code> 了，但是 Wireshark 抓包显示 这个ping没有收到 ICMP echo-response（也就是 ping 的响应包）。那这个 ping 包去哪儿了？黑洞？</p>
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201705-Linux-Tunnel-Device-and-Route/wireshark_pcap_ping_10.0.8.7.png" alt="wireshark_pcap_ping_10.0.8.7"></p>
+<p>后来我才反应过来，既然是 tun 设备，那这个包从 <code>10.0.8.1</code> 发往 <code>10.0.8.7</code> 的路径应该是 包到了通道的出口然后被我的程序收到，但我的程序未做任何处理，相当于直接丢掉包了。
+本意上我想 ping 这个网段里的 <code>10.0.8.7</code>，但实际情况不是这样。这个 ping 包 ping 的不是 <code>tun0</code> 的 <code>10.0.8.0/24</code> 网段里的客户端，而是希望通过出口发往点对点的另一端的 <code>10.0.8.0/24</code> 网段里的 <code>10.0.8.7</code>。
+这样的话，ping 丢包的问题 和 destination address 的意义就能互相解释通了。</p>
+<h3 id="截获整个系统的-ip-包">截获整个系统的 IP 包</h3>
+<p>既然 tun 设备的模型以及工作方式都清楚了，那就好办了，几条命令就能解决：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo route -n <span style="color:#75715e"># 把默认路由记录记下来，比如是 &#34;gateway: 192.168.1.1, iface: wlan0&#34;</span>
+</span></span><span style="display:flex;"><span>sudo route del default <span style="color:#75715e"># 删除默认路由</span>
+</span></span><span style="display:flex;"><span>sudo route add default gw 10.0.8.2 dev tun0 <span style="color:#75715e"># Gateway(gw) 的地址在 10.0.8.0/24 这网段里就行，dev 就写设备名称 比如 tun0.</span>
+</span></span><span style="display:flex;"><span>sudo route -n <span style="color:#75715e"># 然后路由表的输出大概就是这样：</span>
+</span></span></code></pre></div><pre tabindex="0"><code>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.0.8.2        0.0.0.0         UG    0      0        0 tun0
+10.0.8.0        0.0.0.0         255.255.255.0   U     0      0        0 tun0
+</code></pre><p>上面的路由表翻译出来就是：数据包将默认通过 <code>tun0</code> 设备发往 <code>10.0.8.2</code> 地址，<code>10.0.8.0</code> 这条路由接收来自 <code>10.0.8.2</code> 的包，这样就能把整个系统发往外面的包都拦截了。<code>ping 8.8.8.8</code> 效果如下图：</p>
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201705-Linux-Tunnel-Device-and-Route/wireshark_pcap_ping_8.8.8.8.png" alt="wireshark_pcap_ping_8.8.8.8"></p>
+<p>要想恢复默认路由的话，执行下面的命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo route del default
+</span></span><span style="display:flex;"><span>sudo route add default gw 192.168.1.1 dev wlan0 <span style="color:#75715e"># gw 和 dev 填写之前记录下来的默认路由即可</span>
+</span></span></code></pre></div><h1 id="更新历史">更新历史</h1>
+<p>12 May 2017: 首次发布
+2 Jun 2017:</p>
+<ul>
+<li>更正: <code>wlan0</code> 设备不拥有 <code>192.168.1.1</code> 这个地址，而是将包发往 <code>192.168.1.1</code> 这个网关.</li>
+</ul>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://serverfault.com/questions/696988/difference-between-genmask-and-netmask">Difference between “genmask” and “netmask”? - serverfault.com</a></li>
+<li><a href="https://serverfault.com/questions/49765/how-does-ipv4-subnetting-work/49836#49836">How does IPv4 Subnetting work? - serverfault.com</a></li>
+<li><a href="http://www.networking-forum.com/viewtopic.php?t=31077#p210840">Difference between Peer-to-Peer and Point-to-Point</a></li>
+<li><a href="https://stackoverflow.com/questions/36375530/what-is-the-destination-address-for-a-tap-tun-device/37327065#37327065">What is the &ldquo;destination address&rdquo; for a TAP/TUN device?</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/linux/">#Linux</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/tunnel-device/">#Tunnel Device</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/tun/">#tun</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/gateway/">#gateway</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/route/">#route</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

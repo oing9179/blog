@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BIOS on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/bios/</link>
+    <description>Recent content in BIOS on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Tue, 24 Jul 2018 20:19:46 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/bios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为 BIOS 启动的电脑换上 UEFI</title>
+      <link>https://oing9179.github.io/blog/posts/2018/july/install-and-boot-os-on-efi-supported-pc/</link>
+      <pubDate>Tue, 24 Jul 2018 20:19:46 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2018/july/install-and-boot-os-on-efi-supported-pc/</guid>
+      <description>Preface 这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。
+准备工具  SystemRecuseCd （以下简称 sysrcd）
+会用到里面自带的一些工具（sgdisk, GParted, etc.） Windows 10 PE 软件包  syslinux mtools   一个U盘  创建 sysrcd 的 U 盘启动 sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。
+注意： 以下任意一种方式都会导致U盘的全部数据丢失。
+制作可以通过 BIOS 启动的 sysrcd U盘  复制出一份 sysrcd.iso 文件，因为下面的命令会修改 iso 文件 运行命令 isohybrid sysrcd.iso
+（isohybrid 该可执行文件包含在 syslinux 软件包内） 假设 /dev/sdb 是U盘，运行命令 dd if=./sysrcd.iso of=/dev/sdb  制作可以通过 UEFI 启动的 sysrcd U盘  为U盘创建新的分区表，使用 GPT 分区表 为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 /dev/sdb1 挂载 /dev/sdb1 将 sysrcd.</description>
+    </item>
+    
+  </channel>
+</rss>

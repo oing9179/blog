@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>v2ray on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/v2ray/</link>
+    <description>Recent content in v2ray on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sat, 11 Mar 2017 21:00:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/v2ray/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 Nginx 转发 V2Ray 的 WebSocket 连接</title>
+      <link>https://oing9179.github.io/blog/posts/2017/march/v2ray-as-websocket-proxy-behind-nginx/</link>
+      <pubDate>Sat, 11 Mar 2017 21:00:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/march/v2ray-as-websocket-proxy-behind-nginx/</guid>
+      <description>Preface 有些地方网络环境很糟糕，比如：
+  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+ 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+   除 80 和 443 之类的端口外的数据包传输速率都很低
+  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+ TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &amp;ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&amp;quot;，那我就用 WebSocket 吧。</description>
+    </item>
+    
+    <item>
+      <title>v2ray - 比 Shadowsocks 更强大更复杂的替代品</title>
+      <link>https://oing9179.github.io/blog/posts/2016/november/v2ray-more-complex-and-better-than-shadowsocks/</link>
+      <pubDate>Sat, 26 Nov 2016 17:25:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/november/v2ray-more-complex-and-better-than-shadowsocks/</guid>
+      <description>Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
+ VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
+然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
+ 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+客户端配置示例：
+{  &amp;#34;log&amp;#34;: {  &amp;#34;access&amp;#34;: &amp;#34;/var/log/v2ray/access.</description>
+    </item>
+    
+  </channel>
+</rss>

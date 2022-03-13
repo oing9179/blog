@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reverse proxy on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/reverse-proxy/</link>
+    <description>Recent content in reverse proxy on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Wed, 15 Mar 2017 10:09:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/reverse-proxy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 Docker 和 Nginx 搭建自己的云服务器（Nextcloud）</title>
+      <link>https://oing9179.github.io/blog/posts/2017/march/setup-nextcloud-using-docker-and-nginx/</link>
+      <pubDate>Wed, 15 Mar 2017 10:09:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/march/setup-nextcloud-using-docker-and-nginx/</guid>
+      <description>Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&amp;quot;无缘无故&amp;quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
+ Owncloud
+不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
+同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
+还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &amp;ldquo;Let&amp;rsquo;s Encrypt&amp;quot;。
+注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
+安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &amp;#39;Passw0rd&amp;#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud.</description>
+    </item>
+    
+  </channel>
+</rss>

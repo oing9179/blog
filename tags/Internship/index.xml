@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Internship on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/internship/</link>
+    <description>Recent content in Internship on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Wed, 14 Jun 2017 21:57:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/internship/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日记 - Android 实习测试题</title>
+      <link>https://oing9179.github.io/blog/posts/2017/june/diary-android-tnternship-test/</link>
+      <pubDate>Wed, 14 Jun 2017 21:57:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/june/diary-android-tnternship-test/</guid>
+      <description>Preface 有个小伙伴给我介绍了一家互联网公司，说让我投份简历看看能不能争取到一份校招实习资格。后来和这个公司的 HR 联系了一下，说让我先做做题。题目一共两道：
+ 第1题可能涉及到公司的业务，这里不做透露。 第2题是写一个 Android 自定义控件，是个尺子控件，要求使用系统提供的绘图API（android.graphics.Canvas）来做。  下面我就说下这次做自定义尺子控件都学到了什么。
+开发流程记录 Day 1:
+  上午: 看 Android 自定义组件 的官方文档，Google 找了两三篇中文教程，又到 GitHub 上看了一些 Demo 的源码，大致知道了 View 类的几个主要方法。
+  下午: 搭建项目开发环境（Android Studio, AVD, etc.），覆盖了 android.view.View 类的3个方法
+ onTouchEvent(MotionEvent event): 负责接受任何触摸事件 onMeasure(int widthMeasureSpec, int heightMeasureSpec): 负责算出控件在被载入后应该占用多大地方 onDraw(Canvas canvas): 负责绘制控件  然后又实现了3个度量单位（Centimeters, Inches, Feet）的枚举类以及换算它们类。
+  Day 2:
+ 看了下 DPI(Dots(或者说 Pixels) per Inches)、dp(Device-Independent Pixels)、sp(Size-Independent Pixels) 的定义以及换算方法，并编写到度量单位换算类里. 比较令我意外的是，把 Centimeter 转成 dp 需要乘以一个数，这个数字居然是个常量。我还反复的在纸上推了几遍（在此感谢 KhanAcademy 教我了一种新的对待单位的方式），后来在尺子实现出来之后没有任何毛病。后来我又想了想 其实很正常，因为 dp 是以 DPI=160 为基准来计算的，最后的算式里它被消除掉了，于是整个算式就和 DPI 没什么关系了。 本来还想支持 sp 的换算来着，虽然本质上和 dp 一样，但因为有些视力障碍的用户会在系统设置里调整文字缩放，因此想实现这个单位还需要读取系统设置，为了主要进度 暂时放弃了这个功能。 进一步完善了 Ruler 类，因为构造函数里可选的初始化成员变量太多（&amp;gt;=4个，参考 《Effective Java》 这本书），于是使用了 Builder 设计模式。 初步的在 onDraw(Canvas canvas) 里做了一些运算，以及画出了错误的尺子刻度。  Day 3:</description>
+    </item>
+    
+  </channel>
+</rss>

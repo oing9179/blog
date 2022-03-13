@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FragmentManagerState on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/fragmentmanagerstate/</link>
+    <description>Recent content in FragmentManagerState on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sun, 09 Jul 2017 12:29:28 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/fragmentmanagerstate/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Android] 阻止特定 Fragment 被恢复</title>
+      <link>https://oing9179.github.io/blog/posts/2017/july/prevent-specific-fragment-being-restored/</link>
+      <pubDate>Sun, 09 Jul 2017 12:29:28 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/july/prevent-specific-fragment-being-restored/</guid>
+      <description>Preface Activity 在经过旋转屏幕（或者其他原因导致配置变更）时，该 Activity 将被销毁并重新创建。 如果 Activity 内放置了 Fragment，Fragment 也会被销毁但会被 FragmentManager 恢复出来，这就带来了一个问题：有些 Fragment 因为时效性问题或者其它原因不需要被恢复。 下面就来解决这个问题。
+启发 最开始是在 StackOverflow.com 看到了 这个 回答，看了下 Activity 的源码后发现 Fragment 的状态存放在 savedInstanceState.get(FRAGMENTS_TAG) 里，于是只要 savedInstanceState.remove(FRAGMENTS_TAG) 就能防止 Fragment 被恢复了。但这会导致所有的 Fragment 都不能被恢复，而我希望的是不恢复某个 Fragment 就足够了。 后来又花了一些时间调试一下代码，最后把知识都总结到这个类文件里了：
+ 用法 FragmentStateUtil 也很好用：
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {  try {  FragmentStateUtil lFragmentStateUtil = new FragmentStateUtil(this, savedInstanceState);  lFragmentStateUtil.dropFragmentState(DontRestoreThisFragment.class);  } catch (Exception ignore) {  ignore.printStackTrace();  }  super.</description>
+    </item>
+    
+  </channel>
+</rss>

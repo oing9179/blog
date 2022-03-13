@@ -1,0 +1,2 @@
+User-Agent: *
+Sitemap: https://oing9179.github.io/blog/sitemap.xml

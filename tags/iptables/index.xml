@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iptables on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/iptables/</link>
+    <description>Recent content in iptables on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sat, 03 Jun 2017 11:36:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/iptables/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The ICMP Tunnel</title>
+      <link>https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/</link>
+      <pubDate>Sat, 03 Jun 2017 11:36:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/june/the-icmp-tunnel/</guid>
+      <description>&lt;h1 id=&#34;preface&#34;&gt;Preface&lt;/h1&gt;
+&lt;p&gt;经过一段时间的学习和研究，总算是把 ICMP Tunnel 的理论知识了解个大概了。
+研究这项技术期间，出现次数对多的问题大概就是下面这几个：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;包从哪里来的?&lt;/li&gt;
+&lt;li&gt;包去哪儿了?&lt;/li&gt;
+&lt;li&gt;Tunnel 的另一端是谁?
+答：操作系统，由操作系统进行包转发，就算设置了 tunnel 的对等端（Peer-to-Peer）也得由操作系统进行转发。于是 前两个问题基本上解决了。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;本文包含如下内容:
+ICMP Tunnel 的基本技术细节, 包括但不限于 IP包、路由、&lt;code&gt;iptables&lt;/code&gt;、Python 代码.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

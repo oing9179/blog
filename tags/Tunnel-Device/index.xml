@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tunnel Device on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/tunnel-device/</link>
+    <description>Recent content in Tunnel Device on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Fri, 12 May 2017 12:04:33 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/tunnel-device/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux Tunnel Device and Route</title>
+      <link>https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/</link>
+      <pubDate>Fri, 12 May 2017 12:04:33 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2017/may/linux-tunnel-device-and-route/</guid>
+      <description>Preface 通过这些天的研究和各种资料的查阅，终于对路由以及 Linux 的 Tunnel 设备有个大致的了解了。 先说路由，然后再带着路由的知识谈 tun 设备。
+路由（Route） 运行命令 route -n 将得到如下输出：
+Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0.0.0.0 192.168.1.1 0.0.0.0 UG 600 0 0 wlan0 8.8.8.8 192.168.1.1 255.255.255.255 UGH 0 0 0 wlan0 10.0.8.0 0.0.0.0 255.255.255.0 U 0 0 0 tun0 169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 wlan0 192.168.1.0 0.0.0.0 255.255.255.0 U 600 0 0 wlan0 只看 Destination Gateway Genmask Iface 这4列就够了，下面将对这4列的含义一一进行解释。</description>
+    </item>
+    
+  </channel>
+</rss>

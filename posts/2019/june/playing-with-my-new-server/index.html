@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>玩玩真的服务器 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="玩玩真的服务器" />
+<meta name="description" content="最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。
+不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。
+硬件配置还算行:
+ Intel Atom x5-Z8350 (64bit, 4 core, no hyperthreading) 4GB RAM 64 GB eMMC storage USB 2.0 connector * 4 USB 3.0 OTG connector * 1 1 Gbps Ethernet RJ-45 connector HDMI output  完整的配置信息可以看这里: Up Board Specs
+购买架式(Rack-mounted)服务器 后来开发板也不够用了
+ 开发板 USB 接口输出电压很低，带一个机械硬盘都吃力 有时候插满 USB 接口后，甚至会导致电压过低而重启 供电不足还会导致硬盘损伤甚至数据丢失  以前经历过的一次数据丢失已经把我吓怕了，于是这次干脆直接买了个二手 1U 服务器。配置如下:
+ Dell PowerEdge R420 Barebone Intel Xeon E5-2470v2(10c, 20t) * 2 不知道什么牌子的内存 单条16G * 4，带 ECC REG PERC H710 RAID卡 不带硬盘 其它一些配件  共 3035 CNY。然后又单独去京东买了点东西:" />
+<meta name="keywords" content="Server,Barebone,Dell,vSphere,ESXi," />
+
+
+<meta property="og:title" content="玩玩真的服务器" />
+<meta property="og:description" content="最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。
+不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。
+硬件配置还算行:
+ Intel Atom x5-Z8350 (64bit, 4 core, no hyperthreading) 4GB RAM 64 GB eMMC storage USB 2.0 connector * 4 USB 3.0 OTG connector * 1 1 Gbps Ethernet RJ-45 connector HDMI output  完整的配置信息可以看这里: Up Board Specs
+购买架式(Rack-mounted)服务器 后来开发板也不够用了
+ 开发板 USB 接口输出电压很低，带一个机械硬盘都吃力 有时候插满 USB 接口后，甚至会导致电压过低而重启 供电不足还会导致硬盘损伤甚至数据丢失  以前经历过的一次数据丢失已经把我吓怕了，于是这次干脆直接买了个二手 1U 服务器。配置如下:
+ Dell PowerEdge R420 Barebone Intel Xeon E5-2470v2(10c, 20t) * 2 不知道什么牌子的内存 单条16G * 4，带 ECC REG PERC H710 RAID卡 不带硬盘 其它一些配件  共 3035 CNY。然后又单独去京东买了点东西:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2019/june/playing-with-my-new-server/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-06-09T11:53:39+00:00" />
+<meta property="article:modified_time" content="2019-06-09T11:53:39+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="玩玩真的服务器"/>
+<meta name="twitter:description" content="最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。
+不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。
+硬件配置还算行:
+ Intel Atom x5-Z8350 (64bit, 4 core, no hyperthreading) 4GB RAM 64 GB eMMC storage USB 2.0 connector * 4 USB 3.0 OTG connector * 1 1 Gbps Ethernet RJ-45 connector HDMI output  完整的配置信息可以看这里: Up Board Specs
+购买架式(Rack-mounted)服务器 后来开发板也不够用了
+ 开发板 USB 接口输出电压很低，带一个机械硬盘都吃力 有时候插满 USB 接口后，甚至会导致电压过低而重启 供电不足还会导致硬盘损伤甚至数据丢失  以前经历过的一次数据丢失已经把我吓怕了，于是这次干脆直接买了个二手 1U 服务器。配置如下:
+ Dell PowerEdge R420 Barebone Intel Xeon E5-2470v2(10c, 20t) * 2 不知道什么牌子的内存 单条16G * 4，带 ECC REG PERC H710 RAID卡 不带硬盘 其它一些配件  共 3035 CNY。然后又单独去京东买了点东西:"/>
+
+
+
+<meta itemprop="name" content="玩玩真的服务器">
+<meta itemprop="description" content="最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。
+不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。
+硬件配置还算行:
+ Intel Atom x5-Z8350 (64bit, 4 core, no hyperthreading) 4GB RAM 64 GB eMMC storage USB 2.0 connector * 4 USB 3.0 OTG connector * 1 1 Gbps Ethernet RJ-45 connector HDMI output  完整的配置信息可以看这里: Up Board Specs
+购买架式(Rack-mounted)服务器 后来开发板也不够用了
+ 开发板 USB 接口输出电压很低，带一个机械硬盘都吃力 有时候插满 USB 接口后，甚至会导致电压过低而重启 供电不足还会导致硬盘损伤甚至数据丢失  以前经历过的一次数据丢失已经把我吓怕了，于是这次干脆直接买了个二手 1U 服务器。配置如下:
+ Dell PowerEdge R420 Barebone Intel Xeon E5-2470v2(10c, 20t) * 2 不知道什么牌子的内存 单条16G * 4，带 ECC REG PERC H710 RAID卡 不带硬盘 其它一些配件  共 3035 CNY。然后又单独去京东买了点东西:"><meta itemprop="datePublished" content="2019-06-09T11:53:39+00:00" />
+<meta itemprop="dateModified" content="2019-06-09T11:53:39+00:00" />
+<meta itemprop="wordCount" content="106">
+<meta itemprop="keywords" content="Server,Barebone,Dell,vSphere,ESXi," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>玩玩真的服务器</h1>
+<p>
+  <i>
+    <time datetime='2019-06-09' pubdate>
+      09 Jun, 2019
+    </time>
+  </i>
+</p>
+
+<content>
+  <p>最开始用的是换下来的旧笔记本电脑 Dell Inspiron m5010，装了个 LinuxMint，放在家里当下载姬。<br>
+不过那个旧电脑噪音太大了，占用空间也大，于是在 2018 年 8 月我买了个 Up Board 开发板作为新的下载姬。</p>
+<!-- more -->
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201906-Playing-with-My-New-Server/photo_up_board_with_hdd.jpg" alt="Up Board"><br>
+硬件配置还算行:</p>
+<ul>
+<li>Intel Atom x5-Z8350 (64bit, 4 core, no hyperthreading)</li>
+<li>4GB RAM</li>
+<li>64 GB eMMC storage</li>
+<li>USB 2.0 connector * 4</li>
+<li>USB 3.0 OTG connector * 1</li>
+<li>1 Gbps Ethernet RJ-45 connector</li>
+<li>HDMI output</li>
+</ul>
+<p>完整的配置信息可以看这里: <a href="https://up-board.org/up/specifications/">Up Board Specs</a></p>
+<h1 id="购买架式rack-mounted服务器">购买架式(Rack-mounted)服务器</h1>
+<p>后来开发板也不够用了</p>
+<ol>
+<li>开发板 USB 接口输出电压很低，带一个机械硬盘都吃力</li>
+<li>有时候插满 USB 接口后，甚至会导致电压过低而重启</li>
+<li>供电不足还会导致硬盘损伤甚至数据丢失</li>
+</ol>
+<p>以前经历过的一次数据丢失已经把我吓怕了，于是这次干脆直接买了个二手 1U 服务器。配置如下:</p>
+<ul>
+<li>Dell PowerEdge R420 Barebone</li>
+<li>Intel Xeon E5-2470v2(10c, 20t) * 2</li>
+<li>不知道什么牌子的内存 单条16G * 4，带 ECC REG</li>
+<li>PERC H710 RAID卡</li>
+<li>不带硬盘</li>
+<li>其它一些配件</li>
+</ul>
+<p>共 3035 CNY。然后又单独去京东买了点东西:</p>
+<ul>
+<li>WD Gold 1TB * 2; 669 CNY/个</li>
+<li>WD HC510 8TB * 2; 2399 CNY/个</li>
+</ul>
+<p>算上前面的服务器，加起来一共 9171 CNY。下图是这个服务器的外观。
+<img src="https://oing9179.github.io/blog/static/images/blog/201906-Playing-with-My-New-Server/photo_dell_server.jpg" alt="Dell PowerEdge R420"></p>
+<blockquote>
+<p>因为后两个硬盘还没买到，所以右边两个硬盘位是空的。</p>
+</blockquote>
+<p>裸机固件升级，然后装了个 ESXi，跑了几个虚拟机，目前用起来还不错。</p>
+<p><img src="https://oing9179.github.io/blog/static/images/blog/201906-Playing-with-My-New-Server/photo_server_with_monitor.jpg" alt="Dell PowerEdge R420 with monitor"></p>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/server/">#Server</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/barebone/">#Barebone</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/dell/">#Dell</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/vsphere/">#vSphere</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/esxi/">#ESXi</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bind9 on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/bind9/</link>
+    <description>Recent content in bind9 on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Fri, 02 Sep 2016 17:23:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/bind9/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 bind9 配合 dnscrypt-proxy 搭建自己的无污染的DNS服务器</title>
+      <link>https://oing9179.github.io/blog/posts/2016/september/clean-dns-server-setup-using-bind9-and-dnscrypt-proxy/</link>
+      <pubDate>Fri, 02 Sep 2016 17:23:00 +0000</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2016/september/clean-dns-server-setup-using-bind9-and-dnscrypt-proxy/</guid>
+      <description>Preface 因为众所周知的原因，DNS缓存投毒(aka: DNS Spoofing) 的出现是因为DNS查询通信协议的设计缺陷导致的，因为DNS查询协议的设计者当时并没有预料到现在的网络环境这么糟糕。利用这个缺陷可以实现一些特技，比如：
+ 用浏览器打开Google然后跳转到了Baidu. ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告. 这里没能列举出的一些特技.  为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 dnscrypt(GitHub项目主页)，相比传统的DNS查询有如下优点：
+ 与DNS服务器通信过程中使用SSL加密. 可以强制使用TCP，避免因UDP丢包而浪费时间. 有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站. 有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果.  不过使用dnscrypt的缺点也是有的：相比ISP提供的DNS，dnscrypt的查询会慢上最少300ms。导致这个问题的原因包括但不限于：
+ UDP丢包. 强制使用TCP的话，TCP握手也要很久. SSL握手. 城门口堵车了.  不过这个问题也是可以解决的，那就是在本地搭建一个DNS服务器来缓存dnscrypt的查询结果。 接下来，我就简单的写一下 dnscrypt-proxy 和 bind(用来缓存DNS查询结果) 的安装和配置.
+ 注1：下面的内容适用于Ubuntu及其衍生Distro，其他Linux Distro可能需要做些修改。 注2：我之所以没用 dnsmasq，是因为无论怎么配置它 它都不缓存向本地请求的记录，但会缓存非本地地址的记录 比如用8.8.8.8它就会缓存。
+ dnscrypt-proxy  DNSCrypt 主页
+dnscrypt-proxy GitHub 主页
+dnscrypt-proxy launchpad.net PPA
+ 安装 dnscrypt-proxy 执行下面的命令来安装dnscrypt-proxy：
+apt-get install dnscrypt-proxy 配置 dnscrypt-proxy 配置dnscrypt-proxy，配置文件在 /etc/default/dnscrypt-proxy：
+# What local IP the daemon will listen to, with an optional port.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list） | Hotaru&#39;s Notebook</title>
+<meta name="title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）" />
+<meta name="description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
+安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose." />
+<meta name="keywords" content="Linux,Docker,Nginx,Wekan,Todo-list," />
+
+
+<meta property="og:title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）" />
+<meta property="og:description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
+安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-08-19T19:40:20+00:00" />
+<meta property="article:modified_time" content="2017-08-19T19:40:20+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）"/>
+<meta name="twitter:description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
+安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose."/>
+
+
+
+<meta itemprop="name" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）">
+<meta itemprop="description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
+安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose."><meta itemprop="datePublished" content="2017-08-19T19:40:20+00:00" />
+<meta itemprop="dateModified" content="2017-08-19T19:40:20+00:00" />
+<meta itemprop="wordCount" content="468">
+<meta itemprop="keywords" content="Linux,Docker,Nginx,Wekan,Todo-list," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）</h1>
+<p>
+  <i>
+    <time datetime='2017-08-19' pubdate>
+      19 Aug, 2017
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。
+今天上午找了一些 Todo-List 软件，然后发现了这个：<a href="https://github.com/wekan/wekan">wekan/wekan - github.com</a>, 已经有 10k+ 个 Star 了。
+想试用的话，打开 <a href="https://wekan.github.io/">wekan.github.io</a> 然后点击 &ldquo;Try on Sandstorm&rdquo;。
+下面将介绍具体的搭建过程。</p>
+<!-- more -->
+<h1 id="安装-amp-配置-mongodb">安装 &amp; 配置 MongoDB</h1>
+<ol>
+<li>执行命令 <code>apt-get install mongodb-server</code></li>
+<li>编辑 <code>/etc/mongodb.conf</code>, 主要修改下面两个参数就够了, 其它的目前用不到.
+<ul>
+<li><code>bind_ip=0.0.0.0</code>: 让 MongoDB 监听所有IP, 方便 Docker 容器访问</li>
+<li><code>port=27017</code>: 这条配置默认是注释掉的, 取消注释即可</li>
+<li>防火墙不要对外开放 <code>27017</code> 端口, 免得被别人乱搞 MongoDB</li>
+</ul>
+</li>
+<li>执行命令，允许来自 <code>172.0.0.0/8</code> IP段的连接，docker 容器一般会被分配到这个地址
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ufw allow from 172.0.0.0/8
+</span></span></code></pre></div></li>
+<li>执行命令重新启动 MongoDB 使上面修改过的设置生效: <code>systemctl restart mongodb.service</code></li>
+</ol>
+<h1 id="安装-amp-配置-wekan-docker-image">安装 &amp; 配置 Wekan Docker Image</h1>
+<ol>
+<li>安装 / 更新 <code>docker-compose</code>, 参考 <a href="https://github.com/docker/compose/releases">这里</a></li>
+<li>创建文件 <code>docker-compose.yml</code>, 内容如下
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#34;3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">wekan-app</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">wekanteam/wekan:latest</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 稍后要借助下面这个 command 进入 docker 容器</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># command: &#34;/bin/cat /dev/stdout &gt; /dev/null&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">wekan-app</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 把容器内的 80 端口映射到主机的 127.0.0.1:18081</span>
+</span></span><span style="display:flex;"><span>            - <span style="color:#e6db74">&#34;127.0.0.1:18081:80/tcp&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">MONGO_URL</span>: <span style="color:#e6db74">&#34;mongodb://host-ip:27017/wekan&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">ROOT_URL</span>: <span style="color:#e6db74">&#34;https://todo.example.com&#34;</span>
+</span></span></code></pre></div></li>
+<li>在 <code>docker-compose.yml</code> 的同一目录下运行命令 <code>docker-compose up -d</code></li>
+<li>上一条命令运行完成后再运行 <code>docker ps -a</code> 如果看到 <code>wekan-app</code> 这个容器的状态是 <code>Exited</code>, 说明上面的 <code>docker-compose.yml</code> 里的 <code>MONGO_URL</code> 是有问题的, 因为现在还不知道 docker 容器被分配的 IP 地址, 也就没法给 <code>host-ip</code> 一个正确的值</li>
+<li>为了让 docker 容器能保持运行 好让我进入容器执行一些命令来获知容器的 IP 地址, 把 <code>docker-compose.yml</code> 里面的 <code># command</code> 那行取消注释, 然后再运行 <code>docker-compose up -d</code>, 现在这个容器就处于运行中的状态了</li>
+<li>运行命令 <code>docker exec -it wekan-app /bin/bash -il</code> 获得容器内的 interactive shell</li>
+<li>运行命令获取分配给容器的 IP 地址: <code>ip route show default</code>, 输出内容大概是这样的:
+<pre tabindex="0"><code>default via 172.17.0.1 dev eth0 
+172.17.0.0/16 dev eth0  proto kernel  scope link  src 172.17.0.2
+</code></pre>那段 <code>default via 172.17.0.1</code> 的 <code>172.17.0.1</code> 就是这个 docker 容器的网关（Gateway）了, 用它替换掉 <code>docker-compose.yml</code> 里的 <code>host-ip</code>, 然后再运行 <code>docker-compose up -d</code></li>
+<li>执行命令 <code>curl -i http://127.0.0.1:18081</code>, 如果有HTML输出说明这个 docker 容器已经运行起来了.</li>
+</ol>
+<p>至此，Wekan 的 Docker 容器就搭建好了。</p>
+<h1 id="配置-nginx-amp-ssl-证书">配置 Nginx &amp; SSL 证书</h1>
+<h2 id="申请-ssl-证书">申请 SSL 证书</h2>
+<ol>
+<li>安装 letsencrypt <code>apt-get install letsencrypt</code></li>
+<li>创建静态网站的目录 <code>mkdir --parents /var/www/todo.example.com</code>，稍后 Let’s Encrypt 会用到它</li>
+<li>创建文件 <code>/etc/nginx/sites-available/todo.example.com</code> 并编辑
+<pre tabindex="0"><code class="language-nginxConf" data-lang="nginxConf">server {
+    # 域名
+    server_name todo.example.com;
+    # 监听 IPv4/6 80 端口
+    listen 80;
+    listen [::]:80;
+    # 静态网站根目录
+    root /var/www/todo.example.com;
+    # 提供静态文件服务
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+</code></pre></li>
+<li>创建软链接
+<pre tabindex="0"><code>ln -s /etc/nginx/sites-available/todo.example.com /etc/nginx/sites-enabled/todo.example.com
+</code></pre></li>
+<li>重启 Nginx <code>systemctl restart nginx</code></li>
+<li>执行命令来生成 SSL 证书</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>letsencrypt certonly --webroot -w /var/www/todo.example.com --domain <span style="color:#e6db74">&#34;todo.example.com&#34;</span>
+</span></span></code></pre></div><p>至此，SSL 证书已经申请好了，接下来将配置 Nginx 使用刚刚申请的 SSL 证书。</p>
+<h2 id="配置-ssl-证书">配置 SSL 证书</h2>
+<ol>
+<li>参考 <a href="https://github.com/wekan/wekan/wiki/Install-Wekan-Docker-in-production">Install Wekan Docker in production</a> 编辑配置文件 <code>/etc/nginx/sites-available/todo.example.com</code>
+<pre tabindex="0"><code class="language-nginxConf" data-lang="nginxConf">upstream websocket {
+    server 127.0.0.1:18081;
+}
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    &#39;&#39; close;
+}
+server {
+    server_name todo.example.com;
+    listen 443;
+    listen [::]:443;
+    access_log /var/log/nginx/todo.example.com_access.log;
+
+    ssl off; 
+    ssl_certificate /etc/letsencrypt/live/todo.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/todo.example.com/privkey.pem;
+    # index index.html index.php;
+    location / {
+        proxy_read_timeout 300;
+        proxy_connect_timeout 300;
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:18081;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    location ~ websocket$ {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+    }
+}
+</code></pre></li>
+<li>验证配置文件语法 并 重启 Nginx
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nginx -t
+</span></span><span style="display:flex;"><span>systemctl restart nginx
+</span></span></code></pre></div></li>
+<li>用网页浏览器打开地址 <code>https://todo.example.com</code> 查看效果</li>
+</ol>
+<h1 id="q-amp-a">Q &amp; A</h1>
+<ol>
+<li>Q：在 Wekan 里点击某个卡片后，网页会重新载入 并打开刚才点击的卡片.
+A：<code>docker-compose.yml</code> 里的 <code>ROOT_URL</code> 必须与实际访问这个站点用的URL完全一致。<sup><a href="#references_5">5</a></sup>
+比如 <code>docker-compose.yml</code> 里有 <code>ROOT_URL: &quot;http://todo.example.com&quot;</code>，用浏览器访问的地址是 <code>https://todo.example.com</code>，这种情况下 点击卡片就会导致页面重新载入。解决方法就是把 <code>ROOT_URL: &quot;http://todo.example.com&quot;</code> 改成 <code>ROOT_URL: &quot;https://todo.example.com&quot;</code>，然后执行命令 <code>docker-compse up -d</code> 使更改生效。</li>
+</ol>
+<h1 id="结语">结语</h1>
+<p>至此，Wekan 的搭建过程就结束了，首次登录到页面需要自己注册一个帐号，第一个注册的帐号将成为管理员帐号。
+默认情况下，Wekan 的帐号注册是公开的，可以在管理员设置页面把公开注册关掉。</p>
+<h1 id="更新历史">更新历史</h1>
+<p>19 Aug 2017: 首次发布
+24 Aug 2017:</p>
+<ul>
+<li>修复：Wekan 内点击卡片导致页面重新载入后才打开卡片<sup><a href="#references_5">5</a></sup></li>
+<li>改进：参考 Wekan 官方文档来编写 Nginx 配置文件</li>
+</ul>
+<h1 id="references">References</h1>
+<ol>
+<li><a href="https://github.com/wekan/wekan">wekan/wekan - github.com</a></li>
+<li><a href="https://wekan.github.io/">Wekan - open-source kanban - wekan.github.io</a></li>
+<li><a href="https://github.com/docker/compose/releases"><code>docker-compose</code> Releases - github.com</a></li>
+<li><a href="https://github.com/wekan/wekan/wiki/Install-Wekan-Docker-in-production">Install Wekan Docker in production - github.com/wekan/wekan</a></li>
+<li><a id="references_5" href="https://github.com/wekan/wekan/issues/741">Docker installation; when clicking cards page always reloads #741 - github.com/wekan/wekan/issues</a></li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/linux/">#Linux</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/docker/">#Docker</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/nginx/">#Nginx</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/wekan/">#Wekan</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/todo-list/">#Todo-list</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

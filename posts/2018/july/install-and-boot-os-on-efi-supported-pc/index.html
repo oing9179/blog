@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>为 BIOS 启动的电脑换上 UEFI | Hotaru&#39;s Notebook</title>
+<meta name="title" content="为 BIOS 启动的电脑换上 UEFI" />
+<meta name="description" content="Preface 这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。
+准备工具  SystemRecuseCd （以下简称 sysrcd）
+会用到里面自带的一些工具（sgdisk, GParted, etc.） Windows 10 PE 软件包  syslinux mtools   一个U盘  创建 sysrcd 的 U 盘启动 sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。
+注意： 以下任意一种方式都会导致U盘的全部数据丢失。
+制作可以通过 BIOS 启动的 sysrcd U盘  复制出一份 sysrcd.iso 文件，因为下面的命令会修改 iso 文件 运行命令 isohybrid sysrcd.iso
+（isohybrid 该可执行文件包含在 syslinux 软件包内） 假设 /dev/sdb 是U盘，运行命令 dd if=./sysrcd.iso of=/dev/sdb  制作可以通过 UEFI 启动的 sysrcd U盘  为U盘创建新的分区表，使用 GPT 分区表 为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 /dev/sdb1 挂载 /dev/sdb1 将 sysrcd." />
+<meta name="keywords" content="BIOS,UEFI,systemrescuecd," />
+
+
+<meta property="og:title" content="为 BIOS 启动的电脑换上 UEFI" />
+<meta property="og:description" content="Preface 这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。
+准备工具  SystemRecuseCd （以下简称 sysrcd）
+会用到里面自带的一些工具（sgdisk, GParted, etc.） Windows 10 PE 软件包  syslinux mtools   一个U盘  创建 sysrcd 的 U 盘启动 sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。
+注意： 以下任意一种方式都会导致U盘的全部数据丢失。
+制作可以通过 BIOS 启动的 sysrcd U盘  复制出一份 sysrcd.iso 文件，因为下面的命令会修改 iso 文件 运行命令 isohybrid sysrcd.iso
+（isohybrid 该可执行文件包含在 syslinux 软件包内） 假设 /dev/sdb 是U盘，运行命令 dd if=./sysrcd.iso of=/dev/sdb  制作可以通过 UEFI 启动的 sysrcd U盘  为U盘创建新的分区表，使用 GPT 分区表 为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 /dev/sdb1 挂载 /dev/sdb1 将 sysrcd." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2018/july/install-and-boot-os-on-efi-supported-pc/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-07-24T20:19:46+00:00" />
+<meta property="article:modified_time" content="2018-07-24T20:19:46+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="为 BIOS 启动的电脑换上 UEFI"/>
+<meta name="twitter:description" content="Preface 这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。
+准备工具  SystemRecuseCd （以下简称 sysrcd）
+会用到里面自带的一些工具（sgdisk, GParted, etc.） Windows 10 PE 软件包  syslinux mtools   一个U盘  创建 sysrcd 的 U 盘启动 sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。
+注意： 以下任意一种方式都会导致U盘的全部数据丢失。
+制作可以通过 BIOS 启动的 sysrcd U盘  复制出一份 sysrcd.iso 文件，因为下面的命令会修改 iso 文件 运行命令 isohybrid sysrcd.iso
+（isohybrid 该可执行文件包含在 syslinux 软件包内） 假设 /dev/sdb 是U盘，运行命令 dd if=./sysrcd.iso of=/dev/sdb  制作可以通过 UEFI 启动的 sysrcd U盘  为U盘创建新的分区表，使用 GPT 分区表 为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 /dev/sdb1 挂载 /dev/sdb1 将 sysrcd."/>
+
+
+
+<meta itemprop="name" content="为 BIOS 启动的电脑换上 UEFI">
+<meta itemprop="description" content="Preface 这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。
+准备工具  SystemRecuseCd （以下简称 sysrcd）
+会用到里面自带的一些工具（sgdisk, GParted, etc.） Windows 10 PE 软件包  syslinux mtools   一个U盘  创建 sysrcd 的 U 盘启动 sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。
+注意： 以下任意一种方式都会导致U盘的全部数据丢失。
+制作可以通过 BIOS 启动的 sysrcd U盘  复制出一份 sysrcd.iso 文件，因为下面的命令会修改 iso 文件 运行命令 isohybrid sysrcd.iso
+（isohybrid 该可执行文件包含在 syslinux 软件包内） 假设 /dev/sdb 是U盘，运行命令 dd if=./sysrcd.iso of=/dev/sdb  制作可以通过 UEFI 启动的 sysrcd U盘  为U盘创建新的分区表，使用 GPT 分区表 为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 /dev/sdb1 挂载 /dev/sdb1 将 sysrcd."><meta itemprop="datePublished" content="2018-07-24T20:19:46+00:00" />
+<meta itemprop="dateModified" content="2018-07-24T20:19:46+00:00" />
+<meta itemprop="wordCount" content="297">
+<meta itemprop="keywords" content="BIOS,UEFI,systemrescuecd," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>为 BIOS 启动的电脑换上 UEFI</h1>
+<p>
+  <i>
+    <time datetime='2018-07-24' pubdate>
+      24 Jul, 2018
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>这几天给某个 Telegram 上的朋友的新电脑装了个 Manjaro，那台电脑使用了 UEFI。<br>
+我自己的电脑也支持 UEFI，于是琢磨着给自己的电脑也换上 UEFI 启动。</p>
+<!-- more -->
+<h1 id="准备工具">准备工具</h1>
+<ol>
+<li><a href="http://www.system-rescue-cd.org/">SystemRecuseCd</a> （以下简称 sysrcd）<br>
+会用到里面自带的一些工具（<code>sgdisk</code>, GParted, etc.）</li>
+<li>Windows 10 PE</li>
+<li>软件包
+<ol>
+<li><code>syslinux</code></li>
+<li><code>mtools</code></li>
+</ol>
+</li>
+<li>一个U盘</li>
+</ol>
+<h1 id="创建-sysrcd-的-u-盘启动">创建 sysrcd 的 U 盘启动</h1>
+<p>sysrcd 同时支持 BIOS 和 UEFI 启动，针对不同的启动方式需要进行不同的配置。<br>
+<strong>注意：</strong> 以下任意一种方式都会导致U盘的全部数据丢失。</p>
+<h2 id="制作可以通过-bios-启动的-sysrcd-u盘">制作可以通过 BIOS 启动的 sysrcd U盘</h2>
+<ol>
+<li>复制出一份 <code>sysrcd.iso</code> 文件，因为下面的命令会修改 iso 文件</li>
+<li>运行命令 <code>isohybrid sysrcd.iso</code><br>
+（<code>isohybrid</code> 该可执行文件包含在 <code>syslinux</code> 软件包内）</li>
+<li>假设 <code>/dev/sdb</code> 是U盘，运行命令 <code>dd if=./sysrcd.iso of=/dev/sdb</code></li>
+</ol>
+<h2 id="制作可以通过-uefi-启动的-sysrcd-u盘">制作可以通过 UEFI 启动的 sysrcd U盘</h2>
+<ol>
+<li>为U盘创建新的分区表，使用 GPT 分区表</li>
+<li>为U盘创建一个 1GiB 的 FAT32 分区，假定分区位于 <code>/dev/sdb1</code></li>
+<li>挂载 <code>/dev/sdb1</code></li>
+<li>将 <code>sysrcd.iso</code> 内的文件复制到U盘内</li>
+<li>卸载 <code>/dev/sdb1</code></li>
+<li>运行命令 <code>syslinux --install --directory isolinux /dev/sdb</code></li>
+</ol>
+<h1 id="转换-mbr-分区表为-gpt-分区表">转换 MBR 分区表为 GPT 分区表</h1>
+<p>假定要转换的硬盘在 <code>/dev/sda</code>。</p>
+<ol>
+<li>通过U盘启动sysrcd</li>
+<li>运行命令：备份MBR分区表<br>
+<code>dd if=/dev/sda of=./mbr_backup.bin bs=512 count=1</code></li>
+<li>sda 硬盘的尾部至少要有 36 个空 sector，如果没有，请缩小硬盘内最后一个分区的大小</li>
+<li>运行命令：将 MBR 分区表转换为 GPT 分区表
+<code>sgdisk -g /dev/sda</code></li>
+<li>打开 GParted 查看效果</li>
+</ol>
+<p>在虚拟机内测试将硬盘转换为GPT分区表后，每个分区后面会有大约 1MiB 的空间空间。如果真实主机也出现这种情况，可以考虑用 GParted 调整一下。</p>
+<h1 id="安装-windows-uefi">安装 Windows UEFI</h1>
+<ol>
+<li>启动至 Windows 10 PE，打开命令行，运行命令 <code>diskpart</code></li>
+<li>使用命令 <code>list disk</code> 找到 ESP 分区所在的硬盘，并使用 <code>select &lt;disk_number&gt;</code> 来选择这块磁盘</li>
+<li>使用命令 <code>list partition</code> 找到 ESP 分区，并使用 <code>select &lt;part_number&gt;</code> 选择该分区</li>
+<li>使用命令 <code>assign letter=b</code> 将 ESP 分区分配到盘符 <code>B:</code> 上</li>
+<li><code>exit</code> 退出 diskpart</li>
+<li>运行命令 <code>bcdboot &lt;winsys&gt;:\Windows /s &lt;esp&gt;: /f uefi</code><br>
+winsys: 硬盘上的 Windows 系统所在盘符<br>
+esp: ESP 分区所在盘符，也就是 <code>B:</code></li>
+</ol>
+<p>重启计算机到 sysrcd，开始安装 GRUB。</p>
+<h1 id="安装-grub">安装 GRUB</h1>
+<blockquote>
+<p>参考: <a href="https://askubuntu.com/questions/831216/how-can-i-reinstall-grub-to-the-efi-partition">How can I reinstall GRUB to the EFI partition? - askubuntu.com</a></p>
+</blockquote>
+<p>假设 <code>/dev/sda2</code> 是 Linux 的 <code>/boot</code> 分区，<br>
+假设 <code>/dev/sda1</code> 是 ESP 分区，<br>
+假设 <code>/dev/sda</code> ESP 所在的硬盘。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mount /dev/sda2 /mnt/sda2
+</span></span><span style="display:flex;"><span>sudo mount /dev/sda1 /mnt/sda2/boot/efi
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i in /dev /dev/pts /proc /sys /run; <span style="color:#66d9ef">do</span> sudo mount -B $i /mnt/sda2$i; <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>sudo chroot /mnt/sda2
+</span></span><span style="display:flex;"><span>grub-install /dev/sda
+</span></span><span style="display:flex;"><span>update-grub
+</span></span></code></pre></div><h1 id="调整-efi-启动项">调整 EFI 启动项</h1>
+<ol>
+<li>使用命令 <code>mount -o remount,rw /sys/firmware/efi/efivars</code> 将 <code>efivars</code> 挂载为读写</li>
+<li>使用命令 <code>efibootmgr</code> 列出所有 EFI 启动项</li>
+<li>使用命令 <code>efibootmgr -B -b &lt;number&gt;</code> 删除 <code>number</code> 代表的 Windows 启动项，<br>
+或使用命令 <code>efibootmgr -A -b &lt;number&gt;</code> 禁用 <code>number</code> 代表的 Windows 启动项</li>
+</ol>
+<p>EFI 启动项调整完了，接下来让 EFI 默认启动 GRUB。</p>
+<ol>
+<li>假定 ESP 分区在 <code>/dev/sda1</code>，使用命令 <code>mount /dev/sda /mnt/esp</code> 挂载 ESP 分区</li>
+<li><code>cd /mnt/esp/EFI</code></li>
+<li><code>mkdir boot</code></li>
+<li><code>cp ./manjaro/grubx64.efi ./boot/bootx64.efi</code></li>
+</ol>
+<p>重启计算机，应该会显示 GRUB 启动界面了。</p>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/bios/">#BIOS</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/uefi/">#UEFI</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/systemrescuecd/">#systemrescuecd</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

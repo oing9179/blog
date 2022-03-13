@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>使用 SoftEther VPN 搭建私有局域网 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="使用 SoftEther VPN 搭建私有局域网" />
+<meta name="description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
+本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
+准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
+安装管理工具 注： 该工具可以用 Wine 安装和运行。
+安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。" />
+<meta name="keywords" content="SoftEther VPN,LAN," />
+
+
+<meta property="og:title" content="使用 SoftEther VPN 搭建私有局域网" />
+<meta property="og:description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
+本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
+准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
+安装管理工具 注： 该工具可以用 Wine 安装和运行。
+安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2018/july/setup-private-lan-using-softether-vpn/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-07-26T19:45:46+00:00" />
+<meta property="article:modified_time" content="2018-07-26T19:45:46+00:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用 SoftEther VPN 搭建私有局域网"/>
+<meta name="twitter:description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
+本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
+准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
+安装管理工具 注： 该工具可以用 Wine 安装和运行。
+安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。"/>
+
+
+
+<meta itemprop="name" content="使用 SoftEther VPN 搭建私有局域网">
+<meta itemprop="description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
+本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
+准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
+安装管理工具 注： 该工具可以用 Wine 安装和运行。
+安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。"><meta itemprop="datePublished" content="2018-07-26T19:45:46+00:00" />
+<meta itemprop="dateModified" content="2018-07-26T19:45:46+00:00" />
+<meta itemprop="wordCount" content="340">
+<meta itemprop="keywords" content="SoftEther VPN,LAN," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>使用 SoftEther VPN 搭建私有局域网</h1>
+<p>
+  <i>
+    <time datetime='2018-07-26' pubdate>
+      26 Jul, 2018
+    </time>
+  </i>
+</p>
+
+<content>
+  <h1 id="preface">Preface</h1>
+<p>Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。<br>
+本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。</p>
+<!-- more -->
+<h1 id="准备工作">准备工作</h1>
+<ol>
+<li>到 <a href="https://www.softether.org">softether.org</a> 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包</li>
+<li>Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面</li>
+<li>GCC 用来编译 Linux 版的 sevpn</li>
+</ol>
+<h1 id="sevpn-的编译和安装">sevpn 的编译和安装</h1>
+<h2 id="编译-linux-版的可执行文件">编译 Linux 版的可执行文件</h2>
+<p>前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 <code>.install.sh</code> 来编译成可执行文件。<br>
+编译完成后，一共有3个文件，{<code>vpnserver</code> 或 <code>vpnclient</code>, <code>vpncmd</code>, <code>hamcore.se2</code>} 是运行 sevpn 的必备文件。</p>
+<h2 id="安装管理工具">安装管理工具</h2>
+<p><strong>注：</strong> 该工具可以用 Wine 安装和运行。</p>
+<p>安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。</p>
+<h1 id="搭建-sevpn-服务器">搭建 sevpn 服务器</h1>
+<h2 id="启动-vpnserver">启动 vpnserver</h2>
+<ol>
+<li>在服务器上运行 <code>sudo vpnserver start</code></li>
+<li>打开 SEVPN Server Manager（也就是 GUI 版的管理工具）</li>
+<li>点击 &ldquo;New Setting&rdquo;，在弹出的窗口中设置如下信息<br>
+Server Name: 显示在管理工具主界面的服务器名称<br>
+Host Name: 服务器的IP地址或域名<br>
+Port Number: 端口号<br>
+然后点击 OK</li>
+<li>回到主界面后，列表里会多出一项，双击它，会要求设置新密码，请设置一个复杂的密码</li>
+<li>设置完密码后点OK，然后会提示密码设置成功，点击OK</li>
+</ol>
+<h2 id="搭建-virtual-hub">搭建 Virtual Hub</h2>
+<ol>
+<li>弹出 SEVPN Easy Setup，关掉它即可</li>
+<li>然后会弹出 &ldquo;Do you want to seup the IPSec?&quot;，点 No 即可</li>
+<li>删掉列表里名为 &ldquo;DEFAULT&rdquo; 的 HUB</li>
+<li>点击 &ldquo;Create New Hub&rdquo;，给 Hub 起个名字，以后会用到这个名字。<br>
+然后设置该 Hub 的密码，请务必设置一个复杂的密码。<br>
+然后勾选 &ldquo;No Enumerate to Anonymous Users&rdquo;，勾选此项后，客户端想要连接服务器，必须手动填写 Hub 的名称。<br>
+然后点击 OK。</li>
+<li>选中列表中刚创建的 Hub，点击 &ldquo;Manage Virtual Hub&rdquo;</li>
+<li>然后点击 &ldquo;Manage User&rdquo;，添加一个用户，这个用户用来登录到该 VPN 服务器</li>
+<li>然后回到管理 Hub 的界面（&ldquo;Management of Virtual Hub&rdquo;）</li>
+<li>点击 &ldquo;Virtual NAT and Virtual DHCP Server (SecureNAT)&quot;，然后点击 &ldquo;Enable SecureNAT&rdquo;，然后点击 &ldquo;Yes&rdquo;。<br>
+SecureNAT 是用来在服务器上可以自动为客户端分配一个 IP 地址。</li>
+<li>然后按数次 Exit 后回到 Manage VPN Server 界面</li>
+<li>点击 &ldquo;Encryption and Network&rdquo;，考虑更换 &ldquo;Encryption Algorithm&rdquo;</li>
+<li>取消勾选 &ldquo;Use Keep Alive Internet Connection&rdquo;</li>
+<li>可选: 点击 &ldquo;VPN over ICMP / DNS Settings&rdquo;，勾选那两个复选框</li>
+<li>点击数次 OK 回到 &ldquo;Manage VPN Server&rdquo;</li>
+</ol>
+<h2 id="端口设置">端口设置</h2>
+<p>在 Management of Listeners 列表里删除不需要的端口监听，并按需求添加需要的端口。<br>
+如果服务器有防火墙，则需要添加规则以放行指定端口的数据包。</p>
+<p>至此，服务器端已经搭建完成。</p>
+<h1 id="使用客户端连接服务器">使用客户端连接服务器</h1>
+<h2 id="启动-vpnclient">启动 vpnclient</h2>
+<ol>
+<li>运行 <code>sudo vpnclient start</code></li>
+<li>启动 SEVPN Client Manager，分2种情况
+<ol>
+<li>使用 Wine 运行 SEVPN Client Manager 的话，直接运行它即可</li>
+<li>在 Windows 虚拟机内运行的话，找到 <code>vpncmgr.exe</code>，使用命令行运行 <code>vpncmgr.exe /remote</code>，然后填写宿主机的IP地址。连接不上的话，请检查防火墙设定。</li>
+</ol>
+</li>
+</ol>
+<h2 id="创建虚拟网卡">创建虚拟网卡</h2>
+<p>菜单栏 -&gt; Virtual Adapter -&gt; New Virtual Network Adapter，然后按照说明创建一个虚拟网卡即可。假定新建的虚拟网卡名称为 <code>vpn_0</code></p>
+<h2 id="创建-vpn-连接">创建 VPN 连接</h2>
+<ol>
+<li>运行命令，允许本机直接发送数据包到服务器<br>
+<code>ip route add &lt;server_ip&gt; via &lt;gateway&gt; dev &lt;interface&gt;</code><br>
+server_ip: VPN 服务器的 IP<br>
+gateway: 当前所在网络内的默认 gateway<br>
+interface: 通过哪个网络设备发送数据包</li>
+<li>菜单栏 -&gt; Connect -&gt; New VPN Connection Setting<br>
+Server Name: 该 VPN 连接的名称<br>
+Host Name: VPN 服务器的IP地址或域名<br>
+Port Number: VPN 服务器的端口号<br>
+Virtual Hub Name: 填写前面创建的 Virtual Hub 的名字<br>
+Virtual Network Adapter to Use: 选择刚才创建的虚拟网卡<br>
+User Authenication Setting: 填写前面创建 Hub 后，在 Hub 里创建的用户名和密码<br>
+点击 OK</li>
+<li>右键刚刚新建的连接 -&gt; Connect</li>
+<li>运行命令 <code>dhclient vpn_0</code>，该命令将让虚拟网卡获得一个 IP 地址</li>
+</ol>
+<h2 id="断开-vpn-连接">断开 VPN 连接</h2>
+<ol>
+<li>在 VPN 连接上右键 -&gt; Disconnect</li>
+<li>删除虚拟网卡，这样就会在路由表里自动删除虚拟网卡的路由</li>
+<li>文件 <code>/etc/resolv.conf</code> 会在连接 VPN 后被修改成 VPN 内的网关，断开 VPN 后需要改回原来的 nameserver</li>
+</ol>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/softether-vpn/">#SoftEther VPN</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/lan/">#LAN</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>
