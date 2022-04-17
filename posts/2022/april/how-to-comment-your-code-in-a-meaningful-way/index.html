@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="https://oing9179.github.io/blog/images/favicon.png" />
+<title>为代码编写更有意义的注释 | Hotaru&#39;s Notebook</title>
+<meta name="title" content="为代码编写更有意义的注释" />
+<meta name="description" content="TL;DR:
+ 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
+val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
+val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:" />
+<meta name="keywords" content="Coding,Commenting,Better Code," />
+
+
+<meta property="og:title" content="为代码编写更有意义的注释" />
+<meta property="og:description" content="TL;DR:
+ 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
+val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
+val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://oing9179.github.io/blog/posts/2022/april/how-to-comment-your-code-in-a-meaningful-way/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2022-04-17T23:44:22+08:00" />
+<meta property="article:modified_time" content="2022-04-17T23:44:22+08:00" /><meta property="og:site_name" content="Hotaru&#39;s Notebook" />
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="为代码编写更有意义的注释"/>
+<meta name="twitter:description" content="TL;DR:
+ 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
+val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
+val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:"/>
+
+
+
+<meta itemprop="name" content="为代码编写更有意义的注释">
+<meta itemprop="description" content="TL;DR:
+ 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
+val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
+val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:"><meta itemprop="datePublished" content="2022-04-17T23:44:22+08:00" />
+<meta itemprop="dateModified" content="2022-04-17T23:44:22+08:00" />
+<meta itemprop="wordCount" content="183">
+<meta itemprop="keywords" content="Coding,Commenting,Better Code," />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+  <style>
+  body {
+    font-family: Verdana, sans-serif;
+    margin: auto;
+    padding: 20px;
+    max-width: 720px;
+    text-align: left;
+    background-color: #fff;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: #444;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  strong,
+  b {
+    color: #222;
+  }
+
+  a {
+    color: #3273dc;
+     
+  }
+
+  .title {
+    text-decoration: none;
+    border: 0;
+  }
+
+  .title span {
+    font-weight: 400;
+  }
+
+  nav a {
+    margin-right: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  content {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  code {
+    padding: 2px 5px;
+    background-color: #f2f2f2;
+  }
+
+  pre code {
+    color: #222;
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+
+  div.highlight pre {
+    background-color: initial;
+    color: initial;
+  }
+
+  div.highlight code {
+    background-color: unset;
+    color: unset;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: #222;
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px;
+    text-align: center;
+  }
+
+  .helptext {
+    color: #777;
+    font-size: small;
+  }
+
+  .errorlist {
+    color: #eba613;
+    font-size: small;
+  }
+
+   
+  ul.blog-posts {
+    list-style-type: none;
+    padding: unset;
+  }
+
+  ul.blog-posts li {
+    display: flex;
+  }
+
+  ul.blog-posts li span {
+    flex: 0 0 130px;
+  }
+
+  ul.blog-posts li a:visited {
+    color: #8b6fcb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #333;
+      color: #ddd;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
+      color: #eee;
+    }
+
+    a {
+      color: #8cc2dd;
+    }
+
+    code {
+      background-color: #777;
+    }
+
+    pre code {
+      color: #ddd;
+    }
+
+    blockquote {
+      color: #ccc;
+    }
+
+    textarea,
+    input {
+      background-color: #252525;
+      color: #ddd;
+    }
+
+    .helptext {
+      color: #aaa;
+    }
+  }
+
+</style>
+
+</head>
+
+<body>
+  <header><a href="https://oing9179.github.io/blog/" class="title">
+  <h2>Hotaru&#39;s Notebook</h2>
+</a>
+<nav><a href="https://oing9179.github.io/blog/">Home</a>
+
+<a href="https://oing9179.github.io/blog/cv-resume/">CV / Résumé</a>
+
+
+<a href="https://oing9179.github.io/blog/blog">Blog</a>
+
+</nav>
+</header>
+  <main>
+
+<h1>为代码编写更有意义的注释</h1>
+<p>
+  <i>
+    <time datetime='2022-04-17' pubdate>
+      17 Apr, 2022
+    </time>
+  </i>
+</p>
+
+<content>
+  <p><img src="https://oing9179.github.io/blog/static/images/blog/2022Apr-How-to-Comment-Your-Code-in-a-Meaningful-Way/a-sticker-says-cat-on-a-head-of-a-cat.png" alt="A sticker says &amp;ldquo;cat&amp;rdquo; on a head of a cat"></p>
+<p>TL;DR:</p>
+<ol>
+<li><strong>解释为什么这里有这段代码而不是这段代码在做什么</strong>;</li>
+<li>不要编写会让人困惑的注释;</li>
+<li>尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做;</li>
+<li><del>Good code is self-documented.</del></li>
+</ol>
+<p>下面将逐个举例糟糕和良好的代码注释。</p>
+<h2 id="1解释为什么这里有这段代码而不是这段代码在做什么">1.解释为什么这里有这段代码而不是这段代码在做什么</h2>
+<p>下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么，
+所以导致这段注释失去了存在的意义:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> text = <span style="color:#e6db74">&#34;Hello, World!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Remove characters not in the alphabet.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> sanitizedText = text.replaceRegex(<span style="color:#e6db74">&#34;&#34;&#34;\W+&#34;&#34;&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>someFunction(sanitizedText)
+</span></span></code></pre></div><p>下面的是良好的注释，它解释了为什么要替换掉 <code>text</code> 内的部分字符:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> text = <span style="color:#e6db74">&#34;Hello, World!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// `someFunction()` accepts characters from the english alphabet only, so
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// characters not in the alphabet have to be removed.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">val</span> sanitizedText = text.replaceRegex(<span style="color:#e6db74">&#34;&#34;&#34;\W+&#34;&#34;&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>someFunction(sanitizedText)
+</span></span></code></pre></div><h2 id="2-不要编写会让人困惑的注释">2. 不要编写会让人困惑的注释</h2>
+<p>下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 <code>previousState</code> 的值，但对阅读代码的
+人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 <code>previousState</code>，那我该怎么更新它？它是
+已经在下面更新了吗？那我还要不要更新它？&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> previousState = ConnectivityState.Disconnected
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (previousState <span style="color:#f92672">!=</span> ConnectivityState.Connected) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (previousState = ConnectivityState.Connecting) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Some lenghtly code here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// that may span over pages.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Remember to update the variable.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    previousState = ConnectivityState.next()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>下面的是良好的注释，它解释了那段代码存在的意义:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> previousState = ConnectivityState.Disconnected
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (previousState <span style="color:#f92672">!=</span> ConnectivityState.Connected) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (previousState = ConnectivityState.Connecting) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Some lenghtly code here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// that may span over pages.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Update this variable so the next time this loop executes it will be the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// state in the previous loop.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    previousState = ConnectivityState.next()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="3-尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做">3. 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做</h2>
+<p>我经常会遇到我无法理解内个月甚至几个星期前我自己写的代码，又可能是别人接手我的代码的时候不断的问
+我这段代码是什么意思，那段代码是什么意思，因此在写注释时要帮助别人或未来的自己更好的理解为什么
+这里有这样一段代码。</p>
+<p>一个我目前在实践的办法就是 &ldquo;假定阅读这段代码的人没有关于这段代码的任何先前认知
+(Prior Knowledge)&quot;，尽可能的想读者解释这段代码在做什么，更重要的是告诉读者为什么这段代码存在
+于此。</p>
+<h2 id="4-good-code-is-self-documented">4. <del>Good code is self-documented</del></h2>
+<p>Let&rsquo;s face it.<br>
+就算是函数或变量名很清晰的表达了它是什么，整段代码读起来通俗易懂，但和其它代码或函数组合后其含义
+就完全不一样了，又或者是其它现在看起来还很合理但未来就变成了毫无逻辑的代码。<br>
+<img src="https://oing9179.github.io/blog/static/images/blog/2022Apr-How-to-Comment-Your-Code-in-a-Meaningful-Way/unit-test-vs-integration-test-door.gif" alt="Unit Test vs Integration Test"><br>
+因此，减少对自己的代码的过度自信。如果写的代码看起来不容易理解它的含义和或存在的意，那就写注释
+来解释它存在的意义。</p>
+
+</content>
+<p>
+  
+  <a href="https://oing9179.github.io/blog/tags/coding/">#Coding</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/commenting/">#Commenting</a>
+  
+  <a href="https://oing9179.github.io/blog/tags/better-code/">#Better Code</a>
+  
+</p>
+
+  </main>
+  <footer>Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a>
+</footer>
+
+    
+</body>
+
+</html>

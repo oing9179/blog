@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Coding on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/coding/</link>
+    <description>Recent content in Coding on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sun, 17 Apr 2022 23:44:22 +0800</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为代码编写更有意义的注释</title>
+      <link>https://oing9179.github.io/blog/posts/2022/april/how-to-comment-your-code-in-a-meaningful-way/</link>
+      <pubDate>Sun, 17 Apr 2022 23:44:22 +0800</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2022/april/how-to-comment-your-code-in-a-meaningful-way/</guid>
+      <description>TL;DR:
+ 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
+val text = &amp;#34;Hello, World!&amp;#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&amp;#34;&amp;#34;&amp;#34;\W+&amp;#34;&amp;#34;&amp;#34;, &amp;#34;&amp;#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
+val text = &amp;#34;Hello, World!&amp;#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&amp;#34;&amp;#34;&amp;#34;\W+&amp;#34;&amp;#34;&amp;#34;, &amp;#34;&amp;#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &amp;ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&amp;rdquo;:</description>
+    </item>
+    
+  </channel>
+</rss>
