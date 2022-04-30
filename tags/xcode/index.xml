@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xcode on Hotaru&#39;s Notebook</title>
+    <link>https://oing9179.github.io/blog/tags/xcode/</link>
+    <description>Recent content in Xcode on Hotaru&#39;s Notebook</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
+    <lastBuildDate>Sat, 30 Apr 2022 21:56:23 +0800</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/xcode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>XcodeGen: For people who hate Xcode</title>
+      <link>https://oing9179.github.io/blog/posts/2022/april/xcodegen-for-people-who-hate-xcode/</link>
+      <pubDate>Sat, 30 Apr 2022 21:56:23 +0800</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2022/april/xcodegen-for-people-who-hate-xcode/</guid>
+      <description>在过去 3 个月里我接触了 iOS app 开发, 这段学习 iOS 开发的时间让我对 Apple Inc. 的评价跌落 到了谷底。
+在 Apple 刚发布第一代 iPhone 的时候, 我周围就有越来越多的人开始吹捧 Apple, 说 iPhone 多么 多么好用。Apple 能让大多数人认可 iPhone 这款产品说明它的确做得不错, 但这群果粉逐渐的开始变质 了, 它们变得开始听不得别人不认可 iPhone, 听不得半点有关 iPhone 的坏话, 颇有苏联垬的味道。
+自从 Steve Jobs 死了以后我就越来越讨厌 Apple, 不只是因为 Apple 用户社区容不得其它声音, Apple 的产品一直都是把复杂的东西用美好的装饰隐藏起来并且阻止任何人去揭开那层装饰。iOS 就是一个 有代表性的操作系统, 它的可定制性几乎为 0, 出了问题就要花钱去找 Genius Bar。
+直到我接触了 iOS app 开发。不得不说, Xcode 可能是我用过的所有 IDE 里最难用的, 不止是 Xcode 无响应或崩溃, 第二让我崩溃的是 xcodeproj 在 VSC 合并代码的时候非常容易出现冲突, 而且这种 冲突不是轻易就能解决的那种。有时候我改错了什么东西后想回到之前的状态, 连的 Cmd+Z 都没的用, 只能通过 git 命令来恢复。</description>
+    </item>
+    
+  </channel>
+</rss>
