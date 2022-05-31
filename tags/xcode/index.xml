@@ -6,7 +6,19 @@
     <description>Recent content in Xcode on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
-    <lastBuildDate>Sat, 30 Apr 2022 21:56:23 +0800</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/xcode/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 31 May 2022 22:34:23 +0800</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/xcode/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GNU Make: Build Xcode Project</title>
+      <link>https://oing9179.github.io/blog/posts/2022/may/gnu-make-build-xcode-project/</link>
+      <pubDate>Tue, 31 May 2022 22:34:23 +0800</pubDate>
+      
+      <guid>https://oing9179.github.io/blog/posts/2022/may/gnu-make-build-xcode-project/</guid>
+      <description>Preface Xcode 很垃圾, 但还好有很多开源工具可以帮我尽可能的避开 Xcode 带来的不便。 除了可以在 Xcode IDE 内构建工程外, 还可以使用 xcodebuild 来构建, 这就意味着我可以用 GNU Make 来构建工程, 这样就能更好的与 CI/CD 整合了。
+Makefile 入门 基本语法 之所以选择 Makefile 而不是其它构建工具或 plain-old shell script 是因为:
+ Makefile 比 shell script 多了目标依赖和其它一些 Makefile 的便利语法; 其它构建工具或多或少有较高的学习曲线; macOS 自带一个 GNU Make 而其它构建工具还需要自行安装。  Makefile 的语法还是很简单的, 具体可以去 makefiletutorial.com 快速入门, 下面只做一个简单的例子:
+# Comment starts with number sign(#). # Run commands in bash shell. SHELL=/bin/bash  # Define a variable. my_variable:=my value, and spaces are ok.</description>
+    </item>
+    
     <item>
       <title>XcodeGen: For people who hate Xcode</title>
       <link>https://oing9179.github.io/blog/posts/2022/april/xcodegen-for-people-who-hate-xcode/</link>
