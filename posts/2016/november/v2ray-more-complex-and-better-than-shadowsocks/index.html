@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -9,25 +9,25 @@
 <title>v2ray - 比 Shadowsocks 更强大更复杂的替代品 | Hotaru&#39;s Notebook</title>
 <meta name="title" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品" />
 <meta name="description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
- VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。 后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
 但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
 然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
- 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
-   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。 安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+文件名 用途 v2ray 软件本体 vpoint_socks_vmess.json 客户端配置示例 vpoint_vmess_freedom.json 服务器配置示例 systemd/v2ray.service v2ray systemd 服务 下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
 客户端配置示例：
-{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access." />
+{ &#34;log&#34;: { &#34;access&#34;: &#34;/var/log/v2ray/access.log&#34;, &#34;error&#34;: &#34;/var/log/v2ray/error.log&#34;, &#34;loglevel&#34;: &#34;info&#34; }, &#34;inbound&#34;: { &#34;protocol&#34;: &#34;socks&#34;, &#34;listen&#34;: &#34;127.0.0.1&#34;, // SOCKS5监听地址，改成 &#34;0.0.0.0&#34; 则监听所有网卡. &#34;port&#34;: 1080, // SOCKS5监听端口 &#34;settings&#34;: { &#34;auth&#34;: &#34;noauth&#34;, &#34;udp&#34;: true, &#34;timeout&#34;: 30 } }, &#34;outbound&#34;: { &#34;protocol&#34;: &#34;vmess&#34;, &#34;settings&#34;: { &#34;vnext&#34;: [ { &#34;address&#34;: &#34;8." />
 <meta name="keywords" content="v2ray,shadowsocks,kcp," />
 
 
 <meta property="og:title" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品" />
 <meta property="og:description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
- VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。 后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
 但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
 然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
- 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
-   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。 安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+文件名 用途 v2ray 软件本体 vpoint_socks_vmess.json 客户端配置示例 vpoint_vmess_freedom.json 服务器配置示例 systemd/v2ray.service v2ray systemd 服务 下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
 客户端配置示例：
-{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access." />
+{ &#34;log&#34;: { &#34;access&#34;: &#34;/var/log/v2ray/access.log&#34;, &#34;error&#34;: &#34;/var/log/v2ray/error.log&#34;, &#34;loglevel&#34;: &#34;info&#34; }, &#34;inbound&#34;: { &#34;protocol&#34;: &#34;socks&#34;, &#34;listen&#34;: &#34;127.0.0.1&#34;, // SOCKS5监听地址，改成 &#34;0.0.0.0&#34; 则监听所有网卡. &#34;port&#34;: 1080, // SOCKS5监听端口 &#34;settings&#34;: { &#34;auth&#34;: &#34;noauth&#34;, &#34;udp&#34;: true, &#34;timeout&#34;: 30 } }, &#34;outbound&#34;: { &#34;protocol&#34;: &#34;vmess&#34;, &#34;settings&#34;: { &#34;vnext&#34;: [ { &#34;address&#34;: &#34;8." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2016/november/v2ray-more-complex-and-better-than-shadowsocks/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2016-11-26T17:25:00+00:00" />
@@ -35,29 +35,28 @@
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品"/>
 <meta name="twitter:description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
- VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。 后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
 但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
 然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
- 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
-   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。 安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+文件名 用途 v2ray 软件本体 vpoint_socks_vmess.json 客户端配置示例 vpoint_vmess_freedom.json 服务器配置示例 systemd/v2ray.service v2ray systemd 服务 下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
 客户端配置示例：
-{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access."/>
+{ &#34;log&#34;: { &#34;access&#34;: &#34;/var/log/v2ray/access.log&#34;, &#34;error&#34;: &#34;/var/log/v2ray/error.log&#34;, &#34;loglevel&#34;: &#34;info&#34; }, &#34;inbound&#34;: { &#34;protocol&#34;: &#34;socks&#34;, &#34;listen&#34;: &#34;127.0.0.1&#34;, // SOCKS5监听地址，改成 &#34;0.0.0.0&#34; 则监听所有网卡. &#34;port&#34;: 1080, // SOCKS5监听端口 &#34;settings&#34;: { &#34;auth&#34;: &#34;noauth&#34;, &#34;udp&#34;: true, &#34;timeout&#34;: 30 } }, &#34;outbound&#34;: { &#34;protocol&#34;: &#34;vmess&#34;, &#34;settings&#34;: { &#34;vnext&#34;: [ { &#34;address&#34;: &#34;8."/>
 
 
 
 <meta itemprop="name" content="v2ray - 比 Shadowsocks 更强大更复杂的替代品">
 <meta itemprop="description" content="Preface 为了穿越防火墙，瓷国程序员可谓是想尽办法。
- VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。  后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
+VPN：带有非常明显的特征：IP上层的通信协议全是密文。 Shadowsocks：基于SOCKS改良的通信协议，无握手 全程加密 无特征。不过换个思路想其实特征也很明显：TCP/UDP上层的包全是密文，这样就和VPN没啥区别了。 后来有人想出来个办法并付诸实践，于是 Shadowsocks-R 出现了，其中一个特性就是为原 Shadowsocks 协议的数据流前面加上HTTP头，让防火墙误认为是HTTP协议，于是防火墙就应用针对HTTP的规则，于是就骗过防火墙了。
 但终究需要面对一个事实：防火墙心情不好，总想着丢点儿包来降低自己分析数据包的负担，由此会导致 TCP 窗口骤降 RTO(Retry Timeout)骤升，然后就龟速了。
 然后有个人写了个纯算法的通信协议叫 KCP，然后又有个人用这个协议写了个软件叫 v2ray。v2ray在引入KCP的同时对其进行了一些改进，其中引起我关注的是：
- 使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。  安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
-   文件名 用途     v2ray 软件本体   vpoint_socks_vmess.json 客户端配置示例   vpoint_vmess_freedom.json 服务器配置示例   systemd/v2ray.service v2ray systemd 服务    下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
+使用UDP作为下层协议，避免TCP带来的窗口和RTO问题。 更小的协议头部以躲避特征检查。 在协议数据流前面增加伪装，比如伪装成BT下载。 安装部署v2ray 首先把v2ray从 v2ray-core Releases on GitHub 下载回来并解压，解压后主要关注下面这4个文件：
+文件名 用途 v2ray 软件本体 vpoint_socks_vmess.json 客户端配置示例 vpoint_vmess_freedom.json 服务器配置示例 systemd/v2ray.service v2ray systemd 服务 下面分别贴出我修改后的配置文件内容，稍作修改即可部署： 注意：json本身不支持注释，请在应用下面的配置前去掉注释。
 客户端配置示例：
-{  &#34;log&#34;: {  &#34;access&#34;: &#34;/var/log/v2ray/access."><meta itemprop="datePublished" content="2016-11-26T17:25:00+00:00" />
+{ &#34;log&#34;: { &#34;access&#34;: &#34;/var/log/v2ray/access.log&#34;, &#34;error&#34;: &#34;/var/log/v2ray/error.log&#34;, &#34;loglevel&#34;: &#34;info&#34; }, &#34;inbound&#34;: { &#34;protocol&#34;: &#34;socks&#34;, &#34;listen&#34;: &#34;127.0.0.1&#34;, // SOCKS5监听地址，改成 &#34;0.0.0.0&#34; 则监听所有网卡. &#34;port&#34;: 1080, // SOCKS5监听端口 &#34;settings&#34;: { &#34;auth&#34;: &#34;noauth&#34;, &#34;udp&#34;: true, &#34;timeout&#34;: 30 } }, &#34;outbound&#34;: { &#34;protocol&#34;: &#34;vmess&#34;, &#34;settings&#34;: { &#34;vnext&#34;: [ { &#34;address&#34;: &#34;8."><meta itemprop="datePublished" content="2016-11-26T17:25:00+00:00" />
 <meta itemprop="dateModified" content="2016-11-26T17:25:00+00:00" />
 <meta itemprop="wordCount" content="571">
 <meta itemprop="keywords" content="v2ray,shadowsocks,kcp," />

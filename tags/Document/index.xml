@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/document/</link>
     <description>Recent content in Document on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Fri, 11 Aug 2017 21:33:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/document/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,13 +15,13 @@
       
       <guid>https://oing9179.github.io/blog/posts/2017/august/android-task-document-loader/</guid>
       <description>Preface 这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。
- Task 和 Document 的基本概念 Loader 的基本概念和用法  Task &amp;amp; Document Task 下面的代码将启动照相机:
+Task 和 Document 的基本概念 Loader 的基本概念和用法 Task &amp;amp; Document Task 下面的代码将启动照相机:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); startActivityForResult(lIntent); 效果如图:
 想把照相机和自己的 App 分开的话，就这样:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivityForResult(lIntent); 效果如图:
 这张图里看上去有两个 App，在 Android 官方文档 里给每个像上图里的 App 定义了一个术语叫做 &amp;ldquo;Task&amp;rdquo;，也就是上图里有2个 Task。容纳许多个 Task 的整个屏幕（也就是上图里的整个屏幕）就叫做 &amp;ldquo;Recents screen&amp;rdquo;（其他非正式名称包括但不限于: Overview screen, Recent apps）.
 Document 使用下面的代码可以让自己的 App 的某个 Activity 以多个 Task 的形式展现在 Recents screen 里:
-Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent);  // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager.</description>
+Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent); // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager.</description>
     </item>
     
   </channel>

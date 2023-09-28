@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -9,19 +9,19 @@
 <title>Linux / Windows 加密用户文件夹 | Hotaru&#39;s Notebook</title>
 <meta name="title" content="Linux / Windows 加密用户文件夹" />
 <meta name="description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
- 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息 解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
 Linux 下加密用户文件夹 先决条件：
- 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
- 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/." />
+以后再登录该账户时需要提供密码 该操作需要root权限 其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+安装 ecryptfs-utils apt-get install ecryptfs-utils 创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp 登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user 重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user 查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group) 添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user 登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private 复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/." />
 <meta name="keywords" content="Linux,Encrypt home,Privacy,Security," />
 
 
 <meta property="og:title" content="Linux / Windows 加密用户文件夹" />
 <meta property="og:description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
- 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息 解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
 Linux 下加密用户文件夹 先决条件：
- 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
- 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/." />
+以后再登录该账户时需要提供密码 该操作需要root权限 其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+安装 ecryptfs-utils apt-get install ecryptfs-utils 创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp 登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user 重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user 查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group) 添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user 登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private 复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/february/encrypt-home-directory-on-linux-and-windows/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2017-02-22T17:02:15+00:00" />
@@ -29,23 +29,22 @@ Linux 下加密用户文件夹 先决条件：
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Linux / Windows 加密用户文件夹"/>
 <meta name="twitter:description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
- 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息 解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
 Linux 下加密用户文件夹 先决条件：
- 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
- 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/."/>
+以后再登录该账户时需要提供密码 该操作需要root权限 其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+安装 ecryptfs-utils apt-get install ecryptfs-utils 创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp 登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user 重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user 查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group) 添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user 登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private 复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/."/>
 
 
 
 <meta itemprop="name" content="Linux / Windows 加密用户文件夹">
 <meta itemprop="description" content="Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&lt;用户名&gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
- 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息 解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
 Linux 下加密用户文件夹 先决条件：
- 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
- 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/."><meta itemprop="datePublished" content="2017-02-22T17:02:15+00:00" />
+以后再登录该账户时需要提供密码 该操作需要root权限 其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+安装 ecryptfs-utils apt-get install ecryptfs-utils 创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp 登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl&#43;Alt&#43;F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &ldquo;&ndash;signal 9&rdquo; 参数来强制结束进程 sudo killall --user user 重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user 查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group) 添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &#34;,&#34; 分隔 usermod --append --groups sudo,some_group user 登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private 复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/."><meta itemprop="datePublished" content="2017-02-22T17:02:15+00:00" />
 <meta itemprop="dateModified" content="2017-02-22T17:02:15+00:00" />
 <meta itemprop="wordCount" content="193">
 <meta itemprop="keywords" content="Linux,Encrypt home,Privacy,Security," />

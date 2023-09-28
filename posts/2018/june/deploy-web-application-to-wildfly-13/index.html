@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -9,21 +9,21 @@
 <title>部署 Web Application 到 WildFly 13 | Hotaru&#39;s Notebook</title>
 <meta name="title" content="部署 Web Application 到 WildFly 13" />
 <meta name="description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
-WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
- &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
- &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+WildFly 开发环境搭建 到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+&ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+&ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了 去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
 去掉它的办法也很简单。
- 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web." />
+首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.xml，文件内容如下 &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?" />
 <meta name="keywords" content="Programming,Java,WildFly,JBoss," />
 
 
 <meta property="og:title" content="部署 Web Application 到 WildFly 13" />
 <meta property="og:description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
-WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
- &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
- &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+WildFly 开发环境搭建 到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+&ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+&ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了 去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
 去掉它的办法也很简单。
- 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web." />
+首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.xml，文件内容如下 &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2018-06-09T10:18:00+00:00" />
@@ -31,25 +31,24 @@ WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full 
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="部署 Web Application 到 WildFly 13"/>
 <meta name="twitter:description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
-WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
- &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
- &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+WildFly 开发环境搭建 到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+&ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+&ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了 去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
 去掉它的办法也很简单。
- 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web."/>
+首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.xml，文件内容如下 &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?"/>
 
 
 
 <meta itemprop="name" content="部署 Web Application 到 WildFly 13">
 <meta itemprop="description" content="Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
-WildFly 开发环境搭建  到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
- &ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
- &ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
+WildFly 开发环境搭建 到 这里 下载 &ldquo;Java EE&lt;版本&gt; Full &amp; Web Distribution&rdquo; 而不是 &ldquo;Servlet-Only Distribution&rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &ldquo;Run/Debug Configurations&rdquo;
+&ldquo;Add New Configuration (Alt&#43;Insert)&rdquo; -&gt; &ldquo;JBoss Server&rdquo; -&gt; &ldquo;Local&rdquo; 点击图中的 &ldquo;Configure&rdquo;
+&ldquo;Add application server (Alt&#43;Insert)&rdquo; 填入刚解压的 WildFly 的路径，然后 &ldquo;OK&rdquo; 然后点击 OK 就可以做开发和调试了 去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&lt;context_path&gt; 的路径里，就像这样:
 去掉它的办法也很简单。
- 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web."><meta itemprop="datePublished" content="2018-06-09T10:18:00+00:00" />
+首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.xml，文件内容如下 &lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?"><meta itemprop="datePublished" content="2018-06-09T10:18:00+00:00" />
 <meta itemprop="dateModified" content="2018-06-09T10:18:00+00:00" />
 <meta itemprop="wordCount" content="179">
 <meta itemprop="keywords" content="Programming,Java,WildFly,JBoss," />

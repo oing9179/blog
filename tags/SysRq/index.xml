@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/sysrq/</link>
     <description>Recent content in SysRq on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Thu, 20 Apr 2017 12:24:48 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/sysrq/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,9 +15,9 @@
       
       <guid>https://oing9179.github.io/blog/posts/2017/april/the-magic-sysrq-key/</guid>
       <description>Preface 今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
- In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”. 在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 &amp;ldquo;Magic SysRq key&amp;rdquo;。 - System request - wikipedia.org
- 当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。
-sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 /etc/sysctl.</description>
+In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”. 在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 &amp;ldquo;Magic SysRq key&amp;rdquo;。 - System request - wikipedia.org
+当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。
+sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 /etc/sysctl.conf 并配合 sysctl 命令使配置生效。 sysctl.</description>
     </item>
     
   </channel>

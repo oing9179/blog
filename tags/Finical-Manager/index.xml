@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/finical-manager/</link>
     <description>Recent content in Finical Manager on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Tue, 18 Apr 2017 07:47:03 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/finical-manager/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,8 +15,8 @@
       
       <guid>https://oing9179.github.io/blog/posts/2017/april/setup-firefly-the-financial-manager-using-docker-nginx/</guid>
       <description>Preface &amp;ldquo;我辛辛苦苦挣的钱都去哪儿了&amp;rdquo;，我可不希望以后什么什么时候开始说这种话，于是 搭建个记账软件来记录自己的收支吧。 该软件优点如下：
- 资金流向：比如钱都花在哪些类目上了，钱都流向哪些商家了。 资金预算：比如打算每个月花多少钱在饮食上。 分类 &amp;amp; 标签：比如钱都花在那些类目上了。 交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易 存钱罐（Piggy Banks）：比如想买个手机但是目前没有那么多预算，可以先弄个存钱罐，然后一点一点的往里面存。相当于一个长远的资金预算。 账单：每月水电费之类的。 规则：比如填写支出描述时自动填写预设的支出金额。 报表（Reports）：按月、季、年生成报表，账户余额、资金流向、短期/长期预算、账单 等等。 多货币：软妹币, 美刀, 英镑, 比特币，想用什么就用什么（不支持货币换算，在创建收支记录时候可以手动填写换算前后的金额）。 数据导入导出：导入导出 csv 格式的文件，进一步对资金流向做分析什么的。  目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。 另外，该软件作者表示 &amp;ldquo;不支持自动支付重复性交易&amp;rdquo;，原因是：
- I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will feel what you spend.</description>
+资金流向：比如钱都花在哪些类目上了，钱都流向哪些商家了。 资金预算：比如打算每个月花多少钱在饮食上。 分类 &amp;amp; 标签：比如钱都花在那些类目上了。 交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易 存钱罐（Piggy Banks）：比如想买个手机但是目前没有那么多预算，可以先弄个存钱罐，然后一点一点的往里面存。相当于一个长远的资金预算。 账单：每月水电费之类的。 规则：比如填写支出描述时自动填写预设的支出金额。 报表（Reports）：按月、季、年生成报表，账户余额、资金流向、短期/长期预算、账单 等等。 多货币：软妹币, 美刀, 英镑, 比特币，想用什么就用什么（不支持货币换算，在创建收支记录时候可以手动填写换算前后的金额）。 数据导入导出：导入导出 csv 格式的文件，进一步对资金流向做分析什么的。 目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。 另外，该软件作者表示 &amp;ldquo;不支持自动支付重复性交易&amp;rdquo;，原因是：
+I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will feel what you spend. 我认为如果你真的想改变你的财务习惯的话，你应该更关心你的账户，你花的钱还有你挣的钱。通过手动地录入每次交易，让你切实体会到钱都花在哪里了。</description>
     </item>
     
   </channel>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -10,16 +10,16 @@
 <meta name="title" content="Kotlin 入门笔记" />
 <meta name="description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
 基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
- &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
- 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：" />
+&ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：" />
 <meta name="keywords" content="Kotlin,JVM Language," />
 
 
 <meta property="og:title" content="Kotlin 入门笔记" />
 <meta property="og:description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
 基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
- &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
- 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：" />
+&ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/october/note-get-started-with-kotlin/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2017-10-09T12:13:00+00:00" />
@@ -27,21 +27,20 @@
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Kotlin 入门笔记"/>
 <meta name="twitter:description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
 基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
- &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
- 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因："/>
+&ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因："/>
 
 
 
 <meta itemprop="name" content="Kotlin 入门笔记">
 <meta itemprop="description" content="Preface 前些天用 Kotlin 写了个 CSGO 辅（wai）助（gua）的网页脚本，发现写 Kotlin 的话就不用跟屎一样的 JS 语法打交道了，于是我花了段时间详细的看了一遍 Kotlin 官方文档。 下文总结一些学习过程中的疑问和解答。
 基本语法 1. 函数默认返回 Unit 而不是像 Java 那样的 void 先来看 Unit 的定义:
- &ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
- 综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因："><meta itemprop="datePublished" content="2017-10-09T12:13:00+00:00" />
+&ldquo;Unit&rdquo; just stands for &ldquo;something that has only one value&rdquo;, it&rsquo;s a traditional name, comes from functional languages. I agree that this name is not very intuitive, but we failed to invent a better name. – Andrey Breslav Mar 27 &lsquo;14 at 6:41
+综合 StackOverflow 上 这个问题 的两个答案，返回 Unit 主要有2个原因："><meta itemprop="datePublished" content="2017-10-09T12:13:00+00:00" />
 <meta itemprop="dateModified" content="2017-10-09T12:13:00+00:00" />
 <meta itemprop="wordCount" content="1120">
 <meta itemprop="keywords" content="Kotlin,JVM Language," />
@@ -364,8 +363,8 @@ Expression: 表达（或者说 代表）一个事物，比如 <code>1 + 2</code>
 Kotlin 里的 <code>while</code> 语法和 Java 里是一样的。</p>
 <h2 id="10-return-break-continue-使用-label-返跳转到特定位置">10. <code>return</code> <code>break</code> <code>continue</code> 使用 <code>@label</code> 返跳转到特定位置</h2>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>jumptOut:
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> array<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> j <span style="color:#f92672">&lt;</span> array2<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> array<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">;</span> j <span style="color:#f92672">&lt;</span> array2<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">continue</span> jumpOut<span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
@@ -463,7 +462,7 @@ Kotlin 里，<code>object</code> 用来定义单例对象，<code>companion obje
 </span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;New instance: SomeClass&#34;</span>)
 </span></span><span style="display:flex;"><span>    SomeClass()
 </span></span><span style="display:flex;"><span>    println(<span style="color:#e6db74">&#34;Accessing SomeClass.NonCompanion&#34;</span>)
-</span></span><span style="display:flex;"><span>    println(SomeClass.NonCompanion)
+</span></span><span style="display:flex;"><span>    println(<span style="color:#a6e22e">SomeClass</span>.NonCompanion)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeClass</span> {
@@ -497,9 +496,9 @@ Kotlin 里，<code>object</code> 用来定义单例对象，<code>companion obje
 </span></span></code></pre></div></li>
 <li><code>companion object</code> 内的成员可以直接使用类名来访问，而其它 Singleton 对象则不能
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">main</span>(args: Array&lt;String&gt;) {
-</span></span><span style="display:flex;"><span>    SomeClass.Companion.directAccess()
-</span></span><span style="display:flex;"><span>    SomeClass.directAccess() <span style="color:#75715e">// Companion can be omitted.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    SomeClass.NonCompanion.indirectAccess()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">SomeClass</span>.<span style="color:#a6e22e">Companion</span>.directAccess()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">SomeClass</span>.directAccess() <span style="color:#75715e">// Companion can be omitted.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">SomeClass</span>.<span style="color:#a6e22e">NonCompanion</span>.indirectAccess()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SomeClass</span> {

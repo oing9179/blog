@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -9,7 +9,7 @@
 <title>为代码编写更有意义的注释 | Hotaru&#39;s Notebook</title>
 <meta name="title" content="为代码编写更有意义的注释" />
 <meta name="description" content="TL;DR:
- 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented. 下面将逐个举例糟糕和良好的代码注释。
 1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
 val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
 val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:" />
@@ -18,7 +18,7 @@ val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from t
 
 <meta property="og:title" content="为代码编写更有意义的注释" />
 <meta property="og:description" content="TL;DR:
- 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented. 下面将逐个举例糟糕和良好的代码注释。
 1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
 val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
 val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:" />
@@ -29,11 +29,10 @@ val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from t
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="为代码编写更有意义的注释"/>
 <meta name="twitter:description" content="TL;DR:
- 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented. 下面将逐个举例糟糕和良好的代码注释。
 1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
 val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
 val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:"/>
@@ -42,7 +41,7 @@ val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from t
 
 <meta itemprop="name" content="为代码编写更有意义的注释">
 <meta itemprop="description" content="TL;DR:
- 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented. 下面将逐个举例糟糕和良好的代码注释。
 1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
 val text = &#34;Hello, World!&#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
 val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&#34;&#34;&#34;\W&#43;&#34;&#34;&#34;, &#34;&#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&rdquo;:"><meta itemprop="datePublished" content="2022-04-17T23:44:22+08:00" />
@@ -251,7 +250,7 @@ val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from t
 </p>
 
 <content>
-  <p><img src="https://oing9179.github.io/blog/static/images/blog/2022Apr-How-to-Comment-Your-Code-in-a-Meaningful-Way/a-sticker-says-cat-on-a-head-of-a-cat.png" alt="A sticker says &amp;ldquo;cat&amp;rdquo; on a head of a cat"></p>
+  <p><img src="https://oing9179.github.io/blog/static/images/blog/2022Apr-How-to-Comment-Your-Code-in-a-Meaningful-Way/a-sticker-says-cat-on-a-head-of-a-cat.png" alt="A sticker says &ldquo;cat&rdquo; on a head of a cat"></p>
 <p>TL;DR:</p>
 <ol>
 <li><strong>解释为什么这里有这段代码而不是这段代码在做什么</strong>;</li>
@@ -277,29 +276,29 @@ val text = &#34;Hello, World!&#34; // `someFunction()` accepts characters from t
 <p>下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 <code>previousState</code> 的值，但对阅读代码的
 人来说这段注释可能会被他/她曲解为 &ldquo;注释要我记得更新 <code>previousState</code>，那我该怎么更新它？它是
 已经在下面更新了吗？那我还要不要更新它？&rdquo;:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> previousState = ConnectivityState.Disconnected
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> previousState = <span style="color:#a6e22e">ConnectivityState</span>.Disconnected
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (previousState <span style="color:#f92672">!=</span> ConnectivityState.Connected) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (previousState = ConnectivityState.Connecting) {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (previousState <span style="color:#f92672">!=</span> <span style="color:#a6e22e">ConnectivityState</span>.Connected) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (previousState = <span style="color:#a6e22e">ConnectivityState</span>.Connecting) {
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Some lenghtly code here
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// that may span over pages.
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Remember to update the variable.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    previousState = ConnectivityState.next()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    previousState = <span style="color:#a6e22e">ConnectivityState</span>.next()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>下面的是良好的注释，它解释了那段代码存在的意义:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> previousState = ConnectivityState.Disconnected
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> previousState = <span style="color:#a6e22e">ConnectivityState</span>.Disconnected
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (previousState <span style="color:#f92672">!=</span> ConnectivityState.Connected) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (previousState = ConnectivityState.Connecting) {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> (previousState <span style="color:#f92672">!=</span> <span style="color:#a6e22e">ConnectivityState</span>.Connected) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (previousState = <span style="color:#a6e22e">ConnectivityState</span>.Connecting) {
 </span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Some lenghtly code here
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// that may span over pages.
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Update this variable so the next time this loop executes it will be the
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// state in the previous loop.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    previousState = ConnectivityState.next()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    previousState = <span style="color:#a6e22e">ConnectivityState</span>.next()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><h2 id="3-尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做">3. 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做</h2>
 <p>我经常会遇到我无法理解内个月甚至几个星期前我自己写的代码，又可能是别人接手我的代码的时候不断的问

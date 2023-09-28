@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/disassemble/</link>
     <description>Recent content in Disassemble on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Mon, 20 Jun 2022 22:04:23 +0800</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/disassemble/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -16,7 +17,7 @@
       <description>今天我又来大战 Xcode 了, 哎。 ObjC 太垃圾, 垃圾到我用 Rust 写完功能然后链接到 iOS App 里, 但这也带来一个问题: Xcode 不 认识 Rust 也就没办法调试 Rust, 那如果 Rust 代码崩溃了怎么办? 接下来就来讲讲如何手动定位崩溃位置。
 注: 本文将使用 stack 和 heap 而不是其中文译名因为它的中文译名极易混淆。
 写个 demo iOS App 工程 用 Xcode 新建一个 iOS App 工程, 文件 main.m 内容如下:
-@import UIKit;  #import &amp;#34;AppDelegate.h&amp;#34;  // Prototype of the function where it crashes once called. void libmansymb_crash(void);  int main(int argc, char * argv[]) {  NSString * appDelegateClassName;  @autoreleasepool {  // Setup code that might create autoreleased objects goes here.</description>
+@import UIKit; #import &amp;#34;AppDelegate.h&amp;#34; // Prototype of the function where it crashes once called. void libmansymb_crash(void); int main(int argc, char * argv[]) { NSString * appDelegateClassName; @autoreleasepool { // Setup code that might create autoreleased objects goes here.</description>
     </item>
     
   </channel>

@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/linux/</link>
     <description>Recent content in Linux on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Sat, 19 Aug 2017 19:40:20 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,7 +15,7 @@
       
       <guid>https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/</guid>
       <description>Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k+ 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &amp;ldquo;Try on Sandstorm&amp;rdquo;。 下面将介绍具体的搭建过程。
-安装 &amp;amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp;amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose.</description>
+安装 &amp;amp; 配置 MongoDB 执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到. bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB 执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8 执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service 安装 &amp;amp; 配置 Wekan Docker Image 安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose.</description>
     </item>
     
     <item>
@@ -54,10 +55,10 @@ Kernel IP routing table Destination Gateway Genmask Flags Metric Ref Use Iface 0
       
       <guid>https://oing9179.github.io/blog/posts/2017/may/pytun/</guid>
       <description>Preface 好几天没写博客了，今天睡前写一篇糊弄一下吧。内容主要有2：
- 用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复  python-pytun 有些 ISP 会对大流量的 UDP 包进行 QoS，导致的现象就是 上行UDP包100%丢包率 下行没问题，而且还能ping得通服务器。借助这一点，可以琢磨着弄个 ICMP Tunnel，显然 GitHub 上已经有轮子实现这个了，但是我怎么弄都没法让它转发 IP 包。于是干脆自己试着用 python 写一个。（当然，还没写出来，但新学的知识已经够写个笔记了） 选择 python 原因有2：
- 调试方便一些，写一点调试一下，不用像 Java 那样还得等编译 主要原因还是有 python-pytun 这个现成的库，可以直接在 Linux 下创建 tun 设备（豚设备） 而不用自己搞什么 FileDescriptor ioctl 之类的东西  现在这个世界就是不缺轮子。
+用 python-pytun 和 scapy 试着弄个包转发工具 Depression 与自我恢复 python-pytun 有些 ISP 会对大流量的 UDP 包进行 QoS，导致的现象就是 上行UDP包100%丢包率 下行没问题，而且还能ping得通服务器。借助这一点，可以琢磨着弄个 ICMP Tunnel，显然 GitHub 上已经有轮子实现这个了，但是我怎么弄都没法让它转发 IP 包。于是干脆自己试着用 python 写一个。（当然，还没写出来，但新学的知识已经够写个笔记了） 选择 python 原因有2：
+调试方便一些，写一点调试一下，不用像 Java 那样还得等编译 主要原因还是有 python-pytun 这个现成的库，可以直接在 Linux 下创建 tun 设备（豚设备） 而不用自己搞什么 FileDescriptor ioctl 之类的东西 现在这个世界就是不缺轮子。
 TUN / TAP 设备 直接由 Linux 内核提供。
- tun 设备：就是 tunnel 设备，可以收发 Network layer （Layer 3，比如 IP, ICMP）的包. tap 设备：就是 tap 设备（反正我没找到 tap 是什么的简写），可以收发 Data link layer（Layer 2，比如 ARP, IEEE 802.</description>
+tun 设备：就是 tunnel 设备，可以收发 Network layer （Layer 3，比如 IP, ICMP）的包. tap 设备：就是 tap 设备（反正我没找到 tap 是什么的简写），可以收发 Data link layer（Layer 2，比如 ARP, IEEE 802.</description>
     </item>
     
     <item>
@@ -67,9 +68,9 @@ TUN / TAP 设备 直接由 Linux 内核提供。
       
       <guid>https://oing9179.github.io/blog/posts/2017/april/the-magic-sysrq-key/</guid>
       <description>Preface 今天看英语语法的时候 随意的看了一眼键盘，意外的发现 除了 pause break 和 scroll 这几个键以外，还有个 SysRq。然后查了一下，发现这个键在 Linux 下大有用途：
- In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”. 在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 &amp;ldquo;Magic SysRq key&amp;rdquo;。 - System request - wikipedia.org
- 当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。
-sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 /etc/sysctl.</description>
+In Linux, the kernel can be configured to provide functions for system debugging and crash recovery. This use is known as the “Magic SysRq key”. 在 Linux 下，通过对内核进行配置 可以让它来提供一些功能，比如调试操作系统以及崩溃恢复（Crash Recovery）。这种 SysRq 用法被称之为 &amp;ldquo;Magic SysRq key&amp;rdquo;。 - System request - wikipedia.org
+当 Linux 系统崩溃但还没到 kernel panic 的地步的时候（比如 CPU soft lockup），就可以使用这棵最后的救命稻草。下面我就来介绍一下 SysRq 的使用方法。
+sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启它的话需要修改配置文件 /etc/sysctl.conf 并配合 sysctl 命令使配置生效。 sysctl.</description>
     </item>
     
     <item>
@@ -79,8 +80,8 @@ sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启�
       
       <guid>https://oing9179.github.io/blog/posts/2017/april/setup-firefly-the-financial-manager-using-docker-nginx/</guid>
       <description>Preface &amp;ldquo;我辛辛苦苦挣的钱都去哪儿了&amp;rdquo;，我可不希望以后什么什么时候开始说这种话，于是 搭建个记账软件来记录自己的收支吧。 该软件优点如下：
- 资金流向：比如钱都花在哪些类目上了，钱都流向哪些商家了。 资金预算：比如打算每个月花多少钱在饮食上。 分类 &amp;amp; 标签：比如钱都花在那些类目上了。 交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易 存钱罐（Piggy Banks）：比如想买个手机但是目前没有那么多预算，可以先弄个存钱罐，然后一点一点的往里面存。相当于一个长远的资金预算。 账单：每月水电费之类的。 规则：比如填写支出描述时自动填写预设的支出金额。 报表（Reports）：按月、季、年生成报表，账户余额、资金流向、短期/长期预算、账单 等等。 多货币：软妹币, 美刀, 英镑, 比特币，想用什么就用什么（不支持货币换算，在创建收支记录时候可以手动填写换算前后的金额）。 数据导入导出：导入导出 csv 格式的文件，进一步对资金流向做分析什么的。  目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。 另外，该软件作者表示 &amp;ldquo;不支持自动支付重复性交易&amp;rdquo;，原因是：
- I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will feel what you spend.</description>
+资金流向：比如钱都花在哪些类目上了，钱都流向哪些商家了。 资金预算：比如打算每个月花多少钱在饮食上。 分类 &amp;amp; 标签：比如钱都花在那些类目上了。 交易记录：除了收入和支出记录外，如有多个银行账户的话 还能记录不同账户之间的转帐交易 存钱罐（Piggy Banks）：比如想买个手机但是目前没有那么多预算，可以先弄个存钱罐，然后一点一点的往里面存。相当于一个长远的资金预算。 账单：每月水电费之类的。 规则：比如填写支出描述时自动填写预设的支出金额。 报表（Reports）：按月、季、年生成报表，账户余额、资金流向、短期/长期预算、账单 等等。 多货币：软妹币, 美刀, 英镑, 比特币，想用什么就用什么（不支持货币换算，在创建收支记录时候可以手动填写换算前后的金额）。 数据导入导出：导入导出 csv 格式的文件，进一步对资金流向做分析什么的。 目前我能想到的唯一缺点就是：没能和各种银行/支付机构（比如支付婊）进行接口对接，实现自动记录收入支出。 另外，该软件作者表示 &amp;ldquo;不支持自动支付重复性交易&amp;rdquo;，原因是：
+I believe that if you are serious about changing your financial habits, you should be aware of what happens on your accounts. The money you spend and the money you earn. By entering each transaction manually, you will feel what you spend. 我认为如果你真的想改变你的财务习惯的话，你应该更关心你的账户，你花的钱还有你挣的钱。通过手动地录入每次交易，让你切实体会到钱都花在哪里了。</description>
     </item>
     
     <item>
@@ -90,14 +91,14 @@ sysctl 简单介绍 有些发行版上的 SysRq 功能是关闭的，想开启�
       
       <guid>https://oing9179.github.io/blog/posts/2017/march/setup-nextcloud-using-docker-and-nginx/</guid>
       <description>Preface 前些阵子瓷国各种网盘纷纷倒下，我也越来越担心自己的数据安全，没准哪天我的网盘帐号就被&amp;quot;无缘无故&amp;quot;的删掉什么的，于是我就琢磨着搭建个自己的私人网盘。现在这个时代最不缺的就是轮子，随便一搜就有好几个符合要求的自搭建（Self-Hosted）网盘软件：
- Owncloud
+Owncloud
 不错的候选，不过一些高级特性（比如 Android/iOS app, 团队协作功能, etc.）需要购买订阅，而且还挺贵。 Cozy
 同样是不错的候选，但是试用了一会儿发现制作得比较粗糙，大部分功能只是存在而已，不够用。 Nextcloud
-Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。  综上，我选择 Nextcloud。
+Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还可以自己选择一些 Nextcloud 仓库内的 app 进行安装，Android app 也是免费使用（对应的 iOS app 售价是 $0.99）。 综上，我选择 Nextcloud。
 接下来的问题是，我以后必定会在同一台主机内搭建多个网站，但 80 端口只能被一个进程监听。解决这个问题就是使用 Nginx 做反向代理，把入站连接根据域名/路径来转发到主机内的不同端口上。
 还有一个问题就是通信安全问题。用 HTTP 这种明文通信协议的话，在通过某些恶意防火墙的时候 很可能会把通信内容给镜像下来 然后拿去分析。解决这个问题也不难，弄个免费 SSL 证书即可，比如 &amp;ldquo;Let&amp;rsquo;s Encrypt&amp;quot;。
 注意： 本文使用 Ubuntu 作为服务器系统，部分特性（比如 ufw）不存在于其他 Linux 发行版里 或 需要代替方案（比如用 iptables 代替 ufw）。
-安装 Nginx  执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp  安装 / 配置 MariaDB  执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &amp;#39;Passw0rd&amp;#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud.</description>
+安装 Nginx 执行命令来安装 Nginx apt-get install nginx，配置 Nginx 需要在安装 Nextcloud 后进行。 执行命令打开防火墙的 80 端口 ufw allow 80/tcp 安装 / 配置 MariaDB 执行命令来安装 MariaDB apt-get install mariadb-server mariadb-client 执行命令来初步配置 MariaDB mysql_secure_installation，然后按照提示进行操作 root 登录 mysql，执行下面的 SQL 语句，为 Nextcloud 的数据库做准备 -- 创建 nextcloud 数据库 CREATE DATABASE nextcloud CHARACTER SET = utf8 COLLATE = utf8_general_ci; -- 创建 nextcloud 用户 CREATE USER nextcloud IDENTIFIED BY &amp;#39;Passw0rd&amp;#39;; -- 让用户 nextcloud 拥有 nextcloud 数据库的完整权限 GRANT ALL ON nextcloud.</description>
     </item>
     
     <item>
@@ -107,11 +108,13 @@ Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还�
       
       <guid>https://oing9179.github.io/blog/posts/2017/march/v2ray-as-websocket-proxy-behind-nginx/</guid>
       <description>Preface 有些地方网络环境很糟糕，比如：
-  防火墙 Drop 掉所有 UDP 包但是 DNS 除外
- 其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
-   除 80 和 443 之类的端口外的数据包传输速率都很低
-  既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
- TCP 并开启 HTTP 伪装 WebSocket  因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &amp;ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&amp;quot;，那我就用 WebSocket 吧。</description>
+防火墙 Drop 掉所有 UDP 包但是 DNS 除外
+其实刚才写完才想到，没准防火墙只允许 53 端口的 UDP 包通过，毕竟这样配置起来简单而且也不怎么影响速度。但后来我想了想 暂时还是算了，因为让 V2Ray 监听 1~1023 端口需要 root 权限。
+除 80 和 443 之类的端口外的数据包传输速率都很低
+既然这样，我就使用 80 或者 443 端口进行通信就是了。于是我看了下 v2ray 官方文档，提供了以下跟 HTTP/HTTPS 有关的选项：
+TCP 并开启 HTTP 伪装 WebSocket 因为我已经用 Nginx 监听 80 口了，所以新的连接必须通过 Nginx 分流到主机内的其他端口。这个 Issue 内提到了 &amp;ldquo;http 伪装没有完全遵守 http 协议，无法被常见的 http server 分流。如果你需要分流，可以使用 websocket 传输方式。&amp;quot;，那我就用 WebSocket 吧。
+哦对还有，有的更奇葩网络环境连 WebSocket 都不支持，具体可以到 websocketstest.com 测试一下。
+弄个子域名 Nginx 支持使用域名来分流，也可以使用 URL 路径来分流，本节将使用域名来进行分流。</description>
     </item>
     
     <item>
@@ -121,10 +124,10 @@ Owncloud 的 fork，所有高级特性/企业团队协同功能全免费，还�
       
       <guid>https://oing9179.github.io/blog/posts/2017/february/encrypt-home-directory-on-linux-and-windows/</guid>
       <description>Preface /home 下的用户文件夹可谓是隐私重灾区（Windows 下的 C:\Users\&amp;lt;用户名&amp;gt; 同理）。相比硬盘其他分区里的数据而言，用户文件夹下面会存放各种与用户隐私有关的文件。比如：
- 浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息  解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
+浏览器的历史记录, 自动填写的表单, Cookies, etc. 有些人喜欢在桌面上放各种文件，包括但不限于公务文件 大部分软件都在这里存放配置文件，配置文件里很可能包含个人信息 解决这个问题的办法就是加密用户文件夹。 本文分两部分内容，分别针对 Linux 和 Windows。
 Linux 下加密用户文件夹 先决条件：
- 以后再登录该账户时需要提供密码 该操作需要root权限  其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
- 安装 ecryptfs-utils apt-get install ecryptfs-utils  创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp  登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl+Alt+F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &amp;ldquo;&amp;ndash;signal 9&amp;rdquo; 参数来强制结束进程 sudo killall --user user  重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user  查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group)  添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &amp;#34;,&amp;#34; 分隔 usermod --append --groups sudo,some_group user  登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private  复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/.</description>
+以后再登录该账户时需要提供密码 该操作需要root权限 其实可以用不要 root 权限的 ecryptfs-setup-private，但为了尽可能提高成功几率，我还是选择了用需要 root 权限的方法。 下文将以 user 用户为例，为其加密home文件夹。以下是具体操作步骤：
+安装 ecryptfs-utils apt-get install ecryptfs-utils 创建一个临时用户并将其加入 sudo 用户组 sudo adduser --ingroup sudo user_temp 登出(Logout)当前用户，在登出前请尽量关闭正在运行的程序 按下 Ctrl+Alt+F1 进入 tty1，并以 user_temp 的身份登录 结束所有属于 user 用户的进程，如果结束所有进程后仍然后进程在运行，可以考虑添加 &amp;ldquo;&amp;ndash;signal 9&amp;rdquo; 参数来强制结束进程 sudo killall --user user 重命名 user 用户为 user_old，并将现有的用户文件夹移至 /home/user_old sudo usermod --home /home/user_old --move-home --login user_old user 查看 user_old 的用户基本信息 id user_old 输出内容大致如下，把输出的 gid 和 groups 记下来： uid=1234(user_old) gid=1234(user_group) groups=1234(user_group),27(sudo),2345(some_group) 添加新的用户名为 user，并加密它的home文件夹 # --ingroup 参数设置为上面的 gid 后面括号里的值 sudo adduser --home /home/user --ingroup user_group --encrypt-home user # 按下回车后会要求为该用户设置密码以及其他信息，其实只需要提供密码，其余的留空就行。 为 user 设置附属用户组 # --groups 参数设置为上面 groups 后面括号里的值，有多个用户组则用 &amp;#34;,&amp;#34; 分隔 usermod --append --groups sudo,some_group user 登录到 user 并挂载加密的文件系统 sudo --user user --login ecryptfs-mount-private 复制旧用户的所有文件到新的用户文件夹里，并修正权限 sudo cp -R /home/user_old/.</description>
     </item>
     
     <item>
@@ -134,16 +137,16 @@ Linux 下加密用户文件夹 先决条件：
       
       <guid>https://oing9179.github.io/blog/posts/2016/september/clean-dns-server-setup-using-bind9-and-dnscrypt-proxy/</guid>
       <description>Preface 因为众所周知的原因，DNS缓存投毒(aka: DNS Spoofing) 的出现是因为DNS查询通信协议的设计缺陷导致的，因为DNS查询协议的设计者当时并没有预料到现在的网络环境这么糟糕。利用这个缺陷可以实现一些特技，比如：
- 用浏览器打开Google然后跳转到了Baidu. ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告. 这里没能列举出的一些特技.  为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 dnscrypt(GitHub项目主页)，相比传统的DNS查询有如下优点：
- 与DNS服务器通信过程中使用SSL加密. 可以强制使用TCP，避免因UDP丢包而浪费时间. 有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站. 有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果.  不过使用dnscrypt的缺点也是有的：相比ISP提供的DNS，dnscrypt的查询会慢上最少300ms。导致这个问题的原因包括但不限于：
- UDP丢包. 强制使用TCP的话，TCP握手也要很久. SSL握手. 城门口堵车了.  不过这个问题也是可以解决的，那就是在本地搭建一个DNS服务器来缓存dnscrypt的查询结果。 接下来，我就简单的写一下 dnscrypt-proxy 和 bind(用来缓存DNS查询结果) 的安装和配置.
- 注1：下面的内容适用于Ubuntu及其衍生Distro，其他Linux Distro可能需要做些修改。 注2：我之所以没用 dnsmasq，是因为无论怎么配置它 它都不缓存向本地请求的记录，但会缓存非本地地址的记录 比如用8.8.8.8它就会缓存。
- dnscrypt-proxy  DNSCrypt 主页
+用浏览器打开Google然后跳转到了Baidu. ISP(网络服务提供商, 比如 奠信 联不通 移不动, etc.)在网页里随意插入广告. 这里没能列举出的一些特技. 为了解决这个问题，我（不知道在什么地方什么时候意外的）发现了个软件叫做 dnscrypt(GitHub项目主页)，相比传统的DNS查询有如下优点：
+与DNS服务器通信过程中使用SSL加密. 可以强制使用TCP，避免因UDP丢包而浪费时间. 有些DNS服务器不会记录用户查了哪些记录，进而也就不会知道用户去了哪些网站. 有些DNS服务器支持DNSSEC，进一步加密/验证DNS查询结果. 不过使用dnscrypt的缺点也是有的：相比ISP提供的DNS，dnscrypt的查询会慢上最少300ms。导致这个问题的原因包括但不限于：
+UDP丢包. 强制使用TCP的话，TCP握手也要很久. SSL握手. 城门口堵车了. 不过这个问题也是可以解决的，那就是在本地搭建一个DNS服务器来缓存dnscrypt的查询结果。 接下来，我就简单的写一下 dnscrypt-proxy 和 bind(用来缓存DNS查询结果) 的安装和配置.
+注1：下面的内容适用于Ubuntu及其衍生Distro，其他Linux Distro可能需要做些修改。 注2：我之所以没用 dnsmasq，是因为无论怎么配置它 它都不缓存向本地请求的记录，但会缓存非本地地址的记录 比如用8.8.8.8它就会缓存。
+dnscrypt-proxy DNSCrypt 主页
 dnscrypt-proxy GitHub 主页
 dnscrypt-proxy launchpad.net PPA
- 安装 dnscrypt-proxy 执行下面的命令来安装dnscrypt-proxy：
+安装 dnscrypt-proxy 执行下面的命令来安装dnscrypt-proxy：
 apt-get install dnscrypt-proxy 配置 dnscrypt-proxy 配置dnscrypt-proxy，配置文件在 /etc/default/dnscrypt-proxy：
-# What local IP the daemon will listen to, with an optional port.</description>
+# What local IP the daemon will listen to, with an optional port. # The default port is 53.</description>
     </item>
     
     <item>
@@ -154,11 +157,12 @@ apt-get install dnscrypt-proxy 配置 dnscrypt-proxy 配置dnscrypt-proxy，配�
       <guid>https://oing9179.github.io/blog/posts/2016/august/tails-linux-tryout/</guid>
       <description>Preface 前几天我浏览网页时候突然想到一件事：有没有什么办法让整个系统都通过洋葱代理，这样的话 在这个系统里不管做什么都是匿名的，而不再限于洋葱浏览器。
 Google &amp;ldquo;anonymous linux system&amp;rdquo; 第一条就给出了 Tails 这款Linux发行版，基于Debian sid(Still in develop)。这款Linux发行版的特点是：
- 匿名的上网：强制所有网络连接从洋葱出去。 使用这个系统的电脑上不会留下任何踪迹，除非你非要留下。  不过官方文档标注了一下：虽然关机/重启时候会把内存擦一遍，但因为技术原因 没能把显存也擦一遍。不过开发团队正着手于这件事。
-  自带最先进的加密工具，用来加密文件、邮件和即时通信。  简单介绍了一下，下面开始下载并试用它。
+匿名的上网：强制所有网络连接从洋葱出去。 使用这个系统的电脑上不会留下任何踪迹，除非你非要留下。 不过官方文档标注了一下：虽然关机/重启时候会把内存擦一遍，但因为技术原因 没能把显存也擦一遍。不过开发团队正着手于这件事。
+自带最先进的加密工具，用来加密文件、邮件和即时通信。 简单介绍了一下，下面开始下载并试用它。
 下载 Tails 打开 Tails 官网，点击页面右边的 &amp;ldquo;Install Tails &amp;lt;版本号&amp;gt;&amp;quot;，页面跳转后 点击&amp;quot;Download only&amp;rdquo;，然后再点击 &amp;ldquo;Download Torrent file&amp;rdquo; 即可。
 Q &amp;amp; A:
-  为什么不点击那个 &amp;ldquo;LET&amp;rsquo;S START THE JOURNEY!&amp;rdquo; 大按钮? 我觉得那里面的教程更麻烦。（估计是给完全新手用的吧） 有必要进行 &amp;ldquo;Download and verify using OpenPGP&amp;rdquo; 吗? 如果是下载Torrent的话：没必要。因为Torrent客户端在下载完成后会自动校验文件的checksum。 可以使用 x雷 / xx旋风下载它吗? Transmission 或 Deluge Torrent 或者 qBittorrent 任选其一即可，x雷 xx旋风 之类的看看就行了。   下载完成后，就可以准备试用了。我在这里分别介绍 在VirtualBox里运行 和 安装到U盘。</description>
+为什么不点击那个 &amp;ldquo;LET&amp;rsquo;S START THE JOURNEY!&amp;rdquo; 大按钮? 我觉得那里面的教程更麻烦。（估计是给完全新手用的吧） 有必要进行 &amp;ldquo;Download and verify using OpenPGP&amp;rdquo; 吗? 如果是下载Torrent的话：没必要。因为Torrent客户端在下载完成后会自动校验文件的checksum。 可以使用 x雷 / xx旋风下载它吗? Transmission 或 Deluge Torrent 或者 qBittorrent 任选其一即可，x雷 xx旋风 之类的看看就行了。 下载完成后，就可以准备试用了。我在这里分别介绍 在VirtualBox里运行 和 安装到U盘。
+警告：在虚拟化软件(Virtualization Software)里运行 Tails 是件很危险的事情，因为虚拟化软件所处的宿主系统(Host)和虚拟化软件都能知道你在做什么。</description>
     </item>
     
   </channel>

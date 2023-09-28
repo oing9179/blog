@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -9,13 +9,13 @@
 <title>用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list） | Hotaru&#39;s Notebook</title>
 <meta name="title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）" />
 <meta name="description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
-安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose." />
+安装 &amp; 配置 MongoDB 执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到. bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB 执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8 执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service 安装 &amp; 配置 Wekan Docker Image 安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose." />
 <meta name="keywords" content="Linux,Docker,Nginx,Wekan,Todo-list," />
 
 
 <meta property="og:title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）" />
 <meta property="og:description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
-安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose." />
+安装 &amp; 配置 MongoDB 执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到. bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB 执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8 执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service 安装 &amp; 配置 Wekan Docker Image 安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/august/setup-wekan-the-kanban-like-todo-list-using-docker-nginx/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2017-08-19T19:40:20+00:00" />
@@ -23,17 +23,16 @@
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）"/>
 <meta name="twitter:description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
-安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose."/>
+安装 &amp; 配置 MongoDB 执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到. bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB 执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8 执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service 安装 &amp; 配置 Wekan Docker Image 安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose."/>
 
 
 
 <meta itemprop="name" content="用 Docker 和 Nginx 搭建 Wekan（Kanban-like todo-list）">
 <meta itemprop="description" content="Preface 明明有那么多事情还没做，为何偏偏不断的去查看手机上有哪些新消息呢？那就把还没做事都具化出来，用肉眼看到自己还有哪些事情没做，以此来督促自己啊。 今天上午找了一些 Todo-List 软件，然后发现了这个：wekan/wekan - github.com, 已经有 10k&#43; 个 Star 了。 想试用的话，打开 wekan.github.io 然后点击 &ldquo;Try on Sandstorm&rdquo;。 下面将介绍具体的搭建过程。
-安装 &amp; 配置 MongoDB  执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到.  bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB   执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8  执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service  安装 &amp; 配置 Wekan Docker Image  安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose."><meta itemprop="datePublished" content="2017-08-19T19:40:20+00:00" />
+安装 &amp; 配置 MongoDB 执行命令 apt-get install mongodb-server 编辑 /etc/mongodb.conf, 主要修改下面两个参数就够了, 其它的目前用不到. bind_ip=0.0.0.0: 让 MongoDB 监听所有IP, 方便 Docker 容器访问 port=27017: 这条配置默认是注释掉的, 取消注释即可 防火墙不要对外开放 27017 端口, 免得被别人乱搞 MongoDB 执行命令，允许来自 172.0.0.0/8 IP段的连接，docker 容器一般会被分配到这个地址 ufw allow from 172.0.0.0/8 执行命令重新启动 MongoDB 使上面修改过的设置生效: systemctl restart mongodb.service 安装 &amp; 配置 Wekan Docker Image 安装 / 更新 docker-compose, 参考 这里 创建文件 docker-compose."><meta itemprop="datePublished" content="2017-08-19T19:40:20+00:00" />
 <meta itemprop="dateModified" content="2017-08-19T19:40:20+00:00" />
 <meta itemprop="wordCount" content="468">
 <meta itemprop="keywords" content="Linux,Docker,Nginx,Wekan,Todo-list," />

@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/lan/</link>
     <description>Recent content in LAN on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Thu, 26 Jul 2018 19:45:46 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/lan/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -15,7 +16,7 @@
       <guid>https://oing9179.github.io/blog/posts/2018/july/setup-private-lan-using-softether-vpn/</guid>
       <description>Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
 本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
-准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+准备工作 到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
 编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
 安装管理工具 注： 该工具可以用 Wine 安装和运行。
 安装很简单，在 &amp;ldquo;Select Software Components to Install&amp;rdquo; 界面选择 &amp;ldquo;Admin Tools Only&amp;rdquo; 那一项即可。</description>

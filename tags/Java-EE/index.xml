@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/java-ee/</link>
     <description>Recent content in Java EE on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Wed, 20 Jul 2016 19:25:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/java-ee/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -18,7 +19,10 @@
 开工 作为切入点的两个类：JavaService 和 JavaUtil 先从 引用1 和 引用2 中所提到的两个类下手：
 com.seventh7.mybatis.service.JavaService com.seventh7.mybatis.util.JavaUtil 用IDEA新建一个Java项目，并在 Project Structure 里选择 IntelliJ Platform Plugin SDK。没有这个选项就创建一个即可，如下图：
 整个java项目的文件结构如下：
-   目录 作用     /libs/ 插件的原版jar包和它引用的一些包   /src/main/java/ 按照原版jar包里的包结构创建,用于替换原版jar包里的类.   /src/main/resources/ 目前只存放 MANIFEST.MF， 用于记录原版jar包对应的版本号.    图中还有一些上面没有提到过的类，这些类以后会用到。只用这一张图也省得我再做其他的图了。</description>
+目录 作用 /libs/ 插件的原版jar包和它引用的一些包 /src/main/java/ 按照原版jar包里的包结构创建,用于替换原版jar包里的类. /src/main/resources/ 目前只存放 MANIFEST.MF， 用于记录原版jar包对应的版本号. 图中还有一些上面没有提到过的类，这些类以后会用到。只用这一张图也省得我再做其他的图了。
+先从 JavaUtils 类下手好了 先把类反编译出来放到对应的包下面。反编译的类一般都会有些编译错误，导致这些错误的原因包括但不限于：
+Java泛型的类型擦除。 类型强制转换时候的 Unchecked 警告。 反编译工具不完善，没能及时更新。 泛型类型擦除这个比较好解决，根据IDE的提示猜出对应的泛型类型就好。猜不出来就先不用泛型，看运行时的异常再决定用什么类型。 以编译通过为基础，尽可能减少可能会导致运行时异常的代码，其他不会导致运行时异常的就不要管它。
+按照 引用2 的说明，对 refVaild()Z 做修改。修改前：</description>
     </item>
     
   </channel>

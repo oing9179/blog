@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -10,18 +10,18 @@
 <meta name="title" content="自定义任务触发器 - Spring Framework" />
 <meta name="description" content="Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
 Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
-class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
- Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34;  xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34;  xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www." />
+class ExampleTaskTrigger : Trigger { override fun nextExecutionTime(triggerContext: TriggerContext): Date { // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。 // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。 } } nextExecutionTime 方法会在两种情况下调用：
+Spring 容器启动时 定时任务执行完成后 注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd&#34;&gt; &lt;bean id=&#34;exampleClassBean&#34; class=&#34;com.example.ExampleClass&#34;/&gt; &lt;bean id=&#34;exampleTaskTrigger&#34; class=&#34;com." />
 <meta name="keywords" content="Programming,Java,Spring Framework,Scheduled Task,Trigger," />
 
 
 <meta property="og:title" content="自定义任务触发器 - Spring Framework" />
 <meta property="og:description" content="Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
 Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
-class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
- Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34;  xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34;  xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www." />
+class ExampleTaskTrigger : Trigger { override fun nextExecutionTime(triggerContext: TriggerContext): Date { // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。 // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。 } } nextExecutionTime 方法会在两种情况下调用：
+Spring 容器启动时 定时任务执行完成后 注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd&#34;&gt; &lt;bean id=&#34;exampleClassBean&#34; class=&#34;com.example.ExampleClass&#34;/&gt; &lt;bean id=&#34;exampleTaskTrigger&#34; class=&#34;com." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2018/february/custom-trigger-spring-framework/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2018-02-03T19:08:02+00:00" />
@@ -29,23 +29,22 @@ class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerCont
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="自定义任务触发器 - Spring Framework"/>
 <meta name="twitter:description" content="Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
 Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
-class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
- Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34;  xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34;  xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www."/>
+class ExampleTaskTrigger : Trigger { override fun nextExecutionTime(triggerContext: TriggerContext): Date { // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。 // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。 } } nextExecutionTime 方法会在两种情况下调用：
+Spring 容器启动时 定时任务执行完成后 注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd&#34;&gt; &lt;bean id=&#34;exampleClassBean&#34; class=&#34;com.example.ExampleClass&#34;/&gt; &lt;bean id=&#34;exampleTaskTrigger&#34; class=&#34;com."/>
 
 
 
 <meta itemprop="name" content="自定义任务触发器 - Spring Framework">
 <meta itemprop="description" content="Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
 Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
-class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
- Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34;  xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34;  xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www."><meta itemprop="datePublished" content="2018-02-03T19:08:02+00:00" />
+class ExampleTaskTrigger : Trigger { override fun nextExecutionTime(triggerContext: TriggerContext): Date { // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。 // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。 } } nextExecutionTime 方法会在两种情况下调用：
+Spring 容器启动时 定时任务执行完成后 注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt; &lt;beans xmlns=&#34;http://www.springframework.org/schema/beans&#34; xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xmlns:task=&#34;http://www.springframework.org/schema/task&#34; xsi:schemaLocation=&#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd&#34;&gt; &lt;bean id=&#34;exampleClassBean&#34; class=&#34;com.example.ExampleClass&#34;/&gt; &lt;bean id=&#34;exampleTaskTrigger&#34; class=&#34;com."><meta itemprop="datePublished" content="2018-02-03T19:08:02+00:00" />
 <meta itemprop="dateModified" content="2018-02-03T19:08:02+00:00" />
 <meta itemprop="wordCount" content="83">
 <meta itemprop="keywords" content="Programming,Java,Spring Framework,Scheduled Task,Trigger," />

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -9,25 +9,25 @@
 <title>[Android] Task &amp; Document / Loader | Hotaru&#39;s Notebook</title>
 <meta name="title" content="[Android] Task &amp; Document / Loader" />
 <meta name="description" content="Preface 这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。
- Task 和 Document 的基本概念 Loader 的基本概念和用法  Task &amp; Document Task 下面的代码将启动照相机:
+Task 和 Document 的基本概念 Loader 的基本概念和用法 Task &amp; Document Task 下面的代码将启动照相机:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); startActivityForResult(lIntent); 效果如图:
 想把照相机和自己的 App 分开的话，就这样:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivityForResult(lIntent); 效果如图:
 这张图里看上去有两个 App，在 Android 官方文档 里给每个像上图里的 App 定义了一个术语叫做 &ldquo;Task&rdquo;，也就是上图里有2个 Task。容纳许多个 Task 的整个屏幕（也就是上图里的整个屏幕）就叫做 &ldquo;Recents screen&rdquo;（其他非正式名称包括但不限于: Overview screen, Recent apps）.
 Document 使用下面的代码可以让自己的 App 的某个 Activity 以多个 Task 的形式展现在 Recents screen 里:
-Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent);  // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager." />
+Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent); // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager." />
 <meta name="keywords" content="Android,Task,Document,Loader," />
 
 
 <meta property="og:title" content="[Android] Task &amp; Document / Loader" />
 <meta property="og:description" content="Preface 这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。
- Task 和 Document 的基本概念 Loader 的基本概念和用法  Task &amp; Document Task 下面的代码将启动照相机:
+Task 和 Document 的基本概念 Loader 的基本概念和用法 Task &amp; Document Task 下面的代码将启动照相机:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); startActivityForResult(lIntent); 效果如图:
 想把照相机和自己的 App 分开的话，就这样:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivityForResult(lIntent); 效果如图:
 这张图里看上去有两个 App，在 Android 官方文档 里给每个像上图里的 App 定义了一个术语叫做 &ldquo;Task&rdquo;，也就是上图里有2个 Task。容纳许多个 Task 的整个屏幕（也就是上图里的整个屏幕）就叫做 &ldquo;Recents screen&rdquo;（其他非正式名称包括但不限于: Overview screen, Recent apps）.
 Document 使用下面的代码可以让自己的 App 的某个 Activity 以多个 Task 的形式展现在 Recents screen 里:
-Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent);  // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager." />
+Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent); // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://oing9179.github.io/blog/posts/2017/august/android-task-document-loader/" /><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2017-08-11T21:33:00+00:00" />
@@ -35,29 +35,28 @@ Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FL
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="[Android] Task &amp; Document / Loader"/>
 <meta name="twitter:description" content="Preface 这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。
- Task 和 Document 的基本概念 Loader 的基本概念和用法  Task &amp; Document Task 下面的代码将启动照相机:
+Task 和 Document 的基本概念 Loader 的基本概念和用法 Task &amp; Document Task 下面的代码将启动照相机:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); startActivityForResult(lIntent); 效果如图:
 想把照相机和自己的 App 分开的话，就这样:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivityForResult(lIntent); 效果如图:
 这张图里看上去有两个 App，在 Android 官方文档 里给每个像上图里的 App 定义了一个术语叫做 &ldquo;Task&rdquo;，也就是上图里有2个 Task。容纳许多个 Task 的整个屏幕（也就是上图里的整个屏幕）就叫做 &ldquo;Recents screen&rdquo;（其他非正式名称包括但不限于: Overview screen, Recent apps）.
 Document 使用下面的代码可以让自己的 App 的某个 Activity 以多个 Task 的形式展现在 Recents screen 里:
-Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent);  // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager."/>
+Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent); // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager."/>
 
 
 
 <meta itemprop="name" content="[Android] Task &amp; Document / Loader">
 <meta itemprop="description" content="Preface 这个月状态挺差的，各种不顺心和意外，不过还是照例把新学的东西整理一下吧。
- Task 和 Document 的基本概念 Loader 的基本概念和用法  Task &amp; Document Task 下面的代码将启动照相机:
+Task 和 Document 的基本概念 Loader 的基本概念和用法 Task &amp; Document Task 下面的代码将启动照相机:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); startActivityForResult(lIntent); 效果如图:
 想把照相机和自己的 App 分开的话，就这样:
 Intent lIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); startActivityForResult(lIntent); 效果如图:
 这张图里看上去有两个 App，在 Android 官方文档 里给每个像上图里的 App 定义了一个术语叫做 &ldquo;Task&rdquo;，也就是上图里有2个 Task。容纳许多个 Task 的整个屏幕（也就是上图里的整个屏幕）就叫做 &ldquo;Recents screen&rdquo;（其他非正式名称包括但不限于: Overview screen, Recent apps）.
 Document 使用下面的代码可以让自己的 App 的某个 Activity 以多个 Task 的形式展现在 Recents screen 里:
-Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent);  // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager."><meta itemprop="datePublished" content="2017-08-11T21:33:00+00:00" />
+Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK); lIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT); startActivity(lIntent); // 在新的 Activity 里使用下面的代码可以修改 Recents screen 里每个 Task 的标题 setTaskDescription(new ActivityManager."><meta itemprop="datePublished" content="2017-08-11T21:33:00+00:00" />
 <meta itemprop="dateModified" content="2017-08-11T21:33:00+00:00" />
 <meta itemprop="wordCount" content="522">
 <meta itemprop="keywords" content="Android,Task,Document,Loader," />
@@ -315,7 +314,7 @@ Intent lIntent = new Intent(this, NewActivity.class); lIntent.addFlags(Intent.FL
 </ol>
 <p>下面展示一个 <code>AsyncTaskLoader</code> 的一种实现。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LoaderImpl</span> <span style="color:#66d9ef">extends</span> AsyncTaskLoader<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> LOADER_ID <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> LOADER_ID <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String mStrUrl<span style="color:#f92672">;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> String mData<span style="color:#f92672">;</span>

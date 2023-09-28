@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/categories/coding/</link>
     <description>Recent content in Coding on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Tue, 31 May 2022 22:34:23 +0800</lastBuildDate><atom:link href="https://oing9179.github.io/blog/categories/coding/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -15,8 +16,8 @@
       <guid>https://oing9179.github.io/blog/posts/2022/may/gnu-make-build-xcode-project/</guid>
       <description>Preface Xcode 很垃圾, 但还好有很多开源工具可以帮我尽可能的避开 Xcode 带来的不便。 除了可以在 Xcode IDE 内构建工程外, 还可以使用 xcodebuild 来构建, 这就意味着我可以用 GNU Make 来构建工程, 这样就能更好的与 CI/CD 整合了。
 Makefile 入门 基本语法 之所以选择 Makefile 而不是其它构建工具或 plain-old shell script 是因为:
- Makefile 比 shell script 多了目标依赖和其它一些 Makefile 的便利语法; 其它构建工具或多或少有较高的学习曲线; macOS 自带一个 GNU Make 而其它构建工具还需要自行安装。  Makefile 的语法还是很简单的, 具体可以去 makefiletutorial.com 快速入门, 下面只做一个简单的例子:
-# Comment starts with number sign(#). # Run commands in bash shell. SHELL=/bin/bash  # Define a variable. my_variable:=my value, and spaces are ok.</description>
+Makefile 比 shell script 多了目标依赖和其它一些 Makefile 的便利语法; 其它构建工具或多或少有较高的学习曲线; macOS 自带一个 GNU Make 而其它构建工具还需要自行安装。 Makefile 的语法还是很简单的, 具体可以去 makefiletutorial.com 快速入门, 下面只做一个简单的例子:
+# Comment starts with number sign(#). # Run commands in bash shell. SHELL=/bin/bash # Define a variable. my_variable:=my value, and spaces are ok.</description>
     </item>
     
     <item>
@@ -38,7 +39,7 @@ Makefile 入门 基本语法 之所以选择 Makefile 而不是其它构建工�
       
       <guid>https://oing9179.github.io/blog/posts/2022/april/how-to-comment-your-code-in-a-meaningful-way/</guid>
       <description>TL;DR:
- 解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented.  下面将逐个举例糟糕和良好的代码注释。
+解释为什么这里有这段代码而不是这段代码在做什么; 不要编写会让人困惑的注释; 尽可能让其它未接触这段代码的人或未来的自己能看懂这段代码为什么这么做; Good code is self-documented. 下面将逐个举例糟糕和良好的代码注释。
 1.解释为什么这里有这段代码而不是这段代码在做什么 下面的是糟糕的注释，因为它只描述了代码在干什么，而任何软件工程师都能很容易的知道代码在做什么， 所以导致这段注释失去了存在的意义:
 val text = &amp;#34;Hello, World!&amp;#34; // Remove characters not in the alphabet. val sanitizedText = text.replaceRegex(&amp;#34;&amp;#34;&amp;#34;\W+&amp;#34;&amp;#34;&amp;#34;, &amp;#34;&amp;#34;) someFunction(sanitizedText) 下面的是良好的注释，它解释了为什么要替换掉 text 内的部分字符:
 val text = &amp;#34;Hello, World!&amp;#34; // `someFunction()` accepts characters from the english alphabet only, so // characters not in the alphabet have to be removed. val sanitizedText = text.replaceRegex(&amp;#34;&amp;#34;&amp;#34;\W+&amp;#34;&amp;#34;&amp;#34;, &amp;#34;&amp;#34;) someFunction(sanitizedText) 2. 不要编写会让人困惑的注释 下面的是糟糕的注释，这段注释看起来是想提醒编译器要更新 previousState 的值，但对阅读代码的 人来说这段注释可能会被他/她曲解为 &amp;ldquo;注释要我记得更新 previousState，那我该怎么更新它？它是 已经在下面更新了吗？那我还要不要更新它？&amp;rdquo;:</description>

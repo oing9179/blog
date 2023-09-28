@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/spring-framework/</link>
     <description>Recent content in Spring Framework on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Sat, 03 Feb 2018 19:08:02 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/spring-framework/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -15,9 +16,9 @@
       <guid>https://oing9179.github.io/blog/posts/2018/february/custom-trigger-spring-framework/</guid>
       <description>Preface 这几天做开发时有个比较特别的需求：当前时间的分钟数在 {5, 15, 25, 35, 45, 55} 的时候触发某个事件。Spring 自带的触发器（包括 Cron）都没法满足这个需求，于是就只能自定义一个触发器了。
 Trigger 接口 写个类实现 org.springframework.scheduling.Trigger，接口里唯一的一个方法 nextExecutionTime(TriggerContext): Date 需要返回一个 Date 类型的对象，表示下一次执行任务的时间。
-class ExampleTaskTrigger : Trigger {  override fun nextExecutionTime(triggerContext: TriggerContext): Date {  // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。  // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。  } } nextExecutionTime 方法会在两种情况下调用：
- Spring 容器启动时 定时任务执行完成后  注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
-&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;beans xmlns=&amp;#34;http://www.springframework.org/schema/beans&amp;#34;  xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xmlns:task=&amp;#34;http://www.springframework.org/schema/task&amp;#34;  xsi:schemaLocation=&amp;#34;http://www.springframework.org/schema/beans http://www.</description>
+class ExampleTaskTrigger : Trigger { override fun nextExecutionTime(triggerContext: TriggerContext): Date { // triggerContext 有3个方法可以分别用来获取到任务的计划执行时间、实际执行时间和执行完成的时间。 // 该 Trigger 被首次调用时，那3个方法的返回值都为 null。 } } nextExecutionTime 方法会在两种情况下调用：
+Spring 容器启动时 定时任务执行完成后 注册定时任务 参考下面的 Spring 配置文件。 ExampleClass 类没有继承任何类或实现任何方法，类内只有一个无参数的 taskMethod 方法。
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?&amp;gt; &amp;lt;beans xmlns=&amp;#34;http://www.springframework.org/schema/beans&amp;#34; xmlns:xsi=&amp;#34;http://www.w3.org/2001/XMLSchema-instance&amp;#34; xmlns:task=&amp;#34;http://www.springframework.org/schema/task&amp;#34; xsi:schemaLocation=&amp;#34;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd&amp;#34;&amp;gt; &amp;lt;bean id=&amp;#34;exampleClassBean&amp;#34; class=&amp;#34;com.example.ExampleClass&amp;#34;/&amp;gt; &amp;lt;bean id=&amp;#34;exampleTaskTrigger&amp;#34; class=&amp;#34;com.</description>
     </item>
     
   </channel>

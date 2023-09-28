@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="zh">
 
 <head>
   <meta http-equiv="X-Clacks-Overhead" content="GNU Terry Pratchett" />
@@ -10,7 +10,7 @@
 <meta name="title" content="使用 SoftEther VPN 搭建私有局域网" />
 <meta name="description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
 本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
-准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+准备工作 到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
 编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
 安装管理工具 注： 该工具可以用 Wine 安装和运行。
 安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。" />
@@ -20,7 +20,7 @@
 <meta property="og:title" content="使用 SoftEther VPN 搭建私有局域网" />
 <meta property="og:description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
 本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
-准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+准备工作 到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
 编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
 安装管理工具 注： 该工具可以用 Wine 安装和运行。
 安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。" />
@@ -31,12 +31,11 @@
 
 
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="使用 SoftEther VPN 搭建私有局域网"/>
 <meta name="twitter:description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
 本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
-准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+准备工作 到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
 编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
 安装管理工具 注： 该工具可以用 Wine 安装和运行。
 安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。"/>
@@ -46,7 +45,7 @@
 <meta itemprop="name" content="使用 SoftEther VPN 搭建私有局域网">
 <meta itemprop="description" content="Preface Linux 下并不是所有软件都能设置代理，于是我想起了很久以前用过但没用明白的 SoftEther VPN。
 本文将描述 SoftEther VPN（以下简称 sevpn） 在 Linux 服务器和客户端的搭建过程。
-准备工作  到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn  sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
+准备工作 到 softether.org 下载 Windows 和 Linux 的 client 和 server，共2个exe和2个tgz包 Wine 或运行 Windows 的虚拟机，用来运行 sevpn 的图形界面 GCC 用来编译 Linux 版的 sevpn sevpn 的编译和安装 编译 Linux 版的可执行文件 前面准备工作里下载的 linux 版 sevpn 只包含源码，需要调用 .install.sh 来编译成可执行文件。
 编译完成后，一共有3个文件，{vpnserver 或 vpnclient, vpncmd, hamcore.se2} 是运行 sevpn 的必备文件。
 安装管理工具 注： 该工具可以用 Wine 安装和运行。
 安装很简单，在 &ldquo;Select Software Components to Install&rdquo; 界面选择 &ldquo;Admin Tools Only&rdquo; 那一项即可。"><meta itemprop="datePublished" content="2018-07-26T19:45:46+00:00" />

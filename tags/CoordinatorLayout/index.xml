@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/coordinatorlayout/</link>
     <description>Recent content in CoordinatorLayout on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Sat, 15 Jul 2017 10:28:49 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/coordinatorlayout/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,10 +15,10 @@
       
       <guid>https://oing9179.github.io/blog/posts/2017/july/getting-started-with-coordinatorlayout/</guid>
       <description>Preface 近些天在做个 Android app demo，有个需求是 默认情况下放大 App 的图标，向上滚动后把它缩小 给下面的内容留出空间。 下面展示的这种效果就是用 CoordinatorLayout 的 Behavior 来做.
- 基本概念 CoordinatorLayout，官方文档给出的意思是 &amp;ldquo;CoordinatorLayout is a super-powered FrameLayout. &amp;ldquo;，也就是说，直接使用它的话和用 FrameLayout 没有区别。 CoordinatorLayout 与 FrameLayout 的区别就在于：CoordinatorLayout 提供了一个内部类 Behavior，用它可以在运行时动态的调整各个 View 的布局。 通过覆盖 Behavior 的两个方法:
- public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency)  来对具体的 View 进行布局.
+基本概念 CoordinatorLayout，官方文档给出的意思是 &amp;ldquo;CoordinatorLayout is a super-powered FrameLayout. &amp;ldquo;，也就是说，直接使用它的话和用 FrameLayout 没有区别。 CoordinatorLayout 与 FrameLayout 的区别就在于：CoordinatorLayout 提供了一个内部类 Behavior，用它可以在运行时动态的调整各个 View 的布局。 通过覆盖 Behavior 的两个方法:
+public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) 来对具体的 View 进行布局.
 布局文件 比如布局文件是这样的:
-&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;android.support.design.widget.CoordinatorLayout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34;  xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34;  xmlns:tools=&amp;#34;http://schemas.android.com/tools&amp;#34;  android:layout_width=&amp;#34;match_parent&amp;#34;  android:layout_height=&amp;#34;match_parent&amp;#34;  android:background=&amp;#34;@android:color/background_light&amp;#34;&amp;gt;   &amp;lt;!</description>
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;android.support.design.widget.CoordinatorLayout xmlns:android=&amp;#34;http://schemas.android.com/apk/res/android&amp;#34; xmlns:app=&amp;#34;http://schemas.android.com/apk/res-auto&amp;#34; xmlns:tools=&amp;#34;http://schemas.android.com/tools&amp;#34; android:layout_width=&amp;#34;match_parent&amp;#34; android:layout_height=&amp;#34;match_parent&amp;#34; android:background=&amp;#34;@android:color/background_light&amp;#34;&amp;gt; &amp;lt;!-- 所有 CoordinatorLayout 的第一层 子View 都能对其配置 Behavior，比如在当前 这个配置文件里第一层子View就包含: AppBarLayout, NestedScrollView, TextView, ImageView.</description>
     </item>
     
   </channel>

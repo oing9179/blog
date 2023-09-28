@@ -5,6 +5,7 @@
     <link>https://oing9179.github.io/blog/tags/jboss/</link>
     <description>Recent content in JBoss on Hotaru&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
     <copyright>Copyright © 2022, Hotaru Oyng.</copyright>
     <lastBuildDate>Sat, 09 Jun 2018 10:18:00 +0000</lastBuildDate><atom:link href="https://oing9179.github.io/blog/tags/jboss/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,11 +15,11 @@
       
       <guid>https://oing9179.github.io/blog/posts/2018/june/deploy-web-application-to-wildfly-13/</guid>
       <description>Preface 以后可能会在生产环境把 war 部署到 WildFly 里，于是写一篇 blog 记录一下部署方法。
-WildFly 开发环境搭建  到 这里 下载 &amp;ldquo;Java EE&amp;lt;版本&amp;gt; Full &amp;amp; Web Distribution&amp;rdquo; 而不是 &amp;ldquo;Servlet-Only Distribution&amp;rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &amp;ldquo;Run/Debug Configurations&amp;rdquo;
- &amp;ldquo;Add New Configuration (Alt+Insert)&amp;rdquo; -&amp;gt; &amp;ldquo;JBoss Server&amp;rdquo; -&amp;gt; &amp;ldquo;Local&amp;rdquo; 点击图中的 &amp;ldquo;Configure&amp;rdquo;
- &amp;ldquo;Add application server (Alt+Insert)&amp;rdquo; 填入刚解压的 WildFly 的路径，然后 &amp;ldquo;OK&amp;rdquo; 然后点击 OK 就可以做开发和调试了  去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&amp;lt;context_path&amp;gt; 的路径里，就像这样:
+WildFly 开发环境搭建 到 这里 下载 &amp;ldquo;Java EE&amp;lt;版本&amp;gt; Full &amp;amp; Web Distribution&amp;rdquo; 而不是 &amp;ldquo;Servlet-Only Distribution&amp;rdquo;，完整版会带有一个网页版管理界面。 解压缩 编辑 IDEA 的 &amp;ldquo;Run/Debug Configurations&amp;rdquo;
+&amp;ldquo;Add New Configuration (Alt+Insert)&amp;rdquo; -&amp;gt; &amp;ldquo;JBoss Server&amp;rdquo; -&amp;gt; &amp;ldquo;Local&amp;rdquo; 点击图中的 &amp;ldquo;Configure&amp;rdquo;
+&amp;ldquo;Add application server (Alt+Insert)&amp;rdquo; 填入刚解压的 WildFly 的路径，然后 &amp;ldquo;OK&amp;rdquo; 然后点击 OK 就可以做开发和调试了 去掉浏览器 URL 里自带的 context path IDEA 默认情况下会部署到有 http://localhost:8080/&amp;lt;context_path&amp;gt; 的路径里，就像这样:
 去掉它的办法也很简单。
- 首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.</description>
+首先先把图中的 context path 删掉 然后到 webapp/WEB-INF/ 下创建文件 jboss-web.xml，文件内容如下 &amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;UTF-8&amp;#34;?</description>
     </item>
     
   </channel>
